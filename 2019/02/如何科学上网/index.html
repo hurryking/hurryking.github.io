@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | 如何科学上网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        如何科学上网
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h2 id="墙的工作方式">墙的工作方式</h2>
+
+<p><a href="https://zh.wikipedia.org/wiki/%E9%98%B2%E7%81%AB%E9%95%BF%E5%9F%8E">维基百科简介</a> 等你翻过去就知道了 ^_^</p>
+
+<h2 id="如何科学上网">如何科学上网</h2>
+
+<p>需要准备的东西</p>
+
+<ol>
+<li><p>购买vps(建议买国外的，国内受监管) 如果有就跳过此步</p>
+
+<p>推荐<a href="https://m.do.co/c/e9484b4d33df">购买地址</a> (建议先买5$/month没，一般需求应该够了，没必要选25$的)</p>
+
+<p>服务端要求的要求操作系统为<strong>Ubuntu 16+ / Debian 8+ / CentOS 7+</strong>，所以vps选操作系统时注意下不要选错了</p></li>
+
+<li><p>购买域名(建议买国外的，国内需要很长的备案时间)</p>
+
+<p>推荐<a href="https://sg.godaddy.com/zh/">godaddy</a></p>
+
+<p>购买完成后记得配置好DNS，把域名指向刚才购买的域名的外网ip，在这里假设购买的域名为 example.com  (<strong>大家记得修改成自己购买的域名不要直接复制</strong>)</p>
+
+<p><a href="https://blog.csdn.net/huwei2003/article/details/54580614">DNS相关知识</a> 希望能帮到你</p></li>
+
+<li><p>paypal账号(为了结账 <a href="https://www.paypal.com">注册地址</a>)</p>
+
+<p>如果有迷惑的这个是官方的<a href="https://www.paypal.com/c2/smarthelp/article/how-do-i-add-a-credit-or-debit-card-to-my-paypal-account-faq826">帮助链接</a> 希望能帮到你</p></li>
+
+<li><p>一定的时间和耐心</p>
+
+<p>顺利的话大约一个小时</p></li>
+</ol>
+
+<p>vps购买好以后, 需要安装的软件分服务端和客户端</p>
+
+<h3 id="安装服务端">安装服务端</h3>
+
+<p>我们先来安装服务端软件
+服务端需要安装的软件</p>
+
+<ol>
+<li><p>nginx(用来转发流量，起混淆作用)</p></li>
+
+<li><p>v2ray(充当代理角色)</p></li>
+</ol>
+
+<p>下面来给出一副图说明下基本工作原理
+<img src="https://user-gold-cdn.xitu.io/2019/2/24/1691c1693dfee5ae?w=966&amp;h=600&amp;f=png&amp;s=88229" alt="" />
+​    <strong>以下所有操作建议用root执行</strong></p>
+
+<h4 id="安装nginx并配置给站点ssl证书">安装Nginx并配置给站点ssl证书</h4>
+
+<p>我们先来安装nginx</p>
+
+<p>安装脚本 <a href="http://mirrors.linuxeye.com/oneinstack-full.tar.gz">在这里</a> 如果不想看教程可以直接复制下面这条命令在家目录下执行</p>
+
+<pre><code>wget -c http://mirrors.linuxeye.com/oneinstack-full.tar.gz &amp;&amp; tar xzf oneinstack-full.tar.gz &amp;&amp; ./oneinstack/install.sh --nginx_option 1 --ssh_port 22
+</code></pre>
+
+<p>nginx 安装完成后 接下来我们来为购买的域名生成虚拟主机配置文件</p>
+
+<pre><code>./oneinstack/vhost.sh
+</code></pre>
+
+<p>选择如下图
+<img src="https://user-gold-cdn.xitu.io/2019/2/24/1691dd483cdb3e0a?w=572&amp;h=328&amp;f=png&amp;s=21041" alt="" />
+​    配置完成后我们需要改下生成的nginx配置</p>
+
+<pre><code>vi /usr/local/nginx/conf/vhost/example.com.conf
+</code></pre>
+
+<p>​    修改以配置，大约在23行下添加如下配置</p>
+
+<p><img src="https://user-gold-cdn.xitu.io/2019/2/24/1691dde2e3caae54?w=598&amp;h=287&amp;f=png&amp;s=14849" alt="" /></p>
+
+<pre><code>location /ray {
+      proxy_redirect off;
+      proxy_pass http://127.0.0.1:10000;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection &quot;upgrade&quot;;
+      proxy_set_header Host $http_host;
+}
+</code></pre>
+
+<p>​    然后重新加载下nginx的配置</p>
+
+<pre><code>systemctl reload nginx
+</code></pre>
+
+<p>nginx安装完成后，我们开始安装v2ray</p>
+
+<h4 id="安装v2ray">安装v2ray</h4>
+
+<p>v2ray一键安装教程 <a href="https://github.com/233boy/v2ray/wiki/V2Ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC">在这里</a> 感谢大佬 <a href="https://233blog.com">233boy</a> 为萌新提供便利
+​<br />
+&nbsp;&nbsp;&nbsp;&nbsp;协议我们先随便选下(后面我们需要手工改下配置)</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;端口我们选 <strong>10000</strong></p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;不配置shadowsock</p>
+
+<p>v2ray安装完成后，我们修改下v2ray的配置</p>
+
+<pre><code>vi /etc/v2ray/config.json
+</code></pre>
+
+<p>改为如下配置</p>
+
+<pre><code>{
+  &quot;inbound&quot;: {
+    &quot;port&quot;: 10000,
+    &quot;listen&quot;:&quot;127.0.0.1&quot;,
+    &quot;protocol&quot;: &quot;vmess&quot;,
+    &quot;settings&quot;: {
+      &quot;clients&quot;: [
+        {
+          &quot;id&quot;: &quot;改为自己的UUID, 不知道的进命令行使用v2ray info查看用户ID的值&quot;,
+          &quot;alterId&quot;: 64
+        }
+      ]
+    },
+    &quot;streamSettings&quot;: {
+      &quot;network&quot;: &quot;ws&quot;,
+      &quot;wsSettings&quot;: {
+      &quot;path&quot;: &quot;/ray&quot;
+      }
+    }
+  },
+  &quot;outbound&quot;: {
+    &quot;protocol&quot;: &quot;freedom&quot;,
+    &quot;settings&quot;: {}
+  },
+  &quot;outboundDetour&quot;: [
+    {
+      &quot;protocol&quot;: &quot;blackhole&quot;,
+      &quot;settings&quot;: {},
+      &quot;tag&quot;: &quot;blocked&quot;
+    }
+  ],
+  &quot;routing&quot;: {
+    &quot;strategy&quot;: &quot;rules&quot;,
+    &quot;settings&quot;: {
+      &quot;rules&quot;: [
+        {
+          &quot;type&quot;: &quot;field&quot;,
+          &quot;ip&quot;: [
+            &quot;0.0.0.0/8&quot;,
+            &quot;10.0.0.0/8&quot;,
+            &quot;100.64.0.0/10&quot;,
+            &quot;127.0.0.0/8&quot;,
+            &quot;169.254.0.0/16&quot;,
+            &quot;172.16.0.0/12&quot;,
+            &quot;192.0.0.0/24&quot;,
+            &quot;192.0.2.0/24&quot;,
+            &quot;192.168.0.0/16&quot;,
+            &quot;198.18.0.0/15&quot;,
+            &quot;198.51.100.0/24&quot;,
+            &quot;203.0.113.0/24&quot;,
+            &quot;::1/128&quot;,
+            &quot;fc00::/7&quot;,
+            &quot;fe80::/10&quot;
+          ],
+          &quot;outboundTag&quot;: &quot;blocked&quot;
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+
+<p>然后重启v2ray</p>
+
+<pre><code>v2ray restart
+</code></pre>
+
+<p>至此服务端算是安装配置完成</p>
+
+<h3 id="安装客户端">安装客户端</h3>
+
+<p>接下来我们开始安装配置客户端</p>
+
+<p>Windows <a href="https://github.com/v2ray/v2ray-core/releases">下载地址</a> (找自己对应系统版本的包 32位和64位不一样)</p>
+
+<p>Mac <a href="https://github.com/yanue/V2rayU">下载地址</a></p>
+
+<p>IOS 去应用商店搜 Kitsunebi 或 i2Ray</p>
+
+<p>Android <a href="https://github.com/2dust/v2rayNG/releases/download/0.6.14/app-universal-release.apk">apk包下载地址</a></p>
+
+<p>贴下Windows客户端配置</p>
+
+<pre><code>{
+  &quot;inbound&quot;: {
+    &quot;port&quot;: 1080,
+    &quot;listen&quot;: &quot;127.0.0.1&quot;,
+    &quot;protocol&quot;: &quot;socks&quot;,
+    &quot;settings&quot;: {
+      &quot;auth&quot;: &quot;noauth&quot;,
+      &quot;udp&quot;: false
+    }
+  },
+  &quot;outbound&quot;: {
+    &quot;protocol&quot;: &quot;vmess&quot;,
+    &quot;settings&quot;: {
+      &quot;vnext&quot;: [
+        {
+          &quot;address&quot;: &quot;example.com&quot;,
+          &quot;port&quot;: 443,
+          &quot;users&quot;: [
+            {
+              &quot;id&quot;: &quot;和服务端的UUID填成一样的&quot;,
+              &quot;alterId&quot;: 64
+            }
+          ]
+        }
+      ]
+    },
+    &quot;streamSettings&quot;: {
+      &quot;network&quot;: &quot;ws&quot;,
+      &quot;security&quot;: &quot;tls&quot;,
+      &quot;tlsSettings&quot;: {
+        &quot;serverName&quot;: &quot;example.com&quot;
+      },
+      &quot;wsSettings&quot;: {
+        &quot;path&quot;: &quot;/ray&quot;
+      }
+    }
+  },
+  &quot;outboundDetour&quot;: [
+    {
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;settings&quot;: {},
+      &quot;tag&quot;: &quot;direct&quot;
+    }
+  ],
+  &quot;routing&quot;: {
+    &quot;strategy&quot;: &quot;rules&quot;,
+    &quot;settings&quot;: {
+      &quot;domainStrategy&quot;: &quot;IPIfNonMatch&quot;,
+      &quot;rules&quot;: [
+        {
+          &quot;type&quot;: &quot;field&quot;,
+          &quot;ip&quot;: [
+            &quot;0.0.0.0/8&quot;,
+            &quot;10.0.0.0/8&quot;,
+            &quot;100.64.0.0/10&quot;,
+            &quot;127.0.0.0/8&quot;,
+            &quot;169.254.0.0/16&quot;,
+            &quot;172.16.0.0/12&quot;,
+            &quot;192.0.0.0/24&quot;,
+            &quot;192.0.2.0/24&quot;,
+            &quot;192.168.0.0/16&quot;,
+            &quot;198.18.0.0/15&quot;,
+            &quot;198.51.100.0/24&quot;,
+            &quot;203.0.113.0/24&quot;,
+            &quot;::1/128&quot;,
+            &quot;fc00::/7&quot;,
+            &quot;fe80::/10&quot;
+          ],
+          &quot;outboundTag&quot;: &quot;direct&quot;
+        },
+        {
+          &quot;type&quot;: &quot;chinasites&quot;,
+          &quot;outboundTag&quot;: &quot;direct&quot;
+        },
+        {
+          &quot;type&quot;: &quot;chinaip&quot;,
+          &quot;outboundTag&quot;: &quot;direct&quot;
+        }
+      ]
+    }
+  }
+}
+</code></pre>
+
+<p>配置的大概意思是把请求发给example.com的443端口，传输协议使用ws(websocket)，使用TLS加密，websocket的域名为 example.com，websocket的路径为/ray
+其他客户端的配置类似就不一一写出来了，主要原因还是没有条件 ^_^</p>
+
+<p>配置完成后打开 chrome 浏览器，安装 Proxy SwitchyOmega 扩展，配置代理协议为sock5 地址 127.0.0.1 端口为 1080 切换至 <strong>proxy</strong> 模式</p>
+
+<h2 id="结束语">结束语</h2>
+
+<p>然后打开文首的链接就可以看到墙是怎么工作的了 <a href="https://zh.wikipedia.org/wiki/%E9%98%B2%E7%81%AB%E9%95%BF%E5%9F%8E">维基百科简介</a> 希望大家遵纪守法不要用来做不利于国家团结的事 ^_^</p>
+
+<p>20190206更新</p>
+
+<p>执行下来有什么问题,可以在我的<a href="https://juejin.im/user/5729b8681ea4930064b00d6f">掘金</a>帐号下留言</p>
+
+            </div>
+        </div>
+        <div class="tile is-child box">
+            <div id="disqus_thread"></div>
+<script>
+
+
+
+
+var PAGE_URL = 'http://hurryking.github.io';
+var PAGE_IDENTIFIER = 'hu-yan-luan-yu';
+var disqus_config = function () {
+this.page.url = PAGE_URL;  
+this.page.identifier = PAGE_IDENTIFIER; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://hu-yan-luan-yu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+                
+
+
+    
+<br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+<br>
+        <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=kfLo_LL3ms0hbZk8wb7L_vK1dMEBcsEGCdi6Bo-jPUc"></script>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

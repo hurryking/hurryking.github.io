@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 胡言乱语</title>
+    <link>https://hurryking.github.io/post/</link>
+    <description>Recent content in Posts on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 12 Apr 2020 22:26:57 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode30</title>
+      <link>https://hurryking.github.io/2020/04/leetcode30/</link>
+      <pubDate>Sun, 12 Apr 2020 22:26:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/leetcode30/</guid>
+      <description>寻找到达某个节点的路径 这是今天面试遇到的一道算法题，看起来比较简单，思路很清楚，但是有些细节没有想清楚，所以没有一下子，答出来。现在整理下思路继续写出来。
+题目是:
+有如下数组[1, 2, [5,6,8,[21,22]],[12,15]]，返回到达给定元素的路径。
+思路是深度有限遍历，然后把路径放进一个栈里面，进入节点压栈，出节点退栈。
+&amp;lt;?php function deepin($arr, $needle, $path) { if (is_array($arr)) { foreach ($arr as $key =&amp;gt; $value) { $path[] = $key; if ($res = deepin($value, $needle, $path)) { return $res; } else { array_pop($path); } } } if ($arr == $needle) { return $path; } else { array_pop($path); return false; } } $array = [3, 5, [9, 10, 11], [12, 13, 29]]; $path = []; $path = deepin($array, 5, $path);  因为用到了递归，所以数据规模比较大的话会爆栈，还需要优化下，用非递归的方式去遍历。</description>
+    </item>
+    
+    <item>
+      <title>ElasticSearch 系列(一)</title>
+      <link>https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/</link>
+      <pubDate>Sun, 05 Apr 2020 16:43:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/</guid>
+      <description>ElasticSearch 简介 ElasticSearch 是什么 ElasticSearch 是分布式的搜索和分析引擎。它可以为各种类型的数据提供接近实时的搜索和分析功能，不管是结构化的还是非结构化的文本，数值型数据或者地理位置数据，ElasticSearch 可以有效的存储和索引。
+下面列出一些可以使用 ElasticSearch 的场景:
+ 给网站或者 APP 添加搜索功能 存储和分析日志，系统指标和安全事件数据 使用机器学习实时自动化建模数据行为 把 ElasticSearch 当做存储引擎自动化业务流程 用来做地理位置信息系统(GIS)，存储分析空间信息 用来做生物信息研究工具 等等，总而言之真的很强大  数据存入: 文档和分片 相较于列数据的行存储，ElasticSearch 使用可以被序列化成　JSON　文档的复杂的数据结构，当你有一个有多节点的群时，存储的文档会被分布到集群的每个节点上，每个节点都可以访问到你存储的数据。
+当文档被存储在　ElasticSearch 后，你可以在 1 秒钟之内搜索到它。原因是因为它使用一种叫倒排索引的数据结构，倒排索引支持快速的全文搜索。倒排索引会列出文档中出现的每个单词，并且标识单词出现的所有文档。这有有一段维基百科的解释比较清楚的介绍了倒排索引的原理。
+ 以英文为例，下面是要被索引的文本：
+T0 = &amp;ldquo;it is what it is&amp;rdquo;
+T1 = &amp;ldquo;what is it&amp;rdquo;
+T2 = &amp;ldquo;it is a banana&amp;rdquo;</description>
+    </item>
+    
+    <item>
+      <title>Mysql 分区表实践</title>
+      <link>https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 04 Apr 2020 17:53:49 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/</guid>
+      <description>Mysql 表分区实践 为什么要分区 单表数据量过大时，查询操作会导致 CPU 飙升，机器压力很大，所以 Mysql 官方开发了分区功能，可以用来解决这个问题。
+Mysql 的分区原理 分区就相当于把原先存在一张表中的数据，按照指定规则放到几张小表里，当查询进来后再按照这个规则去找对应的表。比如按照区间分表，把用户　id 0-100000 的放到一个表，100000-200000 的放一个表，一般是根据业务来定规则。
+分区的策略  Range Partition
+按照某个字段的区间来分，比如说按照store_id区间分，stroe_id 在　[0,6] [6,11] [11,16] [16,21]　这些区间分属于不同的区域
+  CREATE TABLE employees ( id INT NOT NULL, fname VARCHAR(30), lname VARCHAR(30), hired DATE NOT NULL DEFAULT &#39;1970-01-01&#39;, separated DATE NOT NULL DEFAULT &#39;9999-12-31&#39;, job_code INT NOT NULL, store_id INT NOT NULL ) PARTITION BY RANGE (store_id) ( PARTITION p0 VALUES LESS THAN (6), PARTITION p1 VALUES LESS THAN (11), PARTITION p2 VALUES LESS THAN (16), PARTITION p3 VALUES LESS THAN (21) );   List Partition</description>
+    </item>
+    
+    <item>
+      <title>Kafka 入门</title>
+      <link>https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Fri, 03 Apr 2020 00:27:05 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/</guid>
+      <description>Kafka 入门 Kafka 是什么 Kafka 是分布式的流处理平台。
+Kafka 主要的应用场景大体分为两类:
+ 在多个应用之间构建一条实时流式数据管道 构建用于响应或修改流数据的应用  Kafka 中的几个概念  Topic
+Kafka 中给流记录是按分类来存储的，每个分类就是一个 Topic
+ Broker
+消息中间件处理节点，一个 Kafka 节点就是一个 Broker，一个或者多个 Broker 可以组成一个 Kafka 集群，一般情况下 Kafka 都是已集群方式运行的，由 Zookeeper 来管理每个节点
+ Producer
+数据生产者 它的职责是选择分配记录给哪个 Topic 的哪个 Partition，一般采用的策略是轮训，也可以根据记录的 key 进行自定义配置
+ Consumer
+数据消费者
+每个消费者保留的唯一元数据是该消费者在日志中的 offset 或 position，消费者可以以任意顺序来处理记录 消费者默认都会有一个消费者组，消费者组中的消费者可以使用在多个进程中或者多个机器中，发布到一个 Topic 的记录会被发送到每个消费者组内的其中一个消费者，也就是说一个消费者组实际上算是一个订阅者，内部的消费者有统一的 offset。</description>
+    </item>
+    
+    <item>
+      <title>Hugo 安装</title>
+      <link>https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Tue, 31 Mar 2020 17:02:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/</guid>
+      <description>Hugo 安装 由于最近换了一台新的服务器，想把博客迁移过来所以决定把hugo 在新服务器上再安装一遍
+环境: CentOS Linux release 7.3.1611 x86_64
+阅读 Hugo 的文档 发现新版本需要 go1.11 所以先安装 go
+找到下载地址下载地址 我们选择最新版本 1.14.1 选中x86_64 对应的二进制包 切换到临时目录
+cd /tmp/  下载
+wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz  我想把 go 安装到 /usr/local/， 于是把安装包解压到 /usr/local/
+tar -C /usr/local -xzf go1.14.1.linux-amd64.tar.gz  然后把 go 的 bin 目录添加到系统 PATH 路径中</description>
+    </item>
+    
+    <item>
+      <title>单点登录系列(一)</title>
+      <link>https://hurryking.github.io/2020/03/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E5%88%97%E4%B8%80/</link>
+      <pubDate>Mon, 23 Mar 2020 17:17:04 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E5%88%97%E4%B8%80/</guid>
+      <description>单点登录出现的背景 企业内的办公软件繁多，每个软件都有一套自己的用户系统，每个系统都需要注册一个账号，对员工来说需要记录许多账号密码，难以使用，对企业来说需要管理多系统的用户，难以管理。如果有一个系统实现用户的统一管理，登录企业内的所有软件只需要一个账号，对员工和企业都是好事。
+单点登录的出现就解决了这个问题。
+单点登录的实现方式 单点登录实现的核心就是多应用共享会话，共享会话的实现方式因协议而异，目前主要有三种协议。
+ SAML(Security Assertion Markup Language)
+SAML 是一种基于 XML 结构提供应用间交换用户信息的协议。下面放一张 SAML 单点登录的流程图。
+其中有三个角色， Client(客户端),Identify Provider(认证服务提供者),Service Provider(服务提供者)，SP 提供服务，IP 负责认证 SAML协议 比较复杂，上面的流程图只是 web 浏览器的访问模式，还有 ECP(Enchaned Client Or Proxy) 加强型客户端或代理，IDP(Identity Provider Discovery) 认证服务发现等几种模式。
+ OIDC(OpenID Connect)
+OpenId Connect 是基于 OAuth 2.0 协议的一种简单认证层协议。它允许客户端通过授权服务去校验终端用户的身份，并通过易上手的 REST 风格的接口获取用户的基本信息。
+OIDC 的基本流程如下图
++--------+ +--------+ | | | | | |---------(1) AuthN Request--------&amp;gt;| | | | | | | | +--------+ | | | | | | | | | | | End- |&amp;lt;--(2) AuthN &amp;amp; AuthZ--&amp;gt;| | | | | User | | | | RP | | | | OP | | | +--------+ | | | | | | | |&amp;lt;--------(3) AuthN Response--------| | | | | | | |---------(4) UserInfo Request-----&amp;gt;| | | | | | | |&amp;lt;--------(5) UserInfo Response-----| | | | | | +--------+ +--------+  RP (Reply Party) 代表需要验证用户身份的客户端</description>
+    </item>
+    
+    <item>
+      <title>Composer 自动加载解析</title>
+      <link>https://hurryking.github.io/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Sun, 22 Mar 2020 16:14:11 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/</guid>
+      <description>Composer 自动加载分析以及优化 自动加载的原理 自动加载的核心实现是依靠 spl_autoload_register 函数
+spl_autoload_register 可以注册自动加载器到SPL __autoload函数队列中。用通俗一点的话说就是这个方法允许我们自己定义一个自动加载函数。
+下面给出一个官方的例子 A.class.php
+&amp;lt;?php class A { function foo() { echo __CLASS__ . PHP_EOL; } }  autoload.php
+&amp;lt;?php spl_autoload_register(function ($class) { echo $class . PHP_EOL; $filename = $class . &#39;.class.php&#39;; if (file_exists($filename)) { include $filename; } else { throw new Exception(&amp;quot;Unable to load {$class}&amp;quot;, 1); } }); try { $obj = new A(); } catch (Exception $e) { echo $e-&amp;gt;getMessage() .</description>
+    </item>
+    
+    <item>
+      <title>RabbitMq 基本概念以及使用</title>
+      <link>https://hurryking.github.io/2020/03/rabbitmq-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 03 Mar 2020 16:43:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/rabbitmq-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>RabbitMQ 基本概念以及使用 AMQP 中的一些概念 RabbitMQ 原生实现了 AMQP 协议，下面讲的一些概念都是 AMQP 0-9-1 模型的概念
+在 AMQP 中有以下几种角色
+ Publisher   消息发布者，这个应该很好理解就是发送消息的一方
+ Broker
+中转站，接收消息并根据制定规则发给接收方
+ Exchange
+交换机，消息送到中转站后首先会被发给它，它再根据规则发给指定的队列
+ Queue
+队列，存储消息的地方
+ Consumer
+消费者，接收消息的一方，消费端会从指定的队列中取消息
+  给出一张 AMQP 协议的模型图
+Exchange 的类型分为 4 种
+ Direct Exchange Fanout Exchange Topic Exchange Headers Exchange  下面会按照类型给出相应的 PHP 示例 首先要下载安装 rabbitmq 的 server 端，我选择使用 docker</description>
+    </item>
+    
+    <item>
+      <title>Leetcode29</title>
+      <link>https://hurryking.github.io/2020/02/leetcode29/</link>
+      <pubDate>Tue, 25 Feb 2020 22:26:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/02/leetcode29/</guid>
+      <description>Longest Common Sequence 用动态规划的思想，解决最长公共子序列问题。
+先解释概念，什么是公共子序列？
+最长公共子序列（LCS）是一个在一个序列集合中（通常为两个序列）用来查找所有序列中最长子序列的問題。这与查找最長公共子串的问题不同的地方是：子序列不需要在原序列中占用连续的位置。可能比较难懂，贴上一个维基百科的定义链接
+举例如下，假设有两个字符串 A=&amp;ldquo;acda&amp;rdquo; B=&amp;ldquo;adac&amp;rdquo;
+那么 A 和 B 的公共子串有 ac ad ada，其中最长的公共子序列就是 ada
+动态规划是什么，简单来说就是把事情按照阶段来进行处理，每个阶段的运算依赖上个阶段的结果。
+LCS(&amp;quot;abc&amp;quot;, &amp;quot;dab&amp;quot;) | | | | ----------------------------------------- | | | | | | LCS(&amp;quot;abc&amp;quot;, &amp;quot;ab&amp;quot;) LCS(&amp;quot;bc&amp;quot;, &amp;quot;dab&amp;quot;) | | | | | | 1 + LCS(&amp;quot;bc&amp;quot;, &amp;quot;b&amp;quot;) --------------- | | | | | | | | | 2 + LCS(&amp;quot;c&amp;quot;, &amp;quot;&amp;quot;) LCS(&amp;quot;c&amp;quot;, &amp;quot;dab&amp;quot;) LCS(&amp;quot;bc&amp;quot;, &amp;quot;ab&amp;quot;) | | ------------- | | | | | | LCS(&amp;quot;c&amp;quot;, &amp;quot;ab&amp;quot;) LCS(&amp;quot;bc&amp;quot;, &amp;quot;b&amp;quot;) | 1 + LCS(&amp;quot;c&amp;quot;, &amp;quot;&amp;quot;)	 给出一段伪代码</description>
+    </item>
+    
+    <item>
+      <title>西方哲学史读书笔记</title>
+      <link>https://hurryking.github.io/2020/01/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 03 Jan 2020 16:43:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/01/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>最近在读罗素写的西方哲学史，其中有一首关于酒神的诗
+Will they ever come to me, ever again,
+The long long dances,
+On through the dark till the dim stars wane?
+Shall I feel the dew on my throat, and the stream
+Of wind in my hair? Shall our white feet gleam
+In the dim expanses?
+Oh, feet of a fawn to the greenwood fled,</description>
+    </item>
+    
+    <item>
+      <title>西方哲学史读书笔记</title>
+      <link>https://hurryking.github.io/2020/01/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 03 Jan 2020 16:43:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/01/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>最近在读罗素写的西方哲学史，其中有一首关于酒神的诗
+Will they ever come to me, ever again, The long long dances, On through the dark till the dim stars wane? Shall I feel the dew on my throat, and the stream Of wind in my hair? Shall our white feet gleam In the dim expanses? Oh, feet of a fawn to the greenwood fled, Alone in the grass and the loveliness; Leap of the hunted, no more in dread, Beyond the snares and the deadly press: Yet a voice still in the distance sounds, A voice and a fear and a haste of hounds; O wildly labouring, fiercely fleet, Onward yet by river and glen… Is it joy or terror, ye storm-swift feet?</description>
+    </item>
+    
+    <item>
+      <title>20191023日记</title>
+      <link>https://hurryking.github.io/2019/10/20191023%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Wed, 23 Oct 2019 00:57:39 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191023%E6%97%A5%E8%AE%B0/</guid>
+      <description> 少有进步的一天 依旧晚起,今天比较给力，把 APUE 第八章刷完了，第九章看了一部分，游戏也没有少玩，还算控制住了一些。
+如何让自己对某件事情感兴趣? 1. 把这件事和某个奖励联系起来 2. 尝试从中获得成就感 3. 总之不能和惩罚挂钩，比如做不到就惩罚，这样只会导致越来越反感
+如何找到自己的兴趣? 1. 多尝试 肯定是少不了的 2. 记录下自己做这些事情是的状态 3. 不断重复上面两步
+keep thinking, stop copy.  </description>
+    </item>
+    
+    <item>
+      <title>20191021日记</title>
+      <link>https://hurryking.github.io/2019/10/20191021%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Mon, 21 Oct 2019 01:47:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191021%E6%97%A5%E8%AE%B0/</guid>
+      <description> 20191021日记 照旧晚起，毫无斗志，今天问了下接外包的事，自己琢磨了下，先列个大概的工期估算表，再想办法和对方面对面谈，没有克制住打游戏的冲动，没定闹钟。
+还是自己的生活状态有问题，过于看重钱，把人生该有的体验都错过了，还假装自己不在乎，该争取的还是要争取，不然活着还有什么意义，当个过客吗。
+APUE 第八章看了waitpid那一小节。
+明天早起去跑步，吃个早餐，买些有生活仪式感的东西，把生活捡起来。
+该来的总会来，勇敢面对，寻找你生命中的光。  </description>
+    </item>
+    
+    <item>
+      <title>20191018日记</title>
+      <link>https://hurryking.github.io/2019/10/20191018%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Fri, 18 Oct 2019 02:24:22 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191018%E6%97%A5%E8%AE%B0/</guid>
+      <description> 20191018日记 又是浑浑噩噩的一天，起的很晚，故意不起床，然后起床后看了一会　Mysql　原理的小册，只有三十分钟，可能都不到，然后发现群里有一个好玩的游戏，就玩了一天，三国杀，控制不住自己的注意力，本来想玩会去继续第七章，还是没有控制住，下次把开始玩游戏之前给手机设置一个３０分钟的闹钟，时间到了必须停止，哪怕不去学东西，也不能继续了，真的好可怕，一天8个小时就盯着那个手机，吃饭的时候也是。
+依旧比较迷茫，但是仍然没有做事情的动力。还是自己太矫情了，不然不会这样。以后做决定前多想想家人，多想想未来。
+明天开始可以尝试针对一个最近的新闻或者之前的某一件事发表一些自己的看法，尝试锻炼下表达能力，结构化输出。
+信则有，不信则无  </description>
+    </item>
+    
+    <item>
+      <title>20191017日记</title>
+      <link>https://hurryking.github.io/2019/10/20191017%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Thu, 17 Oct 2019 02:44:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191017%E6%97%A5%E8%AE%B0/</guid>
+      <description> 20191017日记 今天照旧起的比较晚，吃过午饭后，开始写APUE第六章的习题，下午把第七章的内容也实践了一部分，又回顾了下C的编译过程，预处理　编译　汇编　链接，还有　C　进程的内存布局。 中间看了两部电影　《杀手代号47》《思维空间》 杀手是一部完全意义上的动作片，并没有留给观众什么思考空间，看着爽就是了，叙事手法也比较简单，先给结果，然后回忆，把前因后果说完了，最后再回来，给6分吧。 四维空间算一部标准意义上的悬疑片，如果不多看两遍完全不知道再将讲什么，女主合适开始操纵男主的记忆，中间哪一段是记忆，哪一段是现实，比较难分清，比较烧脑，给7分。
+还是处于放飞自我的状态，希望能尽快把　APUE　先看完吧，目前也没有别的兴趣。
+话说　ubuntu 的自带的汉字输入法真的很屎，明天看搜狗输入法能用嘛。
+还有昨天说的用户密码加密还没有实践。
+慢就是快，快就是慢  </description>
+    </item>
+    
+    <item>
+      <title>总结一下目前的状态</title>
+      <link>https://hurryking.github.io/2019/10/%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E7%9B%AE%E5%89%8D%E7%9A%84%E7%8A%B6%E6%80%81/</link>
+      <pubDate>Tue, 15 Oct 2019 21:14:10 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E7%9B%AE%E5%89%8D%E7%9A%84%E7%8A%B6%E6%80%81/</guid>
+      <description> 记录下最近的状态 今天是辞职的第二周，压根不想去找工作，回顾了下之前几年的IT生涯，结合目前的状态觉得自己还是喜欢自由职业，但是目前还出于一种得过且过的状态，自认为是不对的，所以决定以后每天更新一片文章，记录每天的状态，用来改进自己。
+今天依旧起得很晚，起床没有丝毫动力，吃完中饭，看了一会APUE，回顾了下之前看过的第六章，中间穿插着了解了一下linux　用户密码加密的算法有哪些，以及如何去修改加密算法，尚未实践，明天实践一下。看了下圈外今天的课程文章，讲如何不成为“企业定制化人才”也就是螺丝钉，课程给了三个建议，第一调整主体，定好自己的发展方向，第二提升能力，让自己成为横向可迁移的人才，第三提高认知高度，思考这个行业和公司的成功要素是什么，自己做的东西对社会的价值是什么，自己所在的部门和岗位，对公司的核心价值是什么
+目前还是过于懒惰，对做事情提不起兴趣，还没有到山穷水尽的地步不肯逼自己一把，很危险，别人都在赚钱，自己却想休息，真是罪恶至极。
+人们总是过于高估短期价值，低估长期价值。  </description>
+    </item>
+    
+    <item>
+      <title>一些废话</title>
+      <link>https://hurryking.github.io/2019/06/%E4%B8%80%E4%BA%9B%E5%BA%9F%E8%AF%9D/</link>
+      <pubDate>Wed, 26 Jun 2019 17:19:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E4%B8%80%E4%BA%9B%E5%BA%9F%E8%AF%9D/</guid>
+      <description>精力不集中，总是在想别的事 有点茫然，目标还是不清晰
+工作重点 BI 推进，跟贤伟要一个前端的库，自己尝试跑一下，看能不能写 登陆流程对接 为什么一直不重视这个事，总是再往后拖，坏习惯
+d3 可视化 (监控数据可视化能用到) 元素选择器和数据绑定（与jquery 及其相似） 简单柱状图 坐标轴 d3动画API transition duration delay update enter exit 交互式 给元素绑定事件
+pandas python 数据分析工具 (再学点爬虫就可以分析一些数据了)
+写出来的东西不成章，没有一个清晰的主题，前因后果，适用范围，还是脑子里没有系统化的知识体系
+遇事发现能做的几率大，就先干再说，别犹豫。</description>
+    </item>
+    
+    <item>
+      <title>周总结201906016</title>
+      <link>https://hurryking.github.io/2019/06/%E5%91%A8%E6%80%BB%E7%BB%93201906016/</link>
+      <pubDate>Sun, 16 Jun 2019 23:24:31 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E5%91%A8%E6%80%BB%E7%BB%93201906016/</guid>
+      <description> 上周计划完成情况 中间空了一周，数据结构的任务没有完成 APUE　第九章阅读 理财课每天都在听，收获还是有一些的，算是扫盲了一些金融常识，比如说国家调控通货膨胀的手段，降准，调息
+反思 上周又开始沉迷游戏，熬夜打游戏，睁开眼还是想打游戏，没控制住
+脸上的癣开始大面积扩散，看着很是恐怖，因为这个深度抑郁，开始想辞职
+工作上的事做的很马虎
+又犯了老毛病，开始贪多，报了很多课程，却没有一门坚持看完，实践完的。
+下周计划 暂时不列什么计划了，还是以目标为导向
+数据结构与算法
+APUE　多看几章，多实践
+培养体系化的能力，多深度阅读
+ 焦虑又不作出改变才是最致命的
+ </description>
+    </item>
+    
+    <item>
+      <title>理财课04</title>
+      <link>https://hurryking.github.io/2019/06/%E7%90%86%E8%B4%A2%E8%AF%BE04/</link>
+      <pubDate>Mon, 10 Jun 2019 21:59:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E7%90%86%E8%B4%A2%E8%AF%BE04/</guid>
+      <description>其中的很多东西，都只是结论，想要真正理解还得自己去系统阅读相关书籍并推理。
+ 请在意你的每个决定，因为它会改变你将来的生活，当然你可以不在乎。
+ </description>
+    </item>
+    
+    <item>
+      <title>APUE_Chapter6</title>
+      <link>https://hurryking.github.io/2019/06/apue_chapter6/</link>
+      <pubDate>Sun, 09 Jun 2019 01:36:01 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/apue_chapter6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>周总结20190603</title>
+      <link>https://hurryking.github.io/2019/06/%E5%91%A8%E6%80%BB%E7%BB%9320190603/</link>
+      <pubDate>Mon, 03 Jun 2019 01:39:12 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E5%91%A8%E6%80%BB%E7%BB%9320190603/</guid>
+      <description> 上周计划完成情况  数据结构 有向图的最短路径与求环（完成） APUE 第八章　第九章(未完成) 理财课 3节 （完成）（计划之外的） Mysql 表空间理解 （完成）（计划之外的）  反思 开始控制不住自己，打游戏，熬夜，自我又开始作祟，懒惰，自大，各种问题都出现了，伴随的焦虑，需要找一个有正向反馈的爱好来解决这个问题。
+现在的状态就是过去一系列选择所造成的，理性做好每一个选择，不要在不理智的时候做决定。
+下周计划  APUE 第八章 数据结构解析２篇   人若无名，便可专心练剑
+ </description>
+    </item>
+    
+    <item>
+      <title>Leetcode28</title>
+      <link>https://hurryking.github.io/2019/06/leetcode28/</link>
+      <pubDate>Sun, 02 Jun 2019 05:31:06 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/leetcode28/</guid>
+      <description>Dijkstra 算法 PHP 实现 单源最短路径算法，核心思想为把起点到所有点的距离存在一个数组中，然后广度优先遍历每次触及距离最短的点，然后更新接触到的点与起点的距离，下面是算法图示:
+下面是的我的PHP版本实现
+&amp;lt;?php Class Vertex { protected $id; protected $neighbors; protected $neighbor_weights; public function __construct($node) { $this-&amp;gt;id = $node; } public function addNeighbor($vertex, int $weight) { $this-&amp;gt;neighbors[] = $vertex; $this-&amp;gt;neighbor_weights[$vertex] = $weight; } public function getNeighbors() { return $this-&amp;gt;neighbors; } public function getId() { return $this-&amp;gt;id; } public function getWeight($vertex) { return $this-&amp;gt;neighbor_weights[$vertex]; } } Class Graph { protected $vertexes; protected $vertex_num; public function __construct() { $this-&amp;gt;vertexes = []; $this-&amp;gt;vertex_num = 0; } public function addVertex($node) { $vertex = new Vertex($node); $this-&amp;gt;vertexes[$node] = $vertex; $this-&amp;gt;vertex_num += 1; return $vertex; } public function getVertex($node) { return $this-&amp;gt;vertexes[$node]?</description>
+    </item>
+    
+    <item>
+      <title>理财课03</title>
+      <link>https://hurryking.github.io/2019/06/%E7%90%86%E8%B4%A2%E8%AF%BE03/</link>
+      <pubDate>Sat, 01 Jun 2019 17:36:41 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E7%90%86%E8%B4%A2%E8%AF%BE03/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>理财课02</title>
+      <link>https://hurryking.github.io/2019/06/%E7%90%86%E8%B4%A2%E8%AF%BE02/</link>
+      <pubDate>Sat, 01 Jun 2019 16:18:19 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E7%90%86%E8%B4%A2%E8%AF%BE02/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>理财课01</title>
+      <link>https://hurryking.github.io/2019/05/%E7%90%86%E8%B4%A2%E8%AF%BE01/</link>
+      <pubDate>Wed, 29 May 2019 00:10:34 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/%E7%90%86%E8%B4%A2%E8%AF%BE01/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Leetcode27</title>
+      <link>https://hurryking.github.io/2019/05/leetcode27/</link>
+      <pubDate>Thu, 23 May 2019 00:52:55 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/leetcode27/</guid>
+      <description>Search in rotated sorted array 买卖股票系列告一段落，主要是第三个　实在是难消化，鄙人实力不济，改日再战。
+今天的题目是search in rotated sorted array，题目的意思是给出一个反转后的不重复有序数组(从大到小)，大意如下，[0,1,2,3,4,5] 有可能被翻转为[4,5,0,1,2,3]　或者 [3,4,5,0,1,2]，然后让你找出数组中指定的值。
+脑子里第一个蹦出来的是，鼎鼎有名的二分算法(binary search)，有进步，哈哈哈，后面一想，这该怎么二分呢，如果不翻转，这题 so easy ，翻转过后怎么办，讨论区逛了一圈，找了一个能理解的实现，如果low小于等于mid，左半边有序，否则右半边有序，然后我们判断目标数是否在有序范围内就ok了。
+class Solution: # @param {integer[]} numss # @param {integer} target # @return {integer} def search(self, nums, target): if not nums: return -1 low, high = 0, len(nums) - 1 while low &amp;lt;= high: mid = int((low + high) / 2) # print(int(mid)) if target == nums[mid]: return mid if nums[low] &amp;lt;= nums[mid]: if nums[low] &amp;lt;= target &amp;lt;= nums[mid]: high = mid - 1 else: low = mid + 1 else: if nums[mid] &amp;lt;= target &amp;lt;= nums[high]: low = mid + 1 else: high = mid - 1 return -1  参考资料 1.</description>
+    </item>
+    
+    <item>
+      <title>周总结20190520</title>
+      <link>https://hurryking.github.io/2019/05/%E5%91%A8%E6%80%BB%E7%BB%9320190520/</link>
+      <pubDate>Mon, 20 May 2019 00:40:29 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/%E5%91%A8%E6%80%BB%E7%BB%9320190520/</guid>
+      <description> 上周计划完成情况  leetcode 三道 (未完成) APUE 第六章 (完成) 额外完成　第七章 swoole 聊天室　(未完成) 额外完成 mysql B+　树索引原理掌握 理财基础知识扫盲  反思 执行力太低了，没有行动的欲望，还是过的太舒服了，下意识想呆在舒适区
+很容易陷入消极状态，而且一下出不来了，多给自己些心里暗示，肯定会好起来的
+输出的东西没有体系化，系统化阅读太少，肚子里没有干货
+开始给自己定３年目标，３年后成为PHP开源社区的中坚力量，拥有自己的个人影响力，输出一个自己的有上万关注者的微信公众号，输出一个自己的个人代表作，月薪30k+，身体健康，阳光开朗，有家庭。
+下周计划  APUE 第八章　第九章 数据结构解析２篇   嘴快过脑，就会发生灾难，切记。
+ </description>
+    </item>
+    
+    <item>
+      <title>TSDR(一些不值得看的废话)</title>
+      <link>https://hurryking.github.io/2019/05/tsdr%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%80%BC%E5%BE%97%E7%9C%8B%E7%9A%84%E5%BA%9F%E8%AF%9D/</link>
+      <pubDate>Sat, 18 May 2019 17:00:36 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/tsdr%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%80%BC%E5%BE%97%E7%9C%8B%E7%9A%84%E5%BA%9F%E8%AF%9D/</guid>
+      <description> 杂谈 最近状态很差，已经跌到了谷底，由于自己的病，导致心理问题开始作祟，一直处于一种很堕落的状态，感觉人生已经失去了希望，怎么过都可以的那种，想想很是可怕，可是又无能为力，能怎么办呢。
+人生几个阶段，童年，青年，中年，老年，每个阶段都有自己的问题要解决，如果解决不好，就会给下个阶段留下问题，时间又不能倒转，局中人看不到局，旁人又不能替自己解决问题，还是得自己往前走，什么时候南墙撞的头破血流，转头一看出口不就在旁边吗，为什么一直没有发现。可能有人一辈子都发现不了出口。
+住在高层，附近有机场，每到周末，下午５点左右，就会听见飞机呼啸的声音，下面是幼儿园，孩子在兴奋的尖叫，也不知道遇到了什么高兴的事。
+照着镜子看着镜子里的脸，好可怕，这是谁。
+此时此刻，忽然觉得人生已经到了尽头，心里安静的像一谭死水，没有了半分牵挂。
+ 人间到底是炼狱还是天堂
+ </description>
+    </item>
+    
+    <item>
+      <title>APUE_Chapter5</title>
+      <link>https://hurryking.github.io/2019/05/apue_chapter5/</link>
+      <pubDate>Mon, 13 May 2019 17:53:49 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/apue_chapter5/</guid>
+      <description>第五章  这是一篇没有经过思考整理，单纯搬书的内容，不值得浪费时间去看
+ 标准IO(带缓冲的IO)
+流的定向 宽定向 字节定向
+缓冲的类型 全缓冲(读写磁盘) 行缓冲 不缓冲(输出到终端)
+打开流 fopen freopen fdopen
+getc() getchar() putchar() fgetc() putc() fputc() fgets() fputs()
+设置流的流类型 setbuf setvbuf
+定位流 ftell fseek ftello fseeko fgetpos fsetpos
+格式化IO printf sprintf fprintf dprintf snprintf
+二进制IO fread fwrite
+内存流 fmemopen
+5-13　中的字符串数组和字符串指针的问题还是没有理解，涉及到 C 内存布局问题，还需要阅读更多资料并实践，这里是资料地址。 5-14　内存流　fseek 后的结果不理解，fseek后hello,world为什么会出现在12个b后面，这12个b是什么鬼,这个地方很疑惑。</description>
+    </item>
+    
+    <item>
+      <title>周总结20190512</title>
+      <link>https://hurryking.github.io/2019/05/%E5%91%A8%E6%80%BB%E7%BB%9320190512/</link>
+      <pubDate>Sun, 12 May 2019 23:54:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/%E5%91%A8%E6%80%BB%E7%BB%9320190512/</guid>
+      <description> 上周计划完成情况  leetcode 3道(未完成) 实现一个简单的 php 框架(未完成) UNIX 环境高级编程 第五章 scrapy 爬虫简单了解下(未完成)  反思 本周执行力，断崖式下跌，原因是沉迷上了游戏，没克制住自己，已经决定把游戏卸载掉。
+阅读了圈外 CEO 孙圈圈的知乎专栏，吸收到了一些东西，此处贴出专栏链接 ，个人感觉和之前的逻辑思维倡导的一些理念十分的相似，但是确实是刷新了一些认知。
+认清自己在市场上的价值
+多培养自己在专业领域之外的能力
+多做可以影响更多人的事(跟之前看过的一个观点很像，一份时间可以服务更多人)
+下周计划  leetcode 三道 APUE 第六章 swoole 聊天室   认知差距对人的影响是巨大的，有很多你不知道自己不知道的事，这里面才有人生的转机，所以多学习吧，保持对新事物的敏感。
+ </description>
+    </item>
+    
+    <item>
+      <title>周总结20190506</title>
+      <link>https://hurryking.github.io/2019/05/%E5%91%A8%E6%80%BB%E7%BB%9320190506/</link>
+      <pubDate>Mon, 06 May 2019 00:33:36 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/%E5%91%A8%E6%80%BB%E7%BB%9320190506/</guid>
+      <description> 上周计划完成情况  3 道 leetcode 1 篇 Julia Evas 翻译 (一直没有开始) UNIX 高级环境编程　第四章 scrapy 爬虫简单了解下 (没有开始)  反思 五一假期 4 天，在家窝了 4 天，打了3天游戏，只刷了两道 leetcode，看了一章 APUE，太颓废了，又开始消极。
+今天又被同事说不阳光，身边的人都在说我性格的事，我也知道自己有这个问题，一直没有做出行动去改变，户外运动会让人身体状态好很多，明天开始早起绕小区跑步吧。
+下周计划  leetcode 3道 实现一个简单的 php 框架，按照上面的计划来 UNIX 环境高级编程 第五章 scrapy 爬虫简单了解下  </description>
+    </item>
+    
+    <item>
+      <title>Leetcode26</title>
+      <link>https://hurryking.github.io/2019/05/leetcode26/</link>
+      <pubDate>Wed, 01 May 2019 23:06:51 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/leetcode26/</guid>
+      <description>Best Time to Buy and Sell Stock II Say you have an array for which the *i*th element is the price of a given stock on day i.
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).</description>
+    </item>
+    
+    <item>
+      <title>Leetcode25</title>
+      <link>https://hurryking.github.io/2019/05/leetcode25/</link>
+      <pubDate>Wed, 01 May 2019 00:41:05 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/leetcode25/</guid>
+      <description>Best Time to Buy and Sell Stock Say you have an array for which the *i*th element is the price of a given stock on day i.
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode24</title>
+      <link>https://hurryking.github.io/2019/04/leetcode24/</link>
+      <pubDate>Tue, 30 Apr 2019 19:59:14 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode24/</guid>
+      <description>Sort Colors Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.</description>
+    </item>
+    
+    <item>
+      <title>APUE_Chapter4</title>
+      <link>https://hurryking.github.io/2019/04/apue_chapter4/</link>
+      <pubDate>Tue, 30 Apr 2019 14:21:30 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/apue_chapter4/</guid>
+      <description>APUE 第四章  这是一篇没有经过思考整理，单纯搬书的内容，不值得浪费时间去看
+ 本章主要讲述了 stat 结构体中的每个属性的含义，以及使用。
+struct stat { mode_t st_mode; /* 文件类型以及模式(权限) */ ino_t st_ino;	/* i节点编号 */ dev_t st_dev;	/* 设备号(文件系统) */ dev_t st_rdev; /* 设备号(特殊文件) 字符特殊设备和块特殊设备 */ nlink_t st_nlink; /* 链接数 */ uid_t st_uid;	/* 所属者的用户ID */ gid_t st_gid;	/* 所属组的组ID(有歧义所属者的组ID) */ off_t st_size; /* 普通文件的字节数 */ struct timespec	st_atime; /* 最后一次访问时间 */ struct timespec st_mtime; /* 最后一次修改时间 */ struct timespec st_ctime; /* 最后一次文件状态修改时间 */ blksize_t st_blksize; /* I/O 块的字节数 */ blkcnt_t st_blocks; /* 分配的磁盘块数 */ }  st_mode  文件类型  Unix 下文件类型有如下 7 种</description>
+    </item>
+    
+    <item>
+      <title>Leetcode23</title>
+      <link>https://hurryking.github.io/2019/04/leetcode23/</link>
+      <pubDate>Tue, 30 Apr 2019 00:28:19 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode23/</guid>
+      <description>Remove Duplicates from Sorted List Given a sorted linked list, delete all duplicates such that each element appear only once.
+Example 1:
+Input: 1-&amp;gt;1-&amp;gt;2 Output: 1-&amp;gt;2  Example 2:
+Input: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3 Output: 1-&amp;gt;2-&amp;gt;3  第一想法是转 list 再转链表
+# Definition for singly-linked list. # class ListNode(object): # def __init__(self, x): # self.</description>
+    </item>
+    
+    <item>
+      <title>周总结201904228</title>
+      <link>https://hurryking.github.io/2019/04/%E5%91%A8%E6%80%BB%E7%BB%93201904228/</link>
+      <pubDate>Sun, 28 Apr 2019 23:59:59 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/%E5%91%A8%E6%80%BB%E7%BB%93201904228/</guid>
+      <description> 上周计划完成情况  3 道 leetcode 1 篇 Julia Evas 翻译 UNIX 高级环境编程　第三章 scrapy 爬虫上手，爬下链家的租房数据  反思 应该定制一个稍微大一点的目标下面是小目标，最后去执行，不会迷路，更容易有成就感，下面是一个简单的计划图
+容易分心，很难集中精力是我最大的毛病，总是很容易被别的东西给吸引走注意力，现在开始就要改，先把一件事做完，再去做另一件。
+总是一上来就给自己列一个很大的目标，总以为自己什么都能学会，每个人都有自己的能力上限，每个人都有自己擅长和不擅长的领域，认清自己。
+总是去把精力分的很散，没有合理的安排，应该在精力旺盛的时候做需要的事，略微疲惫的时候可以换个不耗神的事。
+下周计划  leetcode 3道 实现一个简单的 php 框架，按照上面的计划来 UNIX 环境高级编程 第四章 scrapy 爬虫简单了解下   善良没有长出牙齿来，就是软弱
+ </description>
+    </item>
+    
+    <item>
+      <title>APUE Cahpter3</title>
+      <link>https://hurryking.github.io/2019/04/apue-cahpter3/</link>
+      <pubDate>Sun, 28 Apr 2019 01:07:02 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/apue-cahpter3/</guid>
+      <description>Unix 环境高级编程　第三章  这是一篇没有经过思考整理，单纯搬书的内容，不值得浪费时间去看
+ 文件I/O
+讲到一些 Uninx 下的文件操作函数，open creat read close fcntl 其中文件共享一节讲到了内核使用３种数据结构来表示打开的文件 1. 进程表项(每个进程会在进程表中有一个记录项，记录项中有一张此进程打开的文件描述符表)
+ 文件表项(记录文件的文件状态标识，当前的文件偏移量和 v 节点指针)
+ v节点表(记录文件类型和操作文件的函数指针还有 i 节点)
+  这里给出 APUE 中的图 这张图还是比较详细的
+讲到多进程模式下的文件操作，以及系统提供的对于文件的原子操作
+read 中提到的预读(read ahead)，读出多余应用需要的，预备下次使用，减少I/O write 中提到文件系统的延迟写(delayed write)的流程，先写高速缓冲区然后进队列，最后进磁盘，减少I/O 找到一个质量比较高的关于文件系统的资源，有兴趣的可以看看
+lseek 文件中的空洞不占用磁盘块(已经验证)，但是文件结尾的空洞会占磁盘块(未验证) 这里给出一个在 linux 上快速生成指定大小文件的命令 dd
+dd if=/dev/zero of=file.txt count=1024 bs=1024  if 是要读取的文件 of 是要写入的文件 count 是要 copy 的次数 bs 是每次写入的字节数 dd 大多数时候用来测试操作系统的写入速度</description>
+    </item>
+    
+    <item>
+      <title>Leetcode22</title>
+      <link>https://hurryking.github.io/2019/04/leetcode22/</link>
+      <pubDate>Sat, 27 Apr 2019 00:08:41 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode22/</guid>
+      <description>Length of Last Word Given a string s consists of upper/lower-case alphabets and empty space characters &#39; &#39;, return the length of last word in the string.
+If the last word does not exist, return 0.
+Note: A word is defined as a character sequence consists of non-space characters only.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode21</title>
+      <link>https://hurryking.github.io/2019/04/leetcode21/</link>
+      <pubDate>Wed, 24 Apr 2019 22:24:36 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode21/</guid>
+      <description>3Sum Closest Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+Example:
+Given array nums = [-1, 2, 1, -4], and target = 1.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode20</title>
+      <link>https://hurryking.github.io/2019/04/leetcode20/</link>
+      <pubDate>Tue, 23 Apr 2019 23:36:09 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode20/</guid>
+      <description>Two Sum Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+Example:
+Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1].</description>
+    </item>
+    
+    <item>
+      <title>周总结20190422</title>
+      <link>https://hurryking.github.io/2019/04/%E5%91%A8%E6%80%BB%E7%BB%9320190422/</link>
+      <pubDate>Mon, 22 Apr 2019 00:59:54 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/%E5%91%A8%E6%80%BB%E7%BB%9320190422/</guid>
+      <description>上周计划完成情况  翻译 Julia Evas 的一篇质量高的博客 (未完成)
+ 刷 Leetcode 3 道 (完成)
+ 动手编译 Swoole 源码，搭建本地环境 (未完成)
+ 动手写 Angular tutorial (完成90%)
+  工作  参加公司 PHP 技术培训，了解到公司目前正在推行内部开源，这是个机会 阅读了 【UNIX 高级环境编程】 第一章，并进行了实践  需要反思的地方  自控力不好，总是在拖延要干的事，用完成小目标去激励自己，完成后给自己奖励，用大目标防止自己迷失
+ 总是在逃避要执行的问题，把问题分解成小块，逐步执行，找出自己的节奏
+ 做事的时候很容易分心，可以尝试下番茄钟
+  下周计划  3 道 leetcode</description>
+    </item>
+    
+    <item>
+      <title>Leetcode19</title>
+      <link>https://hurryking.github.io/2019/04/leetcode19/</link>
+      <pubDate>Sun, 21 Apr 2019 16:42:02 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode19/</guid>
+      <description>Permutation II Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+Example:
+Input: [1,1,2] Output: [ [1,1,2], [1,2,1], [2,1,1] ]  排列组合，给出一组可能重复的数字，求所有可能的排列组合。
+之前有刷过一道，给出一组不可能重复的数字求排列组合的问题，Permutation, 第一反应就是套用之前的解法加上判断重复的逻辑。
+class Solution(object): def permuteUnique(self, nums): &amp;quot;&amp;quot;&amp;quot; :type nums: List[int] :rtype: List[List[int]] &amp;quot;&amp;quot;&amp;quot; res = [] # 此处的排序可以想下作用是什么 numd.sort() self.dfs(nums, [], res) return res def dfs(self, choices, path, res): if not choices: res.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode18</title>
+      <link>https://hurryking.github.io/2019/04/leetcode18/</link>
+      <pubDate>Fri, 19 Apr 2019 23:05:01 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode18/</guid>
+      <description>ZigZag Conversion The string &amp;quot;PAYPALISHIRING&amp;quot; is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+P A H N A P L S I I G Y I R  And then read line by line: &amp;quot;PAHNAPLSIIGYIR&amp;quot;</description>
+    </item>
+    
+    <item>
+      <title>Leetcode17</title>
+      <link>https://hurryking.github.io/2019/04/leetcode17/</link>
+      <pubDate>Mon, 15 Apr 2019 22:11:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode17/</guid>
+      <description>Longest Common Prefix Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string &amp;ldquo;&amp;rdquo;.
+Example 1:
+Input: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;] Output: &amp;quot;fl&amp;quot;  Example 2:
+Input: [&amp;quot;dog&amp;quot;,&amp;quot;racecar&amp;quot;,&amp;quot;car&amp;quot;] Output: &amp;quot;&amp;quot; Explanation: There is no common prefix among the input strings.</description>
+    </item>
+    
+    <item>
+      <title>周总结20190415</title>
+      <link>https://hurryking.github.io/2019/04/%E5%91%A8%E6%80%BB%E7%BB%9320190415/</link>
+      <pubDate>Mon, 15 Apr 2019 00:50:48 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/%E5%91%A8%E6%80%BB%E7%BB%9320190415/</guid>
+      <description>本周收获 工作  Redash 安装成功，阅读了数据源部分代码，好的代码都是易读的
+ 参加了公司的 PHP 人才通道考试，了解了 PHP 目前在公司的占比
+  个人  搬家，路遇金融行业多年经验大佬借手机，闲聊几句，加深了对金融行业的一点理解
+ 开始向好的方向想，不再悲观了
+  需要反思的地方  工作效率较低，抵触前端 Angular 知识，最好列出一个 List，可以帮助消化问题，不会因为事情太多就开始有抵触心里
+ 没有继续之前刷　Leetcode 的频率，又开始刷电影偷懒，需要给自己树立个目标，到达之后可以给些小奖励，先定刷够　30　道之后给自己放一周假吧(不用刷 Leetcode )
+ 精力管理不好，需要根据自己目前的情况定一套完整的管理机制
+  下周计划  翻译　Julia Evas 的一篇质量高的博客
+ 刷　Leetcode 3 道</description>
+    </item>
+    
+    <item>
+      <title>Leetcode16</title>
+      <link>https://hurryking.github.io/2019/04/leetcode16/</link>
+      <pubDate>Tue, 09 Apr 2019 22:10:48 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode16/</guid>
+      <description>N-Queens The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+Each solution contains a distinct board configuration of the n-queens&amp;rsquo; placement, where &amp;lsquo;Q&amp;rsquo; and &amp;lsquo;.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode15</title>
+      <link>https://hurryking.github.io/2019/04/leetcode15/</link>
+      <pubDate>Wed, 03 Apr 2019 00:27:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode15/</guid>
+      <description>Subset Power set 接着上回提到的求子集合的问题，继续说位操作解法。
+class Solution: def subsets(self, nums): &amp;quot;&amp;quot;&amp;quot; :type nums: List[int] :rtype: List[List[int]] &amp;quot;&amp;quot;&amp;quot; res = [] for i in range(1&amp;lt;&amp;lt;len(nums)): tmp = [] for j in range(len(nums)): # 判断对应位是否为1 if i &amp;amp; 1 &amp;lt;&amp;lt; j: tmp.append(nums[j]) res.append(tmp) return res  可以把每一个结果转换为二进制，然后遍历　000 到　111 ，把对应位置为１的元素保留到临时list，最终结果就是全部子集合
+比如说 [&amp;lsquo;a&amp;rsquo;, &amp;lsquo;b&amp;rsquo;, &amp;lsquo;c&amp;rsquo;] a 代表 第一位为 １ 的情况 100，b 代表　第二位为 １ 的情况　010，c 代表第三位为 １ 的情况，</description>
+    </item>
+    
+    <item>
+      <title>Leetcode14</title>
+      <link>https://hurryking.github.io/2019/04/leetcode14/</link>
+      <pubDate>Mon, 01 Apr 2019 23:24:39 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode14/</guid>
+      <description>Sqrt(x) Implement int sqrt(int x).
+Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+Example 1:
+Input: 4 Output: 2  Example 2:</description>
+    </item>
+    
+    <item>
+      <title>Leetcode13</title>
+      <link>https://hurryking.github.io/2019/03/leetcode13/</link>
+      <pubDate>Wed, 27 Mar 2019 00:46:43 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode13/</guid>
+      <description>Jump Game Given an array of non-negative integers, you are initially positioned at the first index of the array.
+Each element in the array represents your maximum jump length at that position.
+Determine if you are able to reach the last index.
+Example 1:
+Input: [2,3,1,1,4] Output: true Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode12</title>
+      <link>https://hurryking.github.io/2019/03/leetcode12/</link>
+      <pubDate>Mon, 25 Mar 2019 22:26:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode12/</guid>
+      <description>Subsets Given a set of distinct integers, nums, return all possible subsets (the power set).
+Note: The solution set must not contain duplicate subsets.
+Example:
+Input: nums = [1,2,3] Output: [ [3], [1], [2], [1,2,3], [1,3], [2,3], [1,2], [] ]  给出一组不重复的整数，返回所有子集
+what is power set
+回溯解法(DFS)
+回溯算法三要素
+ 选择 可以作出哪些选择 约束 不能做哪些选择 目标 最终要达成的目标  class Solution: def subsets(self, nums): &amp;quot;&amp;quot;&amp;quot; :type nums: List[int] :rtype: List[List[int]] &amp;quot;&amp;quot;&amp;quot; res = [] self.</description>
+    </item>
+    
+    <item>
+      <title>如何给 PHP 添加新特性</title>
+      <link>https://hurryking.github.io/2019/03/%E5%A6%82%E4%BD%95%E7%BB%99-php-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Sun, 24 Mar 2019 15:32:28 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/%E5%A6%82%E4%BD%95%E7%BB%99-php-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
+      <description>如何给 PHP 添加新的语法特性(译) 译者注: 文中的操作都是基于 PHP5.6 进行的修改，翻译这篇文章的时候 PHP7 都已经出了，有很多方法已经被遗弃，希望各位注意不要踩坑。
+原文链接
+正文 最近有好多人问我怎么给 PHP 添加新语法特性。我仔细想了想，确实没有这方面的教程，接下来我会阐述整个流程。同时这篇文章也是对 Zend 引擎的一个简介。
+我提前为这篇过长的文章道歉。
+这篇文章假设你已经掌握了一些 C 的基本知识，并且了解 PHP 的一些基本概念(像 zvals 结构体)。如果你不具备这些条件，建议先去了解一下。
+我将使用你可能从其他语言获知的 in 运算符作为一个例子。它表现如下:
+$words = [&#39;hello&#39;, &#39;world&#39;, &#39;foo&#39;, &#39;bar&#39;]; var_dump(&#39;hello&#39; in $words); // true var_dump(&#39;foo&#39; in $words); // true var_dump(&#39;blub&#39; in $words); // false $string = &#39;PHP is fun!</description>
+    </item>
+    
+    <item>
+      <title>Leetcode11</title>
+      <link>https://hurryking.github.io/2019/03/leetcode11/</link>
+      <pubDate>Fri, 22 Mar 2019 01:18:08 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode11/</guid>
+      <description>3Sum Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find alleft unique triplets in the array which gives the sum of zero.
+Note The solution set must not contain duplicate triplets.
+Example Given array nums = [-1, 0, 1, 2, -1, -4], A solution set is: [ [-1, 0, 1], [-1, -1, 2] ]  给一个数组，找出其中 3 数相加和为 0 的全部组合</description>
+    </item>
+    
+    <item>
+      <title>Leetcode10</title>
+      <link>https://hurryking.github.io/2019/03/leetcode10/</link>
+      <pubDate>Tue, 19 Mar 2019 00:26:56 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode10/</guid>
+      <description>Generate Parentheses Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+For example, given n = 3, a solution set is:
+[ &amp;quot;((()))&amp;quot;, &amp;quot;(()())&amp;quot;, &amp;quot;(())()&amp;quot;, &amp;quot;()(())&amp;quot;, &amp;quot;()()()&amp;quot; ]  给出数字n，列出所有有效的括号组合 此题和上次的排列组合都可以用回溯算法(DFS)解决 回溯算法３要点
+ 选择 选择&amp;rsquo;(&amp;lsquo;或者‘)’ 2.　限制 必须是有效的括号 括号闭合之前必须先开放 括号数有限(n)  3.　目标 排列好所有括号</description>
+    </item>
+    
+    <item>
+      <title>近期状态</title>
+      <link>https://hurryking.github.io/2019/03/%E8%BF%91%E6%9C%9F%E7%8A%B6%E6%80%81/</link>
+      <pubDate>Sat, 16 Mar 2019 14:40:11 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/%E8%BF%91%E6%9C%9F%E7%8A%B6%E6%80%81/</guid>
+      <description> 近期的感悟 性格 当你看到不同的人，对一件事发表不同看法的时候，你会对此深有感触。有人想这件事对我有什么帮助，有人想关我屁事，有人当个笑话，还有人杞人忧天。最后大家采取不一样的措施，因为这件事大家的人生发生了微小的变化。后来又来一件不一样的事，又采取不一样的措施，又发生了一些微小的变化，长此以往可以看到巨大的不同。
+所谓的成功 之前看过一些书和电影，像「北方的空地」「free solo」「127 Hours」，主人公都是靠自己的爱好生活，很是羡慕，但是回过头来想，还有很多人没有爱好，还是得活着，只能向着金钱靠齐，所以有钱人就是成功典型，大家都向往成为一个有钱人。
+工作 最近刚转正，来新公司半年，还是感觉自己比较孤单，刻意疏远同事导致的结果，工作也做的不尽如人意，加了一些技术微信群，看到开源大佬的努力，自己还需要多学习沉淀，不能太浮躁
+生活 还是一如既往，不过开始做些改变，写写文章，记录下学习过程，不像之前挥霍时间了。
+结束语 都是些屁话，记下来以后可以嘲笑下自己
+ 要向好看不向坏看，这世界有太多不如意，但你的生活还是要继续，太阳每天依旧要升起，希望永远种在你心里
+ </description>
+    </item>
+    
+    <item>
+      <title>Leetcode09</title>
+      <link>https://hurryking.github.io/2019/03/leetcode09/</link>
+      <pubDate>Thu, 14 Mar 2019 00:06:45 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode09/</guid>
+      <description>46. Permutations Given a collection of distinct integers, return all possible permutations.
+Example: **Input**: [1,2,3] **Output**: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]  给出一组不重复的整数，返回所有可能的排列组合
+深度优先遍历解法DFS
+class Solution(object): def permute(self, nums): res = [] self.dfs(nums, [], res) return res def dfs(self, nums, path, res): if not nums: res.append(path) # return # backtracking for i in xrange(len(nums)): self.</description>
+    </item>
+    
+    <item>
+      <title>Mysql InnoDB　锁和事务模型系列(一)</title>
+      <link>https://hurryking.github.io/2019/03/mysql-innodb-%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1%E6%A8%A1%E5%9E%8B%E7%B3%BB%E5%88%97%E4%B8%80/</link>
+      <pubDate>Sun, 10 Mar 2019 14:37:25 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/mysql-innodb-%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1%E6%A8%A1%E5%9E%8B%E7%B3%BB%E5%88%97%E4%B8%80/</guid>
+      <description>Mysql InnoDB 锁 以下的所有操作都是基于 mysql8
+Mysql innodb 包含的锁类型如下:
+ 共享锁和排他锁 意向锁 记录锁 区间锁 Next-key 锁 插入意向锁 自增锁 断定锁(仅空间索引使用)  共享锁和排他锁 InnoDB 实现了标准的行级锁定。S(共享)和 X (排他)锁
+ S 允许事务读取一行的时候持有锁 X 允许事务更新或者删除一行的时候持有锁  如果事务　T1 对行　r 持有 S，事务　T2 对行　r 进行加锁的操作会有如下两种情况: * T2 对　r 加 S 可以立刻得到授权，T1 和　T2 都对　r 持有　S * T2 对　r 加 X 不能立马得到授权，得等　r 上的 S 都释放了以后才可以　如果事务　T２ 对行　r 持有 X，事务　T2 对行　r 进行加任何类型的锁都不会立马得到相应，必须得等到　T1 释放掉对 r 加的 X。</description>
+    </item>
+    
+    <item>
+      <title>Leetcode08</title>
+      <link>https://hurryking.github.io/2019/03/leetcode08/</link>
+      <pubDate>Sat, 09 Mar 2019 14:55:08 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode08/</guid>
+      <description>Reverse K-group Node Let&amp;rsquo;s continue the last problem. Here is the question I don&amp;rsquo;t understanind last time.
+ How does the dummy.next change? Accurately When did the dummy.next change?
+Here is the answer.(How does the dummy.next change?)[https://leetcode.com/problems/reverse-nodes-in-k-group/discuss/11491/Succinct-iterative-Python-O(n)-time-O(1)-space/168139] This is related about how the python assign the variable. It&amp;rsquo;s pretty hard to understand for people first time.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode07</title>
+      <link>https://hurryking.github.io/2019/03/leetcode07/</link>
+      <pubDate>Thu, 07 Mar 2019 22:48:41 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode07/</guid>
+      <description>Reverse Nodes in k-Group Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode06</title>
+      <link>https://hurryking.github.io/2019/03/leetcode06/</link>
+      <pubDate>Wed, 06 Mar 2019 23:58:06 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode06/</guid>
+      <description>Merge K sorted link list 还是昨天的合并　K 个有序链表，今天去社区看了下，还有更简单的解决方案，时间复杂度和空间复杂度更好，大概的思路是用 Python 的最小堆来实现，每次从堆里弹出最小元素，然后最近一次哪个链表出了最小元素就把下一个塞进堆里，很高效，很简洁，元祖（tuple）的运用是这个实现的点睛之笔，下面贴出代码
+def mergeKLists(self, lists): from heap import heappop, heapify, heapreplace dummy = node = ListNode(0) # 下面这一步很赞 h = [(n.val, n) for n in lists if n] # n 转　minheap heapify(h) while(h): # 取　堆里最小的值 v, n = h[0] if n.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode05</title>
+      <link>https://hurryking.github.io/2019/03/leetcode05/</link>
+      <pubDate>Tue, 05 Mar 2019 23:37:00 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode05/</guid>
+      <description>Merge k Sorted Lists Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+Example Input: [ 1-&amp;gt;4-&amp;gt;5, 1-&amp;gt;3-&amp;gt;4, 2-&amp;gt;6 ] Output: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5-&amp;gt;6  合并n个有序链表，第一眼看到觉的很简单，想怎么实现的时候头大，大体思路是全部都放到一个list里，然后排序list，再转链表
+class Solution(object): def mergeKLists(self, lists): &amp;quot;&amp;quot;&amp;quot; :type lists: List[ListNode] :rtype: ListNode &amp;quot;&amp;quot;&amp;quot; merged_list = [] for head in lists: while head: merged_list.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode04</title>
+      <link>https://hurryking.github.io/2019/03/leetcode04/</link>
+      <pubDate>Tue, 05 Mar 2019 01:18:38 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode04/</guid>
+      <description>Add Two Numbers You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode03</title>
+      <link>https://hurryking.github.io/2019/03/leetcode03/</link>
+      <pubDate>Sun, 03 Mar 2019 18:23:20 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode03/</guid>
+      <description>Palindrome Number Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+Example 1: Input: 121 Output: true  Example 2: Input: -121 Output: false  Explanation: From left to right, it reads -121. From right to left, it becomes 121-.</description>
+    </item>
+    
+    <item>
+      <title>Git 子模块使用</title>
+      <link>https://hurryking.github.io/2019/03/git-%E5%AD%90%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 02 Mar 2019 00:27:05 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/git-%E5%AD%90%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/</guid>
+      <description>Submodule解决了什么问题 当你的项目里依赖与一个第三方模块，或者一个子项目，而你需要保持这个模块的更新，确保使用这个子模块的所有项目都能同步到，如果拷贝的话就达不到这个目的，总之一句话就是在一个库里可以包含多个子库，并且主库和子库是隔离的，互不影响．
+如何使用 我们现在新建一个库叫 parent
+git clone git@github.com:hurryking/parent.git  然后在 parent 下新建一个目录 children
+cd parent mkdir children  进入 children 执行
+cd children git submodule add git@github.com:hurryking/let-s-go.git  然后在 parent 下就能看到刚才加的子库，还有一个 .gitmodules 文件，里面记录着子库的在这个项目的路径和远程仓库的地址
+然后提交这次的改动
+git commit -am &amp;quot;added submoudle let&#39;s go&amp;quot;  推送到远程仓库
+git push -u origin master(由于是第一次入库需要设置下默认上游)  然后我们修改下子库，提交</description>
+    </item>
+    
+    <item>
+      <title>Leetcode02</title>
+      <link>https://hurryking.github.io/2019/03/leetcode02/</link>
+      <pubDate>Fri, 01 Mar 2019 01:11:21 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode02/</guid>
+      <description>Implement atoi which converts a string to an integer. The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode01</title>
+      <link>https://hurryking.github.io/2019/02/leetcode01/</link>
+      <pubDate>Thu, 28 Feb 2019 02:28:38 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/02/leetcode01/</guid>
+      <description>Valid Square Given the coordinates of four points in 2D space, return whether the four points could construct a square.
+The coordinate (x,y) of a point is represented by an integer array with two integers.
+Example: Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1] Output: True  Note: All the input integers are in the range [-10000, 10000].</description>
+    </item>
+    
+    <item>
+      <title>如何科学上网</title>
+      <link>https://hurryking.github.io/2019/02/%E5%A6%82%E4%BD%95%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</link>
+      <pubDate>Sat, 23 Feb 2019 17:41:55 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/02/%E5%A6%82%E4%BD%95%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</guid>
+      <description>墙的工作方式 维基百科简介 等你翻过去就知道了 ^_^
+如何科学上网 需要准备的东西
+ 购买vps(建议买国外的，国内受监管) 如果有就跳过此步
+推荐购买地址 (建议先买5$/month没，一般需求应该够了，没必要选25$的)
+服务端要求的要求操作系统为Ubuntu 16+ / Debian 8+ / CentOS 7+，所以vps选操作系统时注意下不要选错了
+ 购买域名(建议买国外的，国内需要很长的备案时间)
+推荐godaddy
+购买完成后记得配置好DNS，把域名指向刚才购买的域名的外网ip，在这里假设购买的域名为 example.com (大家记得修改成自己购买的域名不要直接复制)
+DNS相关知识 希望能帮到你
+ paypal账号(为了结账 注册地址)
+如果有迷惑的这个是官方的帮助链接 希望能帮到你
+ 一定的时间和耐心
+顺利的话大约一个小时
+  vps购买好以后, 需要安装的软件分服务端和客户端
+安装服务端 我们先来安装服务端软件 服务端需要安装的软件
+ nginx(用来转发流量，起混淆作用)
+ v2ray(充当代理角色)
+  下面来给出一副图说明下基本工作原理 ​ 以下所有操作建议用root执行</description>
+    </item>
+    
+  </channel>
+</rss>

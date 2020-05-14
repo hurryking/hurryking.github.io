@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | 2020</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+  <link href="https://hurryking.github.io/archives/2020/index.xml" rel="alternate" type="application/rss+xml" title="胡言乱语" />
+  <link href="https://hurryking.github.io/archives/2020/index.xml" rel="feed" type="application/rss+xml" title="胡言乱语" />
+
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        Archive 2020
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/04/leetcode30/">Leetcode30</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 12, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>寻找到达某个节点的路径 这是今天面试遇到的一道算法题，看起来比较简单，思路很清楚，但是有些细节没有想清楚，所以没有一下子，答出来。现在整理下思路继续写出来。
+题目是:
+有如下数组[1, 2, [5,6,8,[21,22]],[12,15]]，返回到达给定元素的路径。
+思路是深度有限遍历，然后把路径放进一个栈里面，进入节点压栈，出节点退栈。
+&lt;?php function deepin($arr, $needle, $path) { if (is_array($arr)) { foreach ($arr as $key =&gt; $value) { $path[] = $key; if ($res = deepin($value, $needle, $path)) { return $res; } else { array_pop($path); } } } if ($arr == $needle) { return $path; } else { array_pop($path); return false; } } $array = [3, 5, [9, 10, 11], [12, 13, 29]]; $path = []; $path = deepin($array, 5, $path);  因为用到了递归，所以数据规模比较大的话会爆栈，还需要优化下，用非递归的方式去遍历。...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 5, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>ElasticSearch 简介 ElasticSearch 是什么 ElasticSearch 是分布式的搜索和分析引擎。它可以为各种类型的数据提供接近实时的搜索和分析功能，不管是结构化的还是非结构化的文本，数值型数据或者地理位置数据，ElasticSearch 可以有效的存储和索引。
+下面列出一些可以使用 ElasticSearch 的场景:
+ 给网站或者 APP 添加搜索功能 存储和分析日志，系统指标和安全事件数据 使用机器学习实时自动化建模数据行为 把 ElasticSearch 当做存储引擎自动化业务流程 用来做地理位置信息系统(GIS)，存储分析空间信息 用来做生物信息研究工具 等等，总而言之真的很强大  数据存入: 文档和分片 相较于列数据的行存储，ElasticSearch 使用可以被序列化成　JSON　文档的复杂的数据结构，当你有一个有多节点的群时，存储的文档会被分布到集群的每个节点上，每个节点都可以访问到你存储的数据。
+当文档被存储在　ElasticSearch 后，你可以在 1 秒钟之内搜索到它。原因是因为它使用一种叫倒排索引的数据结构，倒排索引支持快速的全文搜索。倒排索引会列出文档中出现的每个单词，并且标识单词出现的所有文档。这有有一段维基百科的解释比较清楚的介绍了倒排索引的原理。
+ 以英文为例，下面是要被索引的文本：
+T0 = &ldquo;it is what it is&rdquo;
+T1 = &ldquo;what is it&rdquo;
+T2 = &ldquo;it is a banana&rdquo;...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 4, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Mysql 表分区实践 为什么要分区 单表数据量过大时，查询操作会导致 CPU 飙升，机器压力很大，所以 Mysql 官方开发了分区功能，可以用来解决这个问题。
+Mysql 的分区原理 分区就相当于把原先存在一张表中的数据，按照指定规则放到几张小表里，当查询进来后再按照这个规则去找对应的表。比如按照区间分表，把用户　id 0-100000 的放到一个表，100000-200000 的放一个表，一般是根据业务来定规则。
+分区的策略  Range Partition
+按照某个字段的区间来分，比如说按照store_id区间分，stroe_id 在　[0,6] [6,11] [11,16] [16,21]　这些区间分属于不同的区域
+  CREATE TABLE employees ( id INT NOT NULL, fname VARCHAR(30), lname VARCHAR(30), hired DATE NOT NULL DEFAULT '1970-01-01', separated DATE NOT NULL DEFAULT '9999-12-31', job_code INT NOT NULL, store_id INT NOT NULL ) PARTITION BY RANGE (store_id) ( PARTITION p0 VALUES LESS THAN (6), PARTITION p1 VALUES LESS THAN (11), PARTITION p2 VALUES LESS THAN (16), PARTITION p3 VALUES LESS THAN (21) );   List Partition...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 3, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Kafka 入门 Kafka 是什么 Kafka 是分布式的流处理平台。
+Kafka 主要的应用场景大体分为两类:
+ 在多个应用之间构建一条实时流式数据管道 构建用于响应或修改流数据的应用  Kafka 中的几个概念  Topic
+Kafka 中给流记录是按分类来存储的，每个分类就是一个 Topic
+ Broker
+消息中间件处理节点，一个 Kafka 节点就是一个 Broker，一个或者多个 Broker 可以组成一个 Kafka 集群，一般情况下 Kafka 都是已集群方式运行的，由 Zookeeper 来管理每个节点
+ Producer
+数据生产者 它的职责是选择分配记录给哪个 Topic 的哪个 Partition，一般采用的策略是轮训，也可以根据记录的 key 进行自定义配置
+ Consumer
+数据消费者
+每个消费者保留的唯一元数据是该消费者在日志中的 offset 或 position，消费者可以以任意顺序来处理记录 消费者默认都会有一个消费者组，消费者组中的消费者可以使用在多个进程中或者多个机器中，发布到一个 Topic 的记录会被发送到每个消费者组内的其中一个消费者，也就是说一个消费者组实际上算是一个订阅者，内部的消费者有统一的 offset。...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 31, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Hugo 安装 由于最近换了一台新的服务器，想把博客迁移过来所以决定把hugo 在新服务器上再安装一遍
+环境: CentOS Linux release 7.3.1611 x86_64
+阅读 Hugo 的文档 发现新版本需要 go1.11 所以先安装 go
+找到下载地址下载地址 我们选择最新版本 1.14.1 选中x86_64 对应的二进制包 切换到临时目录
+cd /tmp/  下载
+wget https://dl.google.com/go/go1.14.1.linux-amd64.tar.gz  我想把 go 安装到 /usr/local/， 于是把安装包解压到 /usr/local/
+tar -C /usr/local -xzf go1.14.1.linux-amd64.tar.gz  然后把 go 的 bin 目录添加到系统 PATH 路径中...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/03/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E5%88%97%E4%B8%80/">单点登录系列(一)</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 23, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>单点登录出现的背景 企业内的办公软件繁多，每个软件都有一套自己的用户系统，每个系统都需要注册一个账号，对员工来说需要记录许多账号密码，难以使用，对企业来说需要管理多系统的用户，难以管理。如果有一个系统实现用户的统一管理，登录企业内的所有软件只需要一个账号，对员工和企业都是好事。
+单点登录的出现就解决了这个问题。
+单点登录的实现方式 单点登录实现的核心就是多应用共享会话，共享会话的实现方式因协议而异，目前主要有三种协议。
+ SAML(Security Assertion Markup Language)
+SAML 是一种基于 XML 结构提供应用间交换用户信息的协议。下面放一张 SAML 单点登录的流程图。
+其中有三个角色， Client(客户端),Identify Provider(认证服务提供者),Service Provider(服务提供者)，SP 提供服务，IP 负责认证 SAML协议 比较复杂，上面的流程图只是 web 浏览器的访问模式，还有 ECP(Enchaned Client Or Proxy) 加强型客户端或代理，IDP(Identity Provider Discovery) 认证服务发现等几种模式。
+ OIDC(OpenID Connect)
+OpenId Connect 是基于 OAuth 2.0 协议的一种简单认证层协议。它允许客户端通过授权服务去校验终端用户的身份，并通过易上手的 REST 风格的接口获取用户的基本信息。
+OIDC 的基本流程如下图
++--------+ +--------+ | | | | | |---------(1) AuthN Request--------&gt;| | | | | | | | +--------+ | | | | | | | | | | | End- |&lt;--(2) AuthN &amp; AuthZ--&gt;| | | | | User | | | | RP | | | | OP | | | +--------+ | | | | | | | |&lt;--------(3) AuthN Response--------| | | | | | | |---------(4) UserInfo Request-----&gt;| | | | | | | |&lt;--------(5) UserInfo Response-----| | | | | | +--------+ +--------+  RP (Reply Party) 代表需要验证用户身份的客户端...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/">Composer 自动加载解析</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 22, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;4 min read
+                            </p>
+                            <p>Composer 自动加载分析以及优化 自动加载的原理 自动加载的核心实现是依靠 spl_autoload_register 函数
+spl_autoload_register 可以注册自动加载器到SPL __autoload函数队列中。用通俗一点的话说就是这个方法允许我们自己定义一个自动加载函数。
+下面给出一个官方的例子 A.class.php
+&lt;?php class A { function foo() { echo __CLASS__ . PHP_EOL; } }  autoload.php
+&lt;?php spl_autoload_register(function ($class) { echo $class . PHP_EOL; $filename = $class . '.class.php'; if (file_exists($filename)) { include $filename; } else { throw new Exception(&quot;Unable to load {$class}&quot;, 1); } }); try { $obj = new A(); } catch (Exception $e) { echo $e-&gt;getMessage() ....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/03/rabbitmq-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">RabbitMq 基本概念以及使用</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 3, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;5 min read
+                            </p>
+                            <p>RabbitMQ 基本概念以及使用 AMQP 中的一些概念 RabbitMQ 原生实现了 AMQP 协议，下面讲的一些概念都是 AMQP 0-9-1 模型的概念
+在 AMQP 中有以下几种角色
+ Publisher   消息发布者，这个应该很好理解就是发送消息的一方
+ Broker
+中转站，接收消息并根据制定规则发给接收方
+ Exchange
+交换机，消息送到中转站后首先会被发给它，它再根据规则发给指定的队列
+ Queue
+队列，存储消息的地方
+ Consumer
+消费者，接收消息的一方，消费端会从指定的队列中取消息
+  给出一张 AMQP 协议的模型图
+Exchange 的类型分为 4 种
+ Direct Exchange Fanout Exchange Topic Exchange Headers Exchange  下面会按照类型给出相应的 PHP 示例 首先要下载安装 rabbitmq 的 server 端，我选择使用 docker...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/01/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">西方哲学史读书笔记</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at January 3, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>最近在读罗素写的西方哲学史，其中有一首关于酒神的诗
+Will they ever come to me, ever again,
+The long long dances,
+On through the dark till the dim stars wane?
+Shall I feel the dew on my throat, and the stream
+Of wind in my hair? Shall our white feet gleam
+In the dim expanses?
+Oh, feet of a fawn to the greenwood fled,...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/01/%E8%A5%BF%E6%96%B9%E5%93%B2%E5%AD%A6%E5%8F%B2%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">西方哲学史读书笔记</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at January 3, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>最近在读罗素写的西方哲学史，其中有一首关于酒神的诗
+Will they ever come to me, ever again, The long long dances, On through the dark till the dim stars wane? Shall I feel the dew on my throat, and the stream Of wind in my hair? Shall our white feet gleam In the dim expanses? Oh, feet of a fawn to the greenwood fled, Alone in the grass and the loveliness; Leap of the hunted, no more in dread, Beyond the snares and the deadly press: Yet a voice still in the distance sounds, A voice and a fear and a haste of hounds; O wildly labouring, fiercely fleet, Onward yet by river and glen… Is it joy or terror, ye storm-swift feet?...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+            </div>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

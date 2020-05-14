@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/life/</link>
+    <description>Recent content in Life on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 15 Oct 2019 21:14:10 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>总结一下目前的状态</title>
+      <link>https://hurryking.github.io/2019/10/%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E7%9B%AE%E5%89%8D%E7%9A%84%E7%8A%B6%E6%80%81/</link>
+      <pubDate>Tue, 15 Oct 2019 21:14:10 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E7%9B%AE%E5%89%8D%E7%9A%84%E7%8A%B6%E6%80%81/</guid>
+      <description> 记录下最近的状态 今天是辞职的第二周，压根不想去找工作，回顾了下之前几年的IT生涯，结合目前的状态觉得自己还是喜欢自由职业，但是目前还出于一种得过且过的状态，自认为是不对的，所以决定以后每天更新一片文章，记录每天的状态，用来改进自己。
+今天依旧起得很晚，起床没有丝毫动力，吃完中饭，看了一会APUE，回顾了下之前看过的第六章，中间穿插着了解了一下linux　用户密码加密的算法有哪些，以及如何去修改加密算法，尚未实践，明天实践一下。看了下圈外今天的课程文章，讲如何不成为“企业定制化人才”也就是螺丝钉，课程给了三个建议，第一调整主体，定好自己的发展方向，第二提升能力，让自己成为横向可迁移的人才，第三提高认知高度，思考这个行业和公司的成功要素是什么，自己做的东西对社会的价值是什么，自己所在的部门和岗位，对公司的核心价值是什么
+目前还是过于懒惰，对做事情提不起兴趣，还没有到山穷水尽的地步不肯逼自己一把，很危险，别人都在赚钱，自己却想休息，真是罪恶至极。
+人们总是过于高估短期价值，低估长期价值。  </description>
+    </item>
+    
+    <item>
+      <title>一些废话</title>
+      <link>https://hurryking.github.io/2019/06/%E4%B8%80%E4%BA%9B%E5%BA%9F%E8%AF%9D/</link>
+      <pubDate>Wed, 26 Jun 2019 17:19:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/%E4%B8%80%E4%BA%9B%E5%BA%9F%E8%AF%9D/</guid>
+      <description>精力不集中，总是在想别的事 有点茫然，目标还是不清晰
+工作重点 BI 推进，跟贤伟要一个前端的库，自己尝试跑一下，看能不能写 登陆流程对接 为什么一直不重视这个事，总是再往后拖，坏习惯
+d3 可视化 (监控数据可视化能用到) 元素选择器和数据绑定（与jquery 及其相似） 简单柱状图 坐标轴 d3动画API transition duration delay update enter exit 交互式 给元素绑定事件
+pandas python 数据分析工具 (再学点爬虫就可以分析一些数据了)
+写出来的东西不成章，没有一个清晰的主题，前因后果，适用范围，还是脑子里没有系统化的知识体系
+遇事发现能做的几率大，就先干再说，别犹豫。</description>
+    </item>
+    
+    <item>
+      <title>TSDR(一些不值得看的废话)</title>
+      <link>https://hurryking.github.io/2019/05/tsdr%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%80%BC%E5%BE%97%E7%9C%8B%E7%9A%84%E5%BA%9F%E8%AF%9D/</link>
+      <pubDate>Sat, 18 May 2019 17:00:36 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/tsdr%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%80%BC%E5%BE%97%E7%9C%8B%E7%9A%84%E5%BA%9F%E8%AF%9D/</guid>
+      <description> 杂谈 最近状态很差，已经跌到了谷底，由于自己的病，导致心理问题开始作祟，一直处于一种很堕落的状态，感觉人生已经失去了希望，怎么过都可以的那种，想想很是可怕，可是又无能为力，能怎么办呢。
+人生几个阶段，童年，青年，中年，老年，每个阶段都有自己的问题要解决，如果解决不好，就会给下个阶段留下问题，时间又不能倒转，局中人看不到局，旁人又不能替自己解决问题，还是得自己往前走，什么时候南墙撞的头破血流，转头一看出口不就在旁边吗，为什么一直没有发现。可能有人一辈子都发现不了出口。
+住在高层，附近有机场，每到周末，下午５点左右，就会听见飞机呼啸的声音，下面是幼儿园，孩子在兴奋的尖叫，也不知道遇到了什么高兴的事。
+照着镜子看着镜子里的脸，好可怕，这是谁。
+此时此刻，忽然觉得人生已经到了尽头，心里安静的像一谭死水，没有了半分牵挂。
+ 人间到底是炼狱还是天堂
+ </description>
+    </item>
+    
+    <item>
+      <title>近期状态</title>
+      <link>https://hurryking.github.io/2019/03/%E8%BF%91%E6%9C%9F%E7%8A%B6%E6%80%81/</link>
+      <pubDate>Sat, 16 Mar 2019 14:40:11 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/%E8%BF%91%E6%9C%9F%E7%8A%B6%E6%80%81/</guid>
+      <description> 近期的感悟 性格 当你看到不同的人，对一件事发表不同看法的时候，你会对此深有感触。有人想这件事对我有什么帮助，有人想关我屁事，有人当个笑话，还有人杞人忧天。最后大家采取不一样的措施，因为这件事大家的人生发生了微小的变化。后来又来一件不一样的事，又采取不一样的措施，又发生了一些微小的变化，长此以往可以看到巨大的不同。
+所谓的成功 之前看过一些书和电影，像「北方的空地」「free solo」「127 Hours」，主人公都是靠自己的爱好生活，很是羡慕，但是回过头来想，还有很多人没有爱好，还是得活着，只能向着金钱靠齐，所以有钱人就是成功典型，大家都向往成为一个有钱人。
+工作 最近刚转正，来新公司半年，还是感觉自己比较孤单，刻意疏远同事导致的结果，工作也做的不尽如人意，加了一些技术微信群，看到开源大佬的努力，自己还需要多学习沉淀，不能太浮躁
+生活 还是一如既往，不过开始做些改变，写写文章，记录下学习过程，不像之前挥霍时间了。
+结束语 都是些屁话，记下来以后可以嘲笑下自己
+ 要向好看不向坏看，这世界有太多不如意，但你的生活还是要继续，太阳每天依旧要升起，希望永远种在你心里
+ </description>
+    </item>
+    
+  </channel>
+</rss>

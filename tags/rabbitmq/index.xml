@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rabbitmq on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/rabbitmq/</link>
+    <description>Recent content in Rabbitmq on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 03 Mar 2020 16:43:53 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RabbitMq 基本概念以及使用</title>
+      <link>https://hurryking.github.io/2020/03/rabbitmq-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 03 Mar 2020 16:43:53 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/rabbitmq-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>RabbitMQ 基本概念以及使用 AMQP 中的一些概念 RabbitMQ 原生实现了 AMQP 协议，下面讲的一些概念都是 AMQP 0-9-1 模型的概念
+在 AMQP 中有以下几种角色
+ Publisher   消息发布者，这个应该很好理解就是发送消息的一方
+ Broker
+中转站，接收消息并根据制定规则发给接收方
+ Exchange
+交换机，消息送到中转站后首先会被发给它，它再根据规则发给指定的队列
+ Queue
+队列，存储消息的地方
+ Consumer
+消费者，接收消息的一方，消费端会从指定的队列中取消息
+  给出一张 AMQP 协议的模型图
+Exchange 的类型分为 4 种
+ Direct Exchange Fanout Exchange Topic Exchange Headers Exchange  下面会按照类型给出相应的 PHP 示例 首先要下载安装 rabbitmq 的 server 端，我选择使用 docker</description>
+    </item>
+    
+  </channel>
+</rss>

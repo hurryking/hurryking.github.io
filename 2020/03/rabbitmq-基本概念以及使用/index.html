@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | RabbitMq 基本概念以及使用</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        RabbitMq 基本概念以及使用
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h3 id="rabbitmq-基本概念以及使用">RabbitMQ 基本概念以及使用</h3>
+
+<h4 id="amqp-中的一些概念">AMQP 中的一些概念</h4>
+
+<p>RabbitMQ 原生实现了 AMQP 协议，下面讲的一些概念都是 AMQP 0-9-1 模型的概念</p>
+
+<p>在 AMQP 中有以下几种角色</p>
+
+<ul>
+<li>Publisher
+<br /></li>
+</ul>
+
+<p>消息发布者，这个应该很好理解就是发送消息的一方</p>
+
+<ul>
+<li><p>Broker</p>
+
+<p>中转站，接收消息并根据制定规则发给接收方</p></li>
+
+<li><p>Exchange</p>
+
+<p>交换机，消息送到中转站后首先会被发给它，它再根据规则发给指定的队列</p></li>
+
+<li><p>Queue</p>
+
+<p>队列，存储消息的地方</p></li>
+
+<li><p>Consumer</p>
+
+<p>消费者，接收消息的一方，消费端会从指定的队列中取消息</p></li>
+</ul>
+
+<p>给出一张 AMQP 协议的模型图</p>
+
+<p><img src="https://hurryking.github.io/img/AMQP.png" alt="AMQP" /></p>
+
+<p>Exchange 的类型分为 4 种</p>
+
+<ol>
+<li>Direct Exchange</li>
+<li>Fanout Exchange</li>
+<li>Topic Exchange</li>
+<li>Headers Exchange</li>
+</ol>
+
+<p>下面会按照类型给出相应的 PHP 示例
+首先要下载安装 rabbitmq 的 server 端，我选择使用 docker</p>
+
+<pre><code class="language-shell">docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+</code></pre>
+
+<p>安装 php 的 amqp 的扩展包，接下来要使用</p>
+
+<pre><code>composer require php-amqplib
+</code></pre>
+
+<ol>
+<li>Direct</li>
+</ol>
+
+<p>应用场景: 把指定级别的日志，发送到指定的文件中，可以使用 direct 指定 routing-key，然后绑定 queue 的名称到这个交换机上，就可以实现了</p>
+
+<p><img src="https://hurryking.github.io/img/AMQP-direct.svg" alt="AMQP direct" />
+sender.php</p>
+
+<pre><code class="language-php">&lt;?php
+require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
+$host = 'localhost';
+$port= 5672;
+
+// 创建连接
+$connection = new AMQPStreamConnection($host, $port, 'guest', 'guest');
+// 定义通道
+$channel = $connection-&gt;channel();
+// 定义交换机
+$channel-&gt;exchange_declare('direct_log', 'direct');
+
+// 消息
+$msg = new AMQPMessage('Hello World!');
+
+// 发布消息到 direct_log 交换机 指定 routing_key 为 hello
+$channel-&gt;basic_publish($msg, 'direct_log', 'hello');
+
+echo &quot; [x] Sent 'Hello World!'\n&quot;;
+
+$channel-&gt;close();
+$connection-&gt;close();
+?&gt;
+</code></pre>
+
+<p>receiver.php</p>
+
+<pre><code class="language-php">&lt;?php
+require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+
+$host = 'localhost';
+$port= 5672;
+
+//　开启连接
+$connection = new AMQPStreamConnection($host, $port, 'guest', 'guest');
+// 创建通道
+$channel = $connection-&gt;channel();
+
+// 定义交换机
+$channel-&gt;exchange_declare('direct_log', 'direct');
+// 定义队列
+list($queue_name, ,) = $channel-&gt;queue_declare('hello', false, false, false, false);
+
+// 绑定交换机和队列
+$channel-&gt;queue_bind($queue_name, 'direct_log', 'hello');
+echo &quot; [*] Waiting for messages. To exit press CTRL+C\n&quot;;
+
+$callback = function ($msg) {
+    echo ' [x] Received ', $msg-&gt;body, &quot;\n&quot;;
+};
+
+// 开始消费
+$channel-&gt;basic_consume('hello', 'direct_log', false, true, false, false, $callback);
+
+while ($channel-&gt;is_consuming()) {
+    $channel-&gt;wait();
+}
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<p>实验过程中发现会有丢消息的情况，还需要再确认下原因</p>
+
+<ol>
+<li>Fanout</li>
+</ol>
+
+<p>应用场景: 聊天室的广播，游戏里的推送的全服通知，都可以使用 fanout 类型的交换机实现</p>
+
+<p><img src="https://hurryking.github.io/img/AMQP_Fanout.webp" alt="Fanout" /></p>
+
+<p>sender.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
+$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection-&gt;channel();
+
+$channel-&gt;exchange_declare('logs', 'fanout', false, false, false);
+
+$data = implode(' ', array_slice($argv, 1));
+if (empty($data)) {
+    $data = &quot;info: Hello World!&quot;;
+}
+$msg = new AMQPMessage($data);
+
+$channel-&gt;basic_publish($msg, 'logs');
+
+echo ' [x] Sent ', $data, &quot;\n&quot;;
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<p>receive.php</p>
+
+<pre><code class="language-php">require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+
+$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection-&gt;channel();
+
+$channel-&gt;exchange_declare('logs', 'fanout', false, false, false);
+
+list($queue_name, ,) = $channel-&gt;queue_declare(&quot;&quot;, false, false, true, false);
+
+$channel-&gt;queue_bind($queue_name, 'logs');
+
+echo &quot; [*] Waiting for logs. To exit press CTRL+C\n&quot;;
+
+$callback = function ($msg) {
+    echo ' [x] ', $msg-&gt;body, &quot;\n&quot;;
+};
+
+$channel-&gt;basic_consume($queue_name, '', false, true, false, false, $callback);
+
+while ($channel-&gt;is_consuming()) {
+    $channel-&gt;wait();
+}
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<ol>
+<li>Topic</li>
+</ol>
+
+<p>应用场景: 游戏里的频道，给订阅某个频道的人群，推频道消息(比 Fanout 控制的更细，完全可以当做 fanout 使用)</p>
+
+<p><img src="https://hurryking.github.io/img/AMQP_Topic.webp" alt="AMQP Topic" />
+sender.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
+$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection-&gt;channel();
+
+$channel-&gt;exchange_declare('topic_logs', 'topic', false, false, false);
+
+$routing_key = isset($argv[1]) &amp;&amp; !empty($argv[1]) ? $argv[1] : 'anonymous.info';
+$data = implode(' ', array_slice($argv, 2));
+if (empty($data)) {
+    $data = &quot;Hello World!&quot;;
+}
+
+$msg = new AMQPMessage($data);
+
+$channel-&gt;basic_publish($msg, 'topic_logs', $routing_key);
+
+echo ' [x] Sent ', $routing_key, ':', $data, &quot;\n&quot;;
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<p>receiver.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+
+$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection-&gt;channel();
+
+$channel-&gt;exchange_declare('topic_logs', 'topic', false, false, false);
+
+list($queue_name, ,) = $channel-&gt;queue_declare(&quot;&quot;, false, false, true, false);
+
+$binding_keys = array_slice($argv, 1);
+if (empty($binding_keys)) {
+    file_put_contents('php://stderr', &quot;Usage: $argv[0] [binding_key]\n&quot;);
+    exit(1);
+}
+
+foreach ($binding_keys as $binding_key) {
+    $channel-&gt;queue_bind($queue_name, 'topic_logs', $binding_key);
+}
+
+echo &quot; [*] Waiting for logs. To exit press CTRL+C\n&quot;;
+
+$callback = function ($msg) {
+    echo ' [x] ', $msg-&gt;delivery_info['routing_key'], ':', $msg-&gt;body, &quot;\n&quot;;
+};
+
+$channel-&gt;basic_consume($queue_name, '', false, true, false, false, $callback);
+
+while ($channel-&gt;is_consuming()) {
+    $channel-&gt;wait();
+}
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<ol>
+<li>Header</li>
+</ol>
+
+<p>应用场景: 类似 direct ，但是可以匹配更多属性更多字段，一般建议使用 direct 代替 header</p>
+
+<p>sender.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire;
+
+$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection-&gt;channel();
+
+$exchangeName = 'topic_headers_test';
+$channel-&gt;exchange_declare($exchangeName, AMQPExchangeType::HEADERS);
+
+$data = implode(' ', array_slice($argv, 2));
+if (empty($data)) {
+    $data = &quot;Hello World!&quot;;
+}
+
+$message = new AMQPMessage($data);
+$headers = new Wire\AMQPTable(array(
+    'foo' =&gt; 'bar',
+    'table' =&gt; array('figuf', 'ghf' =&gt; 5, 5 =&gt; 675),
+    'num1' =&gt; -4294967295,
+    'num2' =&gt; 5,
+    'num3' =&gt; -2147483648,
+    'true' =&gt; true,
+    'false' =&gt; false,
+    'void' =&gt; null,
+    'date' =&gt; new DateTime('now', new DateTimeZone('UTC')),
+    'array' =&gt; array(null, 'foo', 'bar', 5, 5674625, 'ttt', array(5, 8, 2)),
+    'arr_with_tbl' =&gt; array(
+        'bar',
+        5,
+        array(
+            'foo',
+            57,
+            'ee',
+            array(
+                'foo' =&gt; 'bar',
+                'baz' =&gt; 'boo',
+                'arr' =&gt; array(1, 2, 3, true, new DateTime('now', new DateTimeZone('UTC'))),
+            ),
+        ),
+        67,
+        array(
+            'foo' =&gt; 'bar',
+            5 =&gt; 7,
+            8 =&gt; 'boo',
+            'baz' =&gt; 3,
+        ),
+    ),
+    '64bitint' =&gt; 9223372036854775807,
+    '64bit_uint' =&gt; '18446744073709600000',
+    '64bitint_neg' =&gt; -pow(2, 40),
+));
+$headers-&gt;set('shortshort', -5, Wire\AMQPTable::T_INT_SHORTSHORT);
+$headers-&gt;set('short', -1024, Wire\AMQPTable::T_INT_SHORT);
+
+echo PHP_EOL . PHP_EOL . 'SENDING MESSAGE WITH HEADERS' . PHP_EOL . PHP_EOL;
+var_dump($headers-&gt;getNativeData());
+echo PHP_EOL;
+
+$message-&gt;set('application_headers', $headers);
+$channel-&gt;basic_publish($message, $exchangeName);
+
+echo ' [x] Sent :', $data, PHP_EOL;
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<p>receive.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Exception\AMQPTimeoutException;
+use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire\AMQPTable;
+
+$headers = array_slice($argv, 1);
+if (empty($headers)) {
+    file_put_contents('php://stderr', &quot;Usage: $argv[0] [header1=value1] [header2=value2]\n&quot;);
+    exit(1);
+}
+
+
+$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+$channel = $connection-&gt;channel();
+
+$exchangeName = 'topic_headers_test';
+$channel-&gt;exchange_declare($exchangeName, AMQPExchangeType::HEADERS);
+
+list($queueName, ,) = $channel-&gt;queue_declare('', false, false, true);
+
+$bindArguments = [];
+foreach ($headers as $header) {
+    list ($key, $value) = explode('=', $header, 2);
+    $bindArguments[$key] = $value;
+}
+
+$channel-&gt;queue_bind($queueName, $exchangeName, '', false, new AMQPTable($bindArguments));
+
+echo ' [*] Waiting for logs. To exit press CTRL+C', &quot;\n&quot;;
+
+$callback = function (AMQPMessage $message) {
+    echo PHP_EOL . ' [x] ', $message-&gt;delivery_info['routing_key'], ':', $message-&gt;body, &quot;\n&quot;;
+    echo 'Message headers follows' . PHP_EOL;
+    var_dump($message-&gt;get('application_headers')-&gt;getNativeData());
+    echo PHP_EOL;
+};
+
+$channel-&gt;basic_consume($queueName, '', false, true, true, false, $callback);
+while ($channel-&gt;is_consuming()) {
+    try {
+        $channel-&gt;wait(null, false, 2);
+    } catch (AMQPTimeoutException $exception) {
+    }
+    echo '*' . PHP_EOL;
+}
+
+$channel-&gt;close();
+$connection-&gt;close();
+</code></pre>
+
+<p>实验过程中发现如果 receive 解析出来的参数都转换成了字符串所以没办法匹配除了字符串以外的 header，如果是正常使用就没有这个问题了，直接在脚本中定义好数据以及类型就不用考虑参数类型的解析问题了</p>
+
+<p>这篇中的实验代码都是搬运的 php-amqplib　里的 demo</p>
+
+<blockquote>
+<p>做自己擅长的事谋生，做自己感兴趣的事来打发时间，如果是这两者是同一件事那真是很幸运了</p>
+</blockquote>
+
+            </div>
+        </div>
+        <div class="tile is-child box">
+            <div id="disqus_thread"></div>
+<script>
+
+
+
+
+var PAGE_URL = 'http://hurryking.github.io';
+var PAGE_IDENTIFIER = 'hu-yan-luan-yu';
+var disqus_config = function () {
+this.page.url = PAGE_URL;  
+this.page.identifier = PAGE_IDENTIFIER; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://hu-yan-luan-yu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+                
+
+
+    
+<br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+<br>
+        <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=kfLo_LL3ms0hbZk8wb7L_vK1dMEBcsEGCdi6Bo-jPUc"></script>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

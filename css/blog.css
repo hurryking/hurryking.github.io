@@ -1,0 +1,18 @@
+html,body {
+    font-family: 'Open Sans', sans-serif;
+    background: #F0F2F4;
+    }
+.flex-between{
+	justify-content:space-between;
+}
+.hero-body {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+.mysocial { color: hsl(0, 0%, 100%);}
+.mysocial:hover { color: hsl(0, 0%, 71%) }
+a:hover {
+    color: #3273dc;
+    box-shadow: inset 0 -4px 0 #ef8b80
+}

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | Composer 自动加载解析</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        Composer 自动加载解析
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h3 id="composer-自动加载分析以及优化">Composer 自动加载分析以及优化</h3>
+
+<h4 id="自动加载的原理">自动加载的原理</h4>
+
+<p>自动加载的核心实现是依靠 spl_autoload_register 函数</p>
+
+<p>spl_autoload_register 可以注册自动加载器到SPL __autoload函数队列中。用通俗一点的话说就是这个方法允许我们自己定义一个自动加载函数。</p>
+
+<p>下面给出一个官方的例子
+A.class.php</p>
+
+<pre><code class="language-php">&lt;?php
+class A
+{
+	function foo()
+	{
+		echo __CLASS__ . PHP_EOL;
+	}
+}
+</code></pre>
+
+<p>autoload.php</p>
+
+<pre><code class="language-php">&lt;?php
+spl_autoload_register(function ($class) {
+	echo $class . PHP_EOL;
+	$filename = $class . '.class.php';
+	if (file_exists($filename)) {
+    	include $filename;
+	} else {
+    	throw new Exception(&quot;Unable to load {$class}&quot;, 1);
+	}
+});
+
+try {
+	$obj = new A();
+} catch (Exception $e) {
+	echo $e-&gt;getMessage() . PHP_EOL;
+}
+
+</code></pre>
+
+<p>上面的代码就注册了一个匿名函数来加载尚未引入文件的类。</p>
+
+<p>现实环境中的代码比较复杂，我们会把类库放到不同的文件，使用不同的命名空间，自动加载实现就比上面的复杂一些，主要是在寻找文件上复杂一些。</p>
+
+<h4 id="composer-的自动加载">Composer 的自动加载</h4>
+
+<p>Composer 的自动加载遵守了 PSR规范。</p>
+
+<p>下面说一下 composer 自动加载的实现。</p>
+
+<p>composer 版本 1.9.2</p>
+
+<p>autoload.php (composer生成的自动加载器)</p>
+
+<pre><code>&lt;?php
+// autoload.php @generated by Composer
+
+require_once __DIR__ . '/composer/autoload_real.php';
+
+return ComposerAutoloaderInite71055bf03a04fd08e1e2c61c27d1437::getLoader();
+
+</code></pre>
+
+<p>这个是引用了autoload_real.php
+然后获取自动加载器。</p>
+
+<p>composer/autoload_real.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+// autoload_real.php @generated by Composer
+
+class ComposerAutoloaderInite71055bf03a04fd08e1e2c61c27d1437
+{
+    private static $loader;
+
+    public static function loadClassLoader($class)
+    {
+        if ('Composer\Autoload\ClassLoader' === $class) {
+            require __DIR__ . '/ClassLoader.php';
+        }
+    }
+
+    public static function getLoader()
+    {
+        if (null !== self::$loader) {
+            return self::$loader;
+        }
+	
+	// 注册自动加载类(只是加载了一下加载器的类文件)
+        spl_autoload_register(array('ComposerAutoloaderInite71055bf03a04fd08e1e2c61c27d1437', 'loadClassLoader'), true, true);
+        // 实例化加载器
+        self::$loader = $loader = new \Composer\Autoload\ClassLoader();
+        // 卸载掉刚才注册的加载器(真正生效的不是刚才注册的加载方法，而是ClassLoader里的register)
+        spl_autoload_unregister(array('ComposerAutoloaderInite71055bf03a04fd08e1e2c61c27d1437', 'loadClassLoader'));
+	
+	// 判断是否使用静态加载器(PHP大于5.6并且没有使用HHVM并且没有使用 Zend Guard Loader)
+        $useStaticLoader = PHP_VERSION_ID &gt;= 50600 &amp;&amp; !defined('HHVM_VERSION') &amp;&amp; (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
+        if ($useStaticLoader) {
+            require_once __DIR__ . '/autoload_static.php';
+
+            call_user_func(\Composer\Autoload\ComposerStaticInite71055bf03a04fd08e1e2c61c27d1437::getInitializer($loader));
+        } else {
+            // 设置PSR0自动加载的命名空间
+            $map = require __DIR__ . '/autoload_namespaces.php';
+            foreach ($map as $namespace =&gt; $path) {
+                $loader-&gt;set($namespace, $path);
+            }
+	    // 设置自动 PSR4 自动加载的命名空间
+            $map = require __DIR__ . '/autoload_psr4.php';
+            foreach ($map as $namespace =&gt; $path) {
+                $loader-&gt;setPsr4($namespace, $path);
+            }
+	    
+	    // 类和目录关系映射
+            $classMap = require __DIR__ . '/autoload_classmap.php';
+            if ($classMap) {
+                $loader-&gt;addClassMap($classMap);
+            }
+        }
+	
+	// 注册自动加载器(这里才是加载扩展包的加载器)
+        $loader-&gt;register(true);
+	
+	// 引入那些没有命名空间的文件
+        if ($useStaticLoader) {
+            $includeFiles = Composer\Autoload\ComposerStaticInite71055bf03a04fd08e1e2c61c27d1437::$files;
+        } else {
+            $includeFiles = require __DIR__ . '/autoload_files.php';
+        }
+        foreach ($includeFiles as $fileIdentifier =&gt; $file) {
+            composerRequiree71055bf03a04fd08e1e2c61c27d1437($fileIdentifier, $file);
+        }
+
+        return $loader;
+    }
+}
+
+function composerRequiree71055bf03a04fd08e1e2c61c27d1437($fileIdentifier, $file)
+{
+    if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
+        require $file;
+
+        $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
+    }
+}
+
+</code></pre>
+
+<p>composer/ClassLoader.php</p>
+
+<pre><code class="language-php">&lt;?php
+
+/*
+ * This file is part of Composer.
+ *
+ * (c) Nils Adermann &lt;naderman@naderman.de&gt;
+ *     Jordi Boggiano &lt;j.boggiano@seld.be&gt;
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Composer\Autoload;
+
+/**
+ * ClassLoader implements a PSR-0, PSR-4 and classmap class loader.
+ *
+ *     $loader = new \Composer\Autoload\ClassLoader();
+ *
+ *     // register classes with namespaces
+ *     $loader-&gt;add('Symfony\Component', __DIR__.'/component');
+ *     $loader-&gt;add('Symfony',           __DIR__.'/framework');
+ *
+ *     // activate the autoloader
+ *     $loader-&gt;register();
+ *
+ *     // to enable searching the include path (eg. for PEAR packages)
+ *     $loader-&gt;setUseIncludePath(true);
+ *
+ * In this example, if you try to use a class in the Symfony\Component
+ * namespace or one of its children (Symfony\Component\Console for instance),
+ * the autoloader will first look for the class under the component/
+ * directory, and it will then fallback to the framework/ directory if not
+ * found before giving up.
+ *
+ * This class is loosely based on the Symfony UniversalClassLoader.
+ *
+ * @author Fabien Potencier &lt;fabien@symfony.com&gt;
+ * @author Jordi Boggiano &lt;j.boggiano@seld.be&gt;
+ * @see    http://www.php-fig.org/psr/psr-0/
+ * @see    http://www.php-fig.org/psr/psr-4/
+ */
+class ClassLoader
+{
+    ...
+    /**
+     * Registers this instance as an autoloader.
+     *
+     * @param bool $prepend Whether to prepend the autoloader or not
+     */
+    public function register($prepend = false)
+    {
+        spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+    }
+
+    ...
+    /**
+     * Loads the given class or interface.
+     *
+     * @param  string    $class The name of the class
+     * @return bool|null True if loaded, null otherwise
+     */
+    public function loadClass($class)
+    {
+        if ($file = $this-&gt;findFile($class)) {
+            includeFile($file);
+
+            return true;
+        }
+    }
+    
+    /**
+     * Finds the path to the file where the class is defined.
+     *
+     * @param string $class The name of the class
+     *
+     * @return string|false The path if found, false otherwise
+     */
+    public function findFile($class)
+    {
+        // class map lookup(这里和下面的 Level 1相关，优化1的关键逻辑所在，生成类图后可以快速返回，不用再去扫文件了)
+        if (isset($this-&gt;classMap[$class])) {
+            return $this-&gt;classMap[$class];
+        }
+        // 这里和 Level 2/A 相关
+        if ($this-&gt;classMapAuthoritative || isset($this-&gt;missingClasses[$class])) {
+            return false;
+        }
+        
+        // 这里和 Level 2/B 相关
+        if (null !== $this-&gt;apcuPrefix) {
+            $file = apcu_fetch($this-&gt;apcuPrefix.$class, $hit);
+            if ($hit) {
+                return $file;
+            }
+        }
+
+        $file = $this-&gt;findFileWithExtension($class, '.php');
+
+        // Search for Hack files if we are running on HHVM
+        if (false === $file &amp;&amp; defined('HHVM_VERSION')) {
+            $file = $this-&gt;findFileWithExtension($class, '.hh');
+        }
+
+        if (null !== $this-&gt;apcuPrefix) {
+            apcu_add($this-&gt;apcuPrefix.$class, $file);
+        }
+
+        if (false === $file) {
+            // Remember that this class does not exist.
+            $this-&gt;missingClasses[$class] = true;
+        }
+
+        return $file;
+    }
+    ...
+    
+}
+
+/**
+ * Scope isolated include.
+ *
+ * Prevents access to $this/self from included files.
+ */
+function includeFile($file)
+{
+    include $file;
+}
+
+</code></pre>
+
+<p>自动加载器类，代码太长，只放了关键方法，loadClass 加载类，findFiles 找类名对应的文件地址， register 注册自动 loadClass 方法。</p>
+
+<h4 id="composer-的自动加载如何优化">composer 的自动加载如何优化</h4>
+
+<ul>
+<li>Level 1: 生成类图(类与文件映射关系，就是一个大数组里面有键是类名值是文件地址)
+
+<ol>
+<li>如何开启
+
+<ul>
+<li>composer.json 文件中设置 &ldquo;optimize-autoloader&rdquo;: true</li>
+<li>install 或者 update 时候带上参数 -o / &ndash;optimize-autoloader</li>
+<li>使用dump-autoload 带上参数 -o / &ndash;optimize</li>
+</ul></li>
+<li>原理
+生成类图后就不用再起扫文件了，直接把类与文件关系映射缓存到 autoload_classmap.php 中，所以快很多，直接返回类对应的文件地址</li>
+<li>缺点
+不会自动加载丢失的类，会爆出 not found 异常，这个问题优化 2 可以解决</li>
+</ol></li>
+<li>Level 2/A: 权威类图(Authoritative class maps)
+
+<ol>
+<li>如何使用
+
+<ul>
+<li>composer.json 文件中设置 &ldquo;classmap-authoritative&rdquo;: true</li>
+<li>install 或者 update 时候带上参数 -a / &ndash;classmap-authoritative</li>
+<li>使用dump-autoload 带上参数 -a / &ndash;classmap-authoritative</li>
+</ul></li>
+<li>原理
+如果在类图中找不到这个类，那么这个类断定就不存在，不会继续在文件系统中寻找这个类</li>
+<li>缺点
+这个优化与 Level 2/B 不共存</li>
+</ol></li>
+<li>Level 2/B: APCu 缓存 APCu Cache(类似于Opcache)
+
+<ol>
+<li>如何使用
+
+<ul>
+<li>composer.json 文件中设置 &ldquo;apcu-autoloader&rdquo;: true</li>
+<li>install 或者 update 时候带上参数 &ndash;apcu-autoloader</li>
+<li>使用dump-autoload 带上参数 &ndash;apcu-autoloader</li>
+</ul></li>
+<li>原理
+如果在类图中找不到这个类，就去 APCu 缓存里找</li>
+<li>缺点
+需要开启 APCu 扩展，这个优化与 Level 2/A 不共存
+<br /></li>
+</ol></li>
+</ul>
+
+<p>参考资料<br />
+[0] <a href="https://www.php.net/manual/zh/language.oop5.autoload.php">类的自动加载</a><br />
+[1] <a href="https://www.php.net/manual/zh/function.spl-autoload-register.php">spl_autoload_register</a><br />
+[2] <a href="https://www.php-fig.org/psr/">PSR</a><br />
+[3] <a href="https://getcomposer.org/doc/articles/autoloader-optimization.md">composer</a><br />
+[4] <a href="https://www.php.net/manual/zh/book.apcu.php">APCu</a></p>
+
+            </div>
+        </div>
+        <div class="tile is-child box">
+            <div id="disqus_thread"></div>
+<script>
+
+
+
+
+var PAGE_URL = 'http://hurryking.github.io';
+var PAGE_IDENTIFIER = 'hu-yan-luan-yu';
+var disqus_config = function () {
+this.page.url = PAGE_URL;  
+this.page.identifier = PAGE_IDENTIFIER; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://hu-yan-luan-yu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+                
+  
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Related posts</h1>
+      
+      
+            <h1><a href="https://hurryking.github.io/2020/03/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E5%88%97%E4%B8%80/">单点登录系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">23 March 2020</time>
+      
+            <h1><a href="https://hurryking.github.io/2019/03/%E5%A6%82%E4%BD%95%E7%BB%99-php-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%89%B9%E6%80%A7/">如何给 PHP 添加新特性</a></h1>
+            <time class="has-text-grey-light is-size-7">24 March 2019</time>
+      
+    </div>
+</div>
+
+    
+<br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+<br>
+        <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=kfLo_LL3ms0hbZk8wb7L_vK1dMEBcsEGCdi6Bo-jPUc"></script>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

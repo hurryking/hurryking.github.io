@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | Mysql 分区表实践</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        Mysql 分区表实践
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h3 id="mysql-表分区实践">Mysql 表分区实践</h3>
+
+<h4 id="为什么要分区">为什么要分区</h4>
+
+<p>单表数据量过大时，查询操作会导致 CPU 飙升，机器压力很大，所以 Mysql 官方开发了分区功能，可以用来解决这个问题。</p>
+
+<h4 id="mysql-的分区原理">Mysql 的分区原理</h4>
+
+<p>分区就相当于把原先存在一张表中的数据，按照指定规则放到几张小表里，当查询进来后再按照这个规则去找对应的表。比如按照区间分表，把用户　id 0-100000 的放到一个表，100000-200000 的放一个表，一般是根据业务来定规则。</p>
+
+<h4 id="分区的策略">分区的策略</h4>
+
+<ol>
+<li><p>Range Partition</p>
+
+<p>按照某个字段的区间来分，比如说按照store_id区间分，stroe_id 在　[0,6] [6,11] [11,16] [16,21]　这些区间分属于不同的区域</p></li>
+</ol>
+
+<pre><code class="language-sql">CREATE TABLE employees (
+    id INT NOT NULL,
+    fname VARCHAR(30),
+    lname VARCHAR(30),
+    hired DATE NOT NULL DEFAULT '1970-01-01',
+    separated DATE NOT NULL DEFAULT '9999-12-31',
+    job_code INT NOT NULL,
+    store_id INT NOT NULL
+)
+PARTITION BY RANGE (store_id) (
+    PARTITION p0 VALUES LESS THAN (6),
+    PARTITION p1 VALUES LESS THAN (11),
+    PARTITION p2 VALUES LESS THAN (16),
+    PARTITION p3 VALUES LESS THAN (21)
+);
+</code></pre>
+
+<ol>
+<li><p>List Partition</p>
+
+<p>按照某个字段是否属于一个离散区间内的一个给定值来区分，比如说 store_id 在 (3,5,6,9,17)　(1,2,10,11,19,20)　(4,12,13,14,18)　(7,8,15,16)　这些集合中分属于不同的分区</p></li>
+</ol>
+
+<pre><code class="language-sql">CREATE TABLE employees (
+    id INT NOT NULL,
+    fname VARCHAR(30),
+    lname VARCHAR(30),
+    hired DATE NOT NULL DEFAULT '1970-01-01',
+    separated DATE NOT NULL DEFAULT '9999-12-31',
+    job_code INT,
+    store_id INT
+)
+PARTITION BY LIST(store_id) (
+    PARTITION pNorth VALUES IN (3,5,6,9,17),
+    PARTITION pEast VALUES IN (1,2,10,11,19,20),
+    PARTITION pWest VALUES IN (4,12,13,14,18),
+    PARTITION pCentral VALUES IN (7,8,15,16)
+);
+</code></pre>
+
+<ol>
+<li><p>HASH partitioning</p>
+
+<p>基于用户定义的表达式的返回值来进行选择的分区，该表达式使用将要插入到表中的这些行的列值进行计算。比如根据员工受雇年份来区分，我要把它分成 4 个分区，</p>
+
+<pre><code class="language-sql">CREATE TABLE employees (
+id INT NOT NULL,
+fname VARCHAR(30),
+lname VARCHAR(30),
+hired DATE NOT NULL DEFAULT '1970-01-01',
+separated DATE NOT NULL DEFAULT '9999-12-31',
+job_code INT,
+store_id INT
+)
+PARTITION BY HASH( YEAR(hired) )
+PARTITIONS 4;
+</code></pre></li>
+
+<li><p>KEY partitioning</p>
+
+<p>基于某一个字段进行分区，类似　Hash 分区，有区别的地方是可以指定多个列当key，可以把字符串列当 key，如果表字段中有主键的话必须指定主键为 key</p>
+
+<pre><code class="language-sql">CREATE TABLE foo_key (
+	empno VARCHAR(20) NOT NULL ,
+	empname VARCHAR(20),
+	birthdate DATE NOT NULL
+)
+PARTITION BY KEY(birthdate, empname)
+PARTITIONS 4;
+</code></pre></li>
+</ol>
+
+<h4 id="分区实践">分区实践</h4>
+
+<p>环境 Ubuntu 16.04 Mysql 8.0.15
+创建一张没有分区的表</p>
+
+<pre><code class="language-sql">CREATE TABLE `account` (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+ `name` varchar(255) DEFAULT NULL,
+ `balance` int(11) DEFAULT NULL COMMENT '余额',
+ `cid` varchar(255) NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `cid` (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8912744 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+</code></pre>
+
+<p>创建一张有分区的表</p>
+
+<pre><code class="language-sql">CREATE TABLE `account_partition` (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+ `name` varchar(255) DEFAULT NULL,
+ `balance` int(11) DEFAULT NULL COMMENT '余额',
+ `cid` varchar(255) NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `cid` (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8912744 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+PARTITION BY RANGE (id) (
+    PARTITION p0 VALUES LESS THAN (2000000),
+    PARTITION p1 VALUES LESS THAN (4000000),
+    PARTITION p2 VALUES LESS THAN (6000000),
+    PARTITION p3 VALUES LESS THAN (8000000),
+    PARTITION p4 VALUES LESS THAN (10000000)
+);
+</code></pre>
+
+<p>然后每个表插入8388608行数据(我使用的方法是insert into select)<br />
+<img src="https://hurryking.github.io/img/mysql_partition_count.png" alt="mysql_partition_count" /></p>
+
+<p>对比下使用了分区和没有使用分区的查询情况</p>
+
+<pre><code class="language-sql">SELECT * FROM `account` WHERE `id` = 5000000;
+SELECT * FROM `account_partition` WHERE `id` = 5000000;
+</code></pre>
+
+<p><img src="https://hurryking.github.io/img/mysql_partition_select.png" alt="mysql_partition_select" /></p>
+
+<pre><code class="language-sql">SELECT * FROM `account` WHERE `id` = 2000000;
+SELECT * FROM `account_partition` WHERE `id` = 2000000;
+</code></pre>
+
+<p><img src="https://hurryking.github.io/img/mysql_partition_select_less.png" alt="mysql_partition_select_less" /></p>
+
+<pre><code class="language-sql">SELECT * FROM `account` LIMIT 5000000,10;
+SELECT * FROM `account_partition` LIMIT 5000000,10;
+</code></pre>
+
+<p>这组数据有些意思，值得深究一下，为什么分区的反而比没分区的快<br />
+<img src="https://hurryking.github.io/img/mysql_partition_limit_1.png" alt="mysql_partition_limit_1" /></p>
+
+<pre><code class="language-sql">SELECT * FROM `account` LIMIT 6000000,10;
+SELECT * FROM `account_partition` LIMIT 6000000,10;
+</code></pre>
+
+<p><img src="https://hurryking.github.io/img/mysql_partition_limit.png" alt="mysql_partition_limit" /></p>
+
+<h4 id="mysql-分区的坑">Mysql 分区的坑</h4>
+
+<ol>
+<li>分区表，分区键设计不太灵活，如果不走分区键，很容易出现全表锁<br /></li>
+<li>一旦数据量并发量上来，如果在分区表实施关联，就是一个灾难</li>
+<li>自己分库分表，自己掌控业务场景与访问模式，可控。分区表，研发写了一个sql，都不确定mysql是怎么玩的，不太可控</li>
+<li>Mysql 8.0 只支持　Innodb 和　NDB 分区</li>
+</ol>
+
+<p>参考资料<br />
+1. <a href="https://dev.mysql.com/doc/refman/8.0/en/partitioning-types.html">partitioning-types</a></p>
+
+            </div>
+        </div>
+        <div class="tile is-child box">
+            <div id="disqus_thread"></div>
+<script>
+
+
+
+
+var PAGE_URL = 'http://hurryking.github.io';
+var PAGE_IDENTIFIER = 'hu-yan-luan-yu';
+var disqus_config = function () {
+this.page.url = PAGE_URL;  
+this.page.identifier = PAGE_IDENTIFIER; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://hu-yan-luan-yu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+                
+  
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Related posts</h1>
+      
+      
+            <h1><a href="https://hurryking.github.io/2019/03/mysql-innodb-%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1%E6%A8%A1%E5%9E%8B%E7%B3%BB%E5%88%97%E4%B8%80/">Mysql InnoDB　锁和事务模型系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">10 March 2019</time>
+      
+    </div>
+</div>
+
+    
+<br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+<br>
+        <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=kfLo_LL3ms0hbZk8wb7L_vK1dMEBcsEGCdi6Bo-jPUc"></script>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>碎碎念 on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/</link>
+    <description>Recent content in 碎碎念 on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 23 Oct 2019 00:57:39 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>20191023日记</title>
+      <link>https://hurryking.github.io/2019/10/20191023%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Wed, 23 Oct 2019 00:57:39 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191023%E6%97%A5%E8%AE%B0/</guid>
+      <description> 少有进步的一天 依旧晚起,今天比较给力，把 APUE 第八章刷完了，第九章看了一部分，游戏也没有少玩，还算控制住了一些。
+如何让自己对某件事情感兴趣? 1. 把这件事和某个奖励联系起来 2. 尝试从中获得成就感 3. 总之不能和惩罚挂钩，比如做不到就惩罚，这样只会导致越来越反感
+如何找到自己的兴趣? 1. 多尝试 肯定是少不了的 2. 记录下自己做这些事情是的状态 3. 不断重复上面两步
+keep thinking, stop copy.  </description>
+    </item>
+    
+    <item>
+      <title>20191021日记</title>
+      <link>https://hurryking.github.io/2019/10/20191021%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Mon, 21 Oct 2019 01:47:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191021%E6%97%A5%E8%AE%B0/</guid>
+      <description> 20191021日记 照旧晚起，毫无斗志，今天问了下接外包的事，自己琢磨了下，先列个大概的工期估算表，再想办法和对方面对面谈，没有克制住打游戏的冲动，没定闹钟。
+还是自己的生活状态有问题，过于看重钱，把人生该有的体验都错过了，还假装自己不在乎，该争取的还是要争取，不然活着还有什么意义，当个过客吗。
+APUE 第八章看了waitpid那一小节。
+明天早起去跑步，吃个早餐，买些有生活仪式感的东西，把生活捡起来。
+该来的总会来，勇敢面对，寻找你生命中的光。  </description>
+    </item>
+    
+    <item>
+      <title>20191018日记</title>
+      <link>https://hurryking.github.io/2019/10/20191018%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Fri, 18 Oct 2019 02:24:22 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191018%E6%97%A5%E8%AE%B0/</guid>
+      <description> 20191018日记 又是浑浑噩噩的一天，起的很晚，故意不起床，然后起床后看了一会　Mysql　原理的小册，只有三十分钟，可能都不到，然后发现群里有一个好玩的游戏，就玩了一天，三国杀，控制不住自己的注意力，本来想玩会去继续第七章，还是没有控制住，下次把开始玩游戏之前给手机设置一个３０分钟的闹钟，时间到了必须停止，哪怕不去学东西，也不能继续了，真的好可怕，一天8个小时就盯着那个手机，吃饭的时候也是。
+依旧比较迷茫，但是仍然没有做事情的动力。还是自己太矫情了，不然不会这样。以后做决定前多想想家人，多想想未来。
+明天开始可以尝试针对一个最近的新闻或者之前的某一件事发表一些自己的看法，尝试锻炼下表达能力，结构化输出。
+信则有，不信则无  </description>
+    </item>
+    
+    <item>
+      <title>20191017日记</title>
+      <link>https://hurryking.github.io/2019/10/20191017%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Thu, 17 Oct 2019 02:44:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/10/20191017%E6%97%A5%E8%AE%B0/</guid>
+      <description> 20191017日记 今天照旧起的比较晚，吃过午饭后，开始写APUE第六章的习题，下午把第七章的内容也实践了一部分，又回顾了下C的编译过程，预处理　编译　汇编　链接，还有　C　进程的内存布局。 中间看了两部电影　《杀手代号47》《思维空间》 杀手是一部完全意义上的动作片，并没有留给观众什么思考空间，看着爽就是了，叙事手法也比较简单，先给结果，然后回忆，把前因后果说完了，最后再回来，给6分吧。 四维空间算一部标准意义上的悬疑片，如果不多看两遍完全不知道再将讲什么，女主合适开始操纵男主的记忆，中间哪一段是记忆，哪一段是现实，比较难分清，比较烧脑，给7分。
+还是处于放飞自我的状态，希望能尽快把　APUE　先看完吧，目前也没有别的兴趣。
+话说　ubuntu 的自带的汉字输入法真的很屎，明天看搜狗输入法能用嘛。
+还有昨天说的用户密码加密还没有实践。
+慢就是快，快就是慢  </description>
+    </item>
+    
+  </channel>
+</rss>

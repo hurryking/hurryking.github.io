@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kafka on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/kafka/</link>
+    <description>Recent content in Kafka on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 03 Apr 2020 00:27:05 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kafka 入门</title>
+      <link>https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Fri, 03 Apr 2020 00:27:05 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/</guid>
+      <description>Kafka 入门 Kafka 是什么 Kafka 是分布式的流处理平台。
+Kafka 主要的应用场景大体分为两类:
+ 在多个应用之间构建一条实时流式数据管道 构建用于响应或修改流数据的应用  Kafka 中的几个概念  Topic
+Kafka 中给流记录是按分类来存储的，每个分类就是一个 Topic
+ Broker
+消息中间件处理节点，一个 Kafka 节点就是一个 Broker，一个或者多个 Broker 可以组成一个 Kafka 集群，一般情况下 Kafka 都是已集群方式运行的，由 Zookeeper 来管理每个节点
+ Producer
+数据生产者 它的职责是选择分配记录给哪个 Topic 的哪个 Partition，一般采用的策略是轮训，也可以根据记录的 key 进行自定义配置
+ Consumer
+数据消费者
+每个消费者保留的唯一元数据是该消费者在日志中的 offset 或 position，消费者可以以任意顺序来处理记录 消费者默认都会有一个消费者组，消费者组中的消费者可以使用在多个进程中或者多个机器中，发布到一个 Topic 的记录会被发送到每个消费者组内的其中一个消费者，也就是说一个消费者组实际上算是一个订阅者，内部的消费者有统一的 offset。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/git/</link>
+    <description>Recent content in Git on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 02 Mar 2019 00:27:05 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git 子模块使用</title>
+      <link>https://hurryking.github.io/2019/03/git-%E5%AD%90%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 02 Mar 2019 00:27:05 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/git-%E5%AD%90%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8/</guid>
+      <description>Submodule解决了什么问题 当你的项目里依赖与一个第三方模块，或者一个子项目，而你需要保持这个模块的更新，确保使用这个子模块的所有项目都能同步到，如果拷贝的话就达不到这个目的，总之一句话就是在一个库里可以包含多个子库，并且主库和子库是隔离的，互不影响．
+如何使用 我们现在新建一个库叫 parent
+git clone git@github.com:hurryking/parent.git  然后在 parent 下新建一个目录 children
+cd parent mkdir children  进入 children 执行
+cd children git submodule add git@github.com:hurryking/let-s-go.git  然后在 parent 下就能看到刚才加的子库，还有一个 .gitmodules 文件，里面记录着子库的在这个项目的路径和远程仓库的地址
+然后提交这次的改动
+git commit -am &amp;quot;added submoudle let&#39;s go&amp;quot;  推送到远程仓库
+git push -u origin master(由于是第一次入库需要设置下默认上游)  然后我们修改下子库，提交</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | Leetcode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+  <link href="https://hurryking.github.io/tags/leetcode/index.xml" rel="alternate" type="application/rss+xml" title="胡言乱语" />
+  <link href="https://hurryking.github.io/tags/leetcode/index.xml" rel="feed" type="application/rss+xml" title="胡言乱语" />
+
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        #Leetcode
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/04/leetcode30/">Leetcode30</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 12, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>寻找到达某个节点的路径 这是今天面试遇到的一道算法题，看起来比较简单，思路很清楚，但是有些细节没有想清楚，所以没有一下子，答出来。现在整理下思路继续写出来。
+题目是:
+有如下数组[1, 2, [5,6,8,[21,22]],[12,15]]，返回到达给定元素的路径。
+思路是深度有限遍历，然后把路径放进一个栈里面，进入节点压栈，出节点退栈。
+&lt;?php function deepin($arr, $needle, $path) { if (is_array($arr)) { foreach ($arr as $key =&gt; $value) { $path[] = $key; if ($res = deepin($value, $needle, $path)) { return $res; } else { array_pop($path); } } } if ($arr == $needle) { return $path; } else { array_pop($path); return false; } } $array = [3, 5, [9, 10, 11], [12, 13, 29]]; $path = []; $path = deepin($array, 5, $path);  因为用到了递归，所以数据规模比较大的话会爆栈，还需要优化下，用非递归的方式去遍历。...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2020/02/leetcode29/">Leetcode29</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at February 25, 2020 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Longest Common Sequence 用动态规划的思想，解决最长公共子序列问题。
+先解释概念，什么是公共子序列？
+最长公共子序列（LCS）是一个在一个序列集合中（通常为两个序列）用来查找所有序列中最长子序列的問題。这与查找最長公共子串的问题不同的地方是：子序列不需要在原序列中占用连续的位置。可能比较难懂，贴上一个维基百科的定义链接
+举例如下，假设有两个字符串 A=&ldquo;acda&rdquo; B=&ldquo;adac&rdquo;
+那么 A 和 B 的公共子串有 ac ad ada，其中最长的公共子序列就是 ada
+动态规划是什么，简单来说就是把事情按照阶段来进行处理，每个阶段的运算依赖上个阶段的结果。
+LCS(&quot;abc&quot;, &quot;dab&quot;) | | | | ----------------------------------------- | | | | | | LCS(&quot;abc&quot;, &quot;ab&quot;) LCS(&quot;bc&quot;, &quot;dab&quot;) | | | | | | 1 + LCS(&quot;bc&quot;, &quot;b&quot;) --------------- | | | | | | | | | 2 + LCS(&quot;c&quot;, &quot;&quot;) LCS(&quot;c&quot;, &quot;dab&quot;) LCS(&quot;bc&quot;, &quot;ab&quot;) | | ------------- | | | | | | LCS(&quot;c&quot;, &quot;ab&quot;) LCS(&quot;bc&quot;, &quot;b&quot;) | 1 + LCS(&quot;c&quot;, &quot;&quot;)	 给出一段伪代码...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/06/leetcode28/">Leetcode28</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at June 2, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;3 min read
+                            </p>
+                            <p>Dijkstra 算法 PHP 实现 单源最短路径算法，核心思想为把起点到所有点的距离存在一个数组中，然后广度优先遍历每次触及距离最短的点，然后更新接触到的点与起点的距离，下面是算法图示:
+下面是的我的PHP版本实现
+&lt;?php Class Vertex { protected $id; protected $neighbors; protected $neighbor_weights; public function __construct($node) { $this-&gt;id = $node; } public function addNeighbor($vertex, int $weight) { $this-&gt;neighbors[] = $vertex; $this-&gt;neighbor_weights[$vertex] = $weight; } public function getNeighbors() { return $this-&gt;neighbors; } public function getId() { return $this-&gt;id; } public function getWeight($vertex) { return $this-&gt;neighbor_weights[$vertex]; } } Class Graph { protected $vertexes; protected $vertex_num; public function __construct() { $this-&gt;vertexes = []; $this-&gt;vertex_num = 0; } public function addVertex($node) { $vertex = new Vertex($node); $this-&gt;vertexes[$node] = $vertex; $this-&gt;vertex_num += 1; return $vertex; } public function getVertex($node) { return $this-&gt;vertexes[$node]?...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/05/leetcode27/">Leetcode27</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at May 23, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Search in rotated sorted array 买卖股票系列告一段落，主要是第三个　实在是难消化，鄙人实力不济，改日再战。
+今天的题目是search in rotated sorted array，题目的意思是给出一个反转后的不重复有序数组(从大到小)，大意如下，[0,1,2,3,4,5] 有可能被翻转为[4,5,0,1,2,3]　或者 [3,4,5,0,1,2]，然后让你找出数组中指定的值。
+脑子里第一个蹦出来的是，鼎鼎有名的二分算法(binary search)，有进步，哈哈哈，后面一想，这该怎么二分呢，如果不翻转，这题 so easy ，翻转过后怎么办，讨论区逛了一圈，找了一个能理解的实现，如果low小于等于mid，左半边有序，否则右半边有序，然后我们判断目标数是否在有序范围内就ok了。
+class Solution: # @param {integer[]} numss # @param {integer} target # @return {integer} def search(self, nums, target): if not nums: return -1 low, high = 0, len(nums) - 1 while low &lt;= high: mid = int((low + high) / 2) # print(int(mid)) if target == nums[mid]: return mid if nums[low] &lt;= nums[mid]: if nums[low] &lt;= target &lt;= nums[mid]: high = mid - 1 else: low = mid + 1 else: if nums[mid] &lt;= target &lt;= nums[high]: low = mid + 1 else: high = mid - 1 return -1  参考资料 1....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/05/leetcode26/">Leetcode26</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at May 1, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Best Time to Buy and Sell Stock II Say you have an array for which the *i*th element is the price of a given stock on day i.
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times)....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/05/leetcode25/">Leetcode25</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at May 1, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Best Time to Buy and Sell Stock Say you have an array for which the *i*th element is the price of a given stock on day i.
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode24/">Leetcode24</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 30, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Sort Colors Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode23/">Leetcode23</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 30, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Remove Duplicates from Sorted List Given a sorted linked list, delete all duplicates such that each element appear only once.
+Example 1:
+Input: 1-&gt;1-&gt;2 Output: 1-&gt;2  Example 2:
+Input: 1-&gt;1-&gt;2-&gt;3-&gt;3 Output: 1-&gt;2-&gt;3  第一想法是转 list 再转链表
+# Definition for singly-linked list. # class ListNode(object): # def __init__(self, x): # self....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode22/">Leetcode22</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 27, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Length of Last Word Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+If the last word does not exist, return 0.
+Note: A word is defined as a character sequence consists of non-space characters only....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode20/">Leetcode20</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 23, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Two Sum Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+Example:
+Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1]....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode19/">Leetcode19</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 21, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Permutation II Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+Example:
+Input: [1,1,2] Output: [ [1,1,2], [1,2,1], [2,1,1] ]  排列组合，给出一组可能重复的数字，求所有可能的排列组合。
+之前有刷过一道，给出一组不可能重复的数字求排列组合的问题，Permutation, 第一反应就是套用之前的解法加上判断重复的逻辑。
+class Solution(object): def permuteUnique(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[List[int]] &quot;&quot;&quot; res = [] # 此处的排序可以想下作用是什么 numd.sort() self.dfs(nums, [], res) return res def dfs(self, choices, path, res): if not choices: res....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode17/">Leetcode17</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 15, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Longest Common Prefix Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string &ldquo;&rdquo;.
+Example 1:
+Input: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;] Output: &quot;fl&quot;  Example 2:
+Input: [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;] Output: &quot;&quot; Explanation: There is no common prefix among the input strings....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode16/">Leetcode16</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 9, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>N-Queens The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+Each solution contains a distinct board configuration of the n-queens&rsquo; placement, where &lsquo;Q&rsquo; and &lsquo;....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode15/">Leetcode15</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 3, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Subset Power set 接着上回提到的求子集合的问题，继续说位操作解法。
+class Solution: def subsets(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[List[int]] &quot;&quot;&quot; res = [] for i in range(1&lt;&lt;len(nums)): tmp = [] for j in range(len(nums)): # 判断对应位是否为1 if i &amp; 1 &lt;&lt; j: tmp.append(nums[j]) res.append(tmp) return res  可以把每一个结果转换为二进制，然后遍历　000 到　111 ，把对应位置为１的元素保留到临时list，最终结果就是全部子集合
+比如说 [&lsquo;a&rsquo;, &lsquo;b&rsquo;, &lsquo;c&rsquo;] a 代表 第一位为 １ 的情况 100，b 代表　第二位为 １ 的情况　010，c 代表第三位为 １ 的情况，...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/04/leetcode14/">Leetcode14</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at April 1, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Sqrt(x) Implement int sqrt(int x).
+Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+Example 1:
+Input: 4 Output: 2  Example 2:...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode13/">Leetcode13</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 27, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Jump Game Given an array of non-negative integers, you are initially positioned at the first index of the array.
+Each element in the array represents your maximum jump length at that position.
+Determine if you are able to reach the last index.
+Example 1:
+Input: [2,3,1,1,4] Output: true Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode12/">Leetcode12</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 25, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Subsets Given a set of distinct integers, nums, return all possible subsets (the power set).
+Note: The solution set must not contain duplicate subsets.
+Example:
+Input: nums = [1,2,3] Output: [ [3], [1], [2], [1,2,3], [1,3], [2,3], [1,2], [] ]  给出一组不重复的整数，返回所有子集
+what is power set
+回溯解法(DFS)
+回溯算法三要素
+ 选择 可以作出哪些选择 约束 不能做哪些选择 目标 最终要达成的目标  class Solution: def subsets(self, nums): &quot;&quot;&quot; :type nums: List[int] :rtype: List[List[int]] &quot;&quot;&quot; res = [] self....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode11/">Leetcode11</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 22, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>3Sum Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find alleft unique triplets in the array which gives the sum of zero.
+Note The solution set must not contain duplicate triplets.
+Example Given array nums = [-1, 0, 1, 2, -1, -4], A solution set is: [ [-1, 0, 1], [-1, -1, 2] ]  给一个数组，找出其中 3 数相加和为 0 的全部组合...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode10/">Leetcode10</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 19, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Generate Parentheses Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+For example, given n = 3, a solution set is:
+[ &quot;((()))&quot;, &quot;(()())&quot;, &quot;(())()&quot;, &quot;()(())&quot;, &quot;()()()&quot; ]  给出数字n，列出所有有效的括号组合 此题和上次的排列组合都可以用回溯算法(DFS)解决 回溯算法３要点
+ 选择 选择&rsquo;(&lsquo;或者‘)’ 2.　限制 必须是有效的括号 括号闭合之前必须先开放 括号数有限(n)  3.　目标 排列好所有括号...</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode09/">Leetcode09</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 14, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>46. Permutations Given a collection of distinct integers, return all possible permutations.
+Example: **Input**: [1,2,3] **Output**: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]  给出一组不重复的整数，返回所有可能的排列组合
+深度优先遍历解法DFS
+class Solution(object): def permute(self, nums): res = [] self.dfs(nums, [], res) return res def dfs(self, nums, path, res): if not nums: res.append(path) # return # backtracking for i in xrange(len(nums)): self....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode07/">Leetcode07</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 7, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Reverse Nodes in k-Group Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode06/">Leetcode06</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 6, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Merge K sorted link list 还是昨天的合并　K 个有序链表，今天去社区看了下，还有更简单的解决方案，时间复杂度和空间复杂度更好，大概的思路是用 Python 的最小堆来实现，每次从堆里弹出最小元素，然后最近一次哪个链表出了最小元素就把下一个塞进堆里，很高效，很简洁，元祖（tuple）的运用是这个实现的点睛之笔，下面贴出代码
+def mergeKLists(self, lists): from heap import heappop, heapify, heapreplace dummy = node = ListNode(0) # 下面这一步很赞 h = [(n.val, n) for n in lists if n] # n 转　minheap heapify(h) while(h): # 取　堆里最小的值 v, n = h[0] if n....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode05/">Leetcode05</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 5, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Merge k Sorted Lists Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+Example Input: [ 1-&gt;4-&gt;5, 1-&gt;3-&gt;4, 2-&gt;6 ] Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6  合并n个有序链表，第一眼看到觉的很简单，想怎么实现的时候头大，大体思路是全部都放到一个list里，然后排序list，再转链表
+class Solution(object): def mergeKLists(self, lists): &quot;&quot;&quot; :type lists: List[ListNode] :rtype: ListNode &quot;&quot;&quot; merged_list = [] for head in lists: while head: merged_list....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode04/">Leetcode04</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 5, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Add Two Numbers You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode03/">Leetcode03</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 3, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Palindrome Number Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+Example 1: Input: 121 Output: true  Example 2: Input: -121 Output: false  Explanation: From left to right, it reads -121. From right to left, it becomes 121-....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/03/leetcode02/">Leetcode02</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at March 1, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;2 min read
+                            </p>
+                            <p>Implement atoi which converts a string to an integer. The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="title is-4"><a href="/2019/02/leetcode01/">Leetcode01</a></p>
+                            <p class="subtitle is-size-6 has-text-grey-light">
+                                Published at February 28, 2019 &middot;
+                                <i class="far fa-clock"></i>&nbsp;1 min read
+                            </p>
+                            <p>Valid Square Given the coordinates of four points in 2D space, return whether the four points could construct a square.
+The coordinate (x,y) of a point is represented by an integer array with two integers.
+Example: Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1] Output: True  Note: All the input integers are in the range [-10000, 10000]....</p>
+                        </div>
+                    </div>
+                </article>
+                <br>
+
+            </div>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

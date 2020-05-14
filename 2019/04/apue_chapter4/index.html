@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | APUE_Chapter4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        APUE_Chapter4
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h3 id="apue-第四章">APUE 第四章</h3>
+
+<blockquote>
+<p>这是一篇没有经过思考整理，单纯搬书的内容，不值得浪费时间去看</p>
+</blockquote>
+
+<p>本章主要讲述了 stat 结构体中的每个属性的含义，以及使用。</p>
+
+<pre><code>struct stat {
+    mode_t          st_mode;    /* 文件类型以及模式(权限) */
+    ino_t           st_ino;	    /* i节点编号 */
+    dev_t           st_dev;	    /* 设备号(文件系统) */
+    dev_t           st_rdev;    /* 设备号(特殊文件) 字符特殊设备和块特殊设备 */
+    nlink_t         st_nlink;   /* 链接数 */
+    uid_t           st_uid;	    /* 所属者的用户ID */
+    gid_t           st_gid;	    /* 所属组的组ID(有歧义所属者的组ID) */
+    off_t           st_size;    /* 普通文件的字节数 */
+    struct timespec	st_atime;   /* 最后一次访问时间 */
+    struct timespec st_mtime;   /* 最后一次修改时间 */
+    struct timespec st_ctime;   /* 最后一次文件状态修改时间 */
+    blksize_t       st_blksize; /* I/O 块的字节数 */
+    blkcnt_t        st_blocks;  /* 分配的磁盘块数 */
+}
+</code></pre>
+
+<h4 id="st-mode">st_mode</h4>
+
+<ol>
+<li>文件类型</li>
+</ol>
+
+<p>Unix 下文件类型有如下 7 种</p>
+
+<ul>
+<li>普通文件</li>
+<li>目录文件</li>
+<li>块特殊文件 比如硬盘(提供对设备带缓冲的访问，以块为单位读取) 硬盘挂载在系统文件树上 挂载点的文件类型就是块特殊文件</li>
+<li>字符特殊文件 比如鼠标键盘(提供对设备不带缓冲的访问，输入多少读取多少不缓冲，以字符为单位进行读取)</li>
+<li>FIFO 命名管道，进程间通信</li>
+<li>Socket 进程间的网络通信</li>
+<li>符号链接(软连接)</li>
+</ul>
+
+<ol>
+<li>文件权限和进程权限</li>
+</ol>
+
+<p>##### 文件权限有如下九种</p>
+
+<p>​    用户读写执行 组读写执行 其他读写执行</p>
+
+<p>##### 进程权限</p>
+
+<p>​    实际用户 ID 实际组 ID</p>
+
+<p>​    有效用户 ID 有效组 ID 附属组 ID</p>
+
+<p>​    保存的设置用户 ID 保存的设置组 ID</p>
+
+<p>​    实际用户 ID 和 组 ID 在登陆时就决定了，以 test 登陆的，执行的所有进程的 实际用户 ID 就是 test</p>
+
+<p>​    有效用户 ID 和 组 ID 决定我们能访问哪些文件，在访问文件的时候会校验进程的有效用户 ID 和 组 ID ，确保进程有权限访问文件</p>
+
+<p>​    保存的设置用户 ID 和 组 ID 可以改变用户的有效用户 ID 和 组 ID</p>
+
+<p>##### umask</p>
+
+<p>​    可以用来设置新文件的权限屏蔽位，如果不想让其他人读，可以设置 0002，新建的文件就是其他人不可读</p>
+
+<p>##### S_ISVTX (粘着位)</p>
+
+<p>​    早期程序执行完后，会被保存在交换区，方便下次运行时更快的载入内存 (通常在 Unix 文件系统中，文件的各数据块随机存放，交换区是被作为一个连续文件处理的)。现在大多数 Unix 系统都配置了<a href="https://www.tldp.org/LDP/tlk/mm/memory.html">虚拟存储系统</a>以及<a href="https://en.wikipedia.org/wiki/Unix_File_System">快速文件系统</a>，已经不再这样使用了。后来粘着位的使用又扩展到了目录，对目录设置粘着位后，只有对该目录有写权限，并且满足以下三个条件之一才能删除或者重命名该目录下的文件:</p>
+
+<ul>
+<li>拥有此文件</li>
+<li>拥有此目录</li>
+<li>是超级用户</li>
+</ul>
+
+<p>/tmp 就是目录粘着位的使用典范</p>
+
+<h4 id="st-uid-st-gid">st_uid st_gid</h4>
+
+<ol>
+<li>chown fchown fchownat lchown</li>
+</ol>
+
+<p>改变文件的属主和组</p>
+
+<h4 id="st-size">st_size</h4>
+
+<ol>
+<li>文件长度</li>
+</ol>
+
+<p>st_size 表示以字节为单位的文件的长度，只对普通文件 目录和符号链接有效。</p>
+
+<ol>
+<li>文件空洞</li>
+</ol>
+
+<p>lseek 超出文件长度后再往文件尾写内容，会导致文件中有空洞。</p>
+
+<h4 id="st-nlink">st_nlink</h4>
+
+<ol>
+<li>文件系统</li>
+</ol>
+
+<p>UFS 文件系统与磁盘的关系</p>
+
+<p>此处应该附图一张</p>
+
+<p><img src="https://hurryking.github.io/img/APUE_4_14.png" alt="ufs-4-14" /></p>
+
+<p><img src="https://hurryking.github.io/img/APUE_4_15.png" alt="ufs-4-15" /></p>
+
+<ol>
+<li>link linkat unlink unlinkat</li>
+</ol>
+
+<p>link linkat 用来建立硬链接，任何一个文件可以有多个目录项指向其 i 节点，这里的硬链接就是新建一个目录项指向已经存在的某个目录项的 i 节点，与软连接不同，后面会讲软连接。</p>
+
+<p>unlink unlinkat 删除目录项，并将 pathname 所引用文件的连接数减1。当链接数到 0 时，该文件才可以被删除，还有一种情况，当有进程打开了这个文件，不能删除。</p>
+
+<ol>
+<li>符号链接</li>
+</ol>
+
+<p>符号链接是指向一个文件的间接指针，与硬链接不同。</p>
+
+<p>软连接解决了硬链接存在的两个问题：</p>
+
+<ul>
+<li>硬链接通常要求链接和文件位于统一文件系统</li>
+<li>只有超级用户才能创建指向目录的硬链接</li>
+</ul>
+
+<p>给目录创建符号链接有可能导致循环，给一个目录下的文件创建一个指向该目录的软连接就会造成循环。</p>
+
+<p><img src="https://hurryking.github.io/img/link_loop.png" alt="link_loop" /></p>
+
+<h4 id="st-atime-st-mtime-st-ctime">st_atime st_mtime st_ctime</h4>
+
+<ol>
+<li>文件时间</li>
+</ol>
+
+<p>下面列出哪些操作会对文件时间造成影响</p>
+
+<p><img src="https://hurryking.github.io/img/AUPE_filetime.png" alt="filetime" /></p>
+
+<h4 id="st-dev-st-rdev">st_dev st_rdev</h4>
+
+<p>​   设备特殊文件</p>
+
+<p>​   系统中每个文件名关联的 st_dev 值是文件系统的设备号，统一磁盘驱动上的各文件系统主设备号(major)相同，次设备号(minor)不同。</p>
+
+<p>​   只有字符特殊文件和块特殊文件才有 st_rdev 值。次值包含实际设备的设备编号。</p>
+
+<h3 id="遇到的问题">遇到的问题</h3>
+
+<p>文件 unlink 在 centos6.7 的实验过程中，发现和书中提到的结果不一样</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+
+int
+main(void)
+{
+    if (creat(&quot;tempfile&quot;, O_RDWR) &lt; 0) {
+        perror(&quot;open error&quot;);
+    }
+
+    if (unlink(&quot;tempfile&quot;) &lt; 0) {
+        perror(&quot;unlink error&quot;);
+    }
+
+    printf(&quot;file unlinked\n&quot;);
+    sleep(10);
+    printf(&quot;done\n&quot;);
+    exit(0);
+}
+
+</code></pre>
+
+<p>运行环境 centos 6.7
+还有预期用 open(&ldquo;tempfile&rdquo;, O_RDWR) 可以创建文件实践发现不行
+预期是在运行期间是可以删除 tempfile 的，但是实践发现并不可以</p>
+
+<p>进行了一番搜索后找到了原因，mode 设置为 O_CREATE 就可以了。</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+
+int
+main(void)
+{
+    if (creat(&quot;tempfile&quot;, O_RDWR) &lt; 0) {
+        perror(&quot;open error&quot;);
+    }
+
+    if (unlink(&quot;tempfile&quot;) &lt; 0) {
+        perror(&quot;unlink error&quot;);
+    }
+
+    printf(&quot;file unlinked\n&quot;);
+    sleep(10);
+    printf(&quot;done\n&quot;);
+    exit(0);
+}
+</code></pre>
+
+<p>之前觉得第二章是讲标准的，以后可以随查随用就跳过了，后面发现很多地方都提到了第二章的 POSIX 标准，所以还得回头粗看一边。</p>
+
+<p><a href="http://www.cnblogs.com/0xcafebabe/p/4430632.html">比较好的资料</a></p>
+
+<blockquote>
+<p>当你没有得到你想要的东西的时候，只能证明你想得到那件东西的欲望还不够强烈</p>
+</blockquote>
+
+            </div>
+        </div>
+        <div class="tile is-child box">
+            <div id="disqus_thread"></div>
+<script>
+
+
+
+
+var PAGE_URL = 'http://hurryking.github.io';
+var PAGE_IDENTIFIER = 'hu-yan-luan-yu';
+var disqus_config = function () {
+this.page.url = PAGE_URL;  
+this.page.identifier = PAGE_IDENTIFIER; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://hu-yan-luan-yu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+                
+  
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Related posts</h1>
+      
+      
+            <h1><a href="https://hurryking.github.io/2019/05/apue_chapter5/">APUE_Chapter5</a></h1>
+            <time class="has-text-grey-light is-size-7">13 May 2019</time>
+      
+            <h1><a href="https://hurryking.github.io/2019/04/apue-cahpter3/">APUE Cahpter3</a></h1>
+            <time class="has-text-grey-light is-size-7">28 April 2019</time>
+      
+    </div>
+</div>
+
+    
+<br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+<br>
+        <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=kfLo_LL3ms0hbZk8wb7L_vK1dMEBcsEGCdi6Bo-jPUc"></script>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

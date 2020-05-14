@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>胡言乱语  | Kafka 入门</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://hurryking.github.io/css/blog.css" />
+    <link rel="stylesheet" type="text/css" href="https://hurryking.github.io/highlight/styles/monokai-sublime.css">
+    
+</head>
+<body>
+
+    
+    <nav class="navbar is-fixed-top flex-between" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://hurryking.github.io/">Home</a>
+        </div>
+        <div class="navbar-brand">
+            <a class="navbar-item" href='javascript:(function(){function c(){var e=document.createElement("link");e.setAttribute("type","text/css");e.setAttribute("rel","stylesheet");e.setAttribute("href",f);e.setAttribute("class",l);document.body.appendChild(e)}function h(){var e=document.getElementsByClassName(l);for(var t=0;t<e.length;t++){document.body.removeChild(e[t])}}function p(){var e=document.createElement("div");e.setAttribute("class",a);document.body.appendChild(e);setTimeout(function(){document.body.removeChild(e)},100)}function d(e){return{height:e.offsetHeight,width:e.offsetWidth}}function v(i){var s=d(i);return s.height>e&&s.height<n&&s.width>t&&s.width<r}function m(e){var t=e;var n=0;while(!!t){n+=t.offsetTop;t=t.offsetParent}return n}function g(){var e=document.documentElement;if(!!window.innerWidth){return window.innerHeight}else if(e&&!isNaN(e.clientHeight)){return e.clientHeight}return 0}function y(){if(window.pageYOffset){return window.pageYOffset}return Math.max(document.documentElement.scrollTop,document.body.scrollTop)}function E(e){var t=m(e);return t>=w&&t<=b+w}function S(){var e=document.createElement("audio");e.setAttribute("class",l);e.src=i;e.loop=false;e.addEventListener("canplay",function(){setTimeout(function(){x(k)},500);setTimeout(function(){N();p();for(var e=0;e<O.length;e++){T(O[e])}},15500)},true);e.addEventListener("ended",function(){N();h()},true);e.innerHTML=" <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";document.body.appendChild(e);e.play()}function x(e){e.className+=" "+s+" "+o}function T(e){e.className+=" "+s+" "+u[Math.floor(Math.random()*u.length)]}function N(){var e=document.getElementsByClassName(s);var t=new RegExp("\\b"+s+"\\b");for(var n=0;n<e.length;){e[n].className=e[n].className.replace(t,"")}}var e=30;var t=30;var n=350;var r=350;var i="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";var s="mw-harlem_shake_me";var o="im_first";var u=["im_drunk","im_baked","im_trippin","im_blown"];var a="mw-strobe_light";var f="//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";var l="mw_added_css";var b=g();var w=y();var C=document.getElementsByTagName("*");var k=null;for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){if(E(A)){k=A;break}}}if(A===null){console.warn("Could not find a node of the right size. Please try a different page.");return}c();S();var O=[];for(var L=0;L<C.length;L++){var A=C[L];if(v(A)){O.push(A)}}})()'>嗨一下(^_^)</a>
+        </div>
+    </nav>
+    
+
+    
+    <section class="hero is-info is-medium">
+        <div class="hero-body" style="background-image: url(https://hurryking.github.io/img/bg-blog.jpg);">
+            <div class="container has-text-centered">
+                <br>
+                <h1 class="title is-size-1">
+                    
+                        Kafka 入门
+                    
+                </h1>
+                
+            </div>
+        </div>
+    </section>
+
+
+<div class="container">
+    <div class="section">
+    
+
+<div class="columns">
+    <div class="column is-9">
+        <div class="tile is-child box">
+            <div class="content">
+                
+
+<h3 id="kafka-入门">Kafka 入门</h3>
+
+<h4 id="kafka-是什么">Kafka 是什么</h4>
+
+<p>Kafka 是分布式的流处理平台。</p>
+
+<p>Kafka 主要的应用场景大体分为两类:</p>
+
+<ol>
+<li>在多个应用之间构建一条实时流式数据管道</li>
+<li>构建用于响应或修改流数据的应用</li>
+</ol>
+
+<h4 id="kafka-中的几个概念">Kafka 中的几个概念</h4>
+
+<ol>
+<li><p>Topic<br />
+Kafka 中给流记录是按分类来存储的，每个分类就是一个 Topic</p></li>
+
+<li><p>Broker<br />
+消息中间件处理节点，一个 Kafka 节点就是一个 Broker，一个或者多个 Broker 可以组成一个 Kafka 集群，一般情况下 Kafka 都是已集群方式运行的，由 Zookeeper 来管理每个节点</p></li>
+
+<li><p>Producer<br />
+数据生产者
+它的职责是选择分配记录给哪个 Topic 的哪个 Partition，一般采用的策略是轮训，也可以根据记录的 key 进行自定义配置</p></li>
+
+<li><p>Consumer<br />
+数据消费者<br />
+每个消费者保留的唯一元数据是该消费者在日志中的 offset 或 position，消费者可以以任意顺序来处理记录
+<img src="https://hurryking.github.io/img/log_consumer.png" alt="log_consumer" /></p>
+
+<p>消费者默认都会有一个消费者组，消费者组中的消费者可以使用在多个进程中或者多个机器中，发布到一个 Topic 的记录会被发送到每个消费者组内的其中一个消费者，也就是说一个消费者组实际上算是一个订阅者，内部的消费者有统一的 offset。<br />
+消费者组保证了消费者的容错性，每个新的组员加入都会接手同组内其他成员的部分 Partition 日志，当一个消费者挂掉后，同组内的其他消费者可以代替它来继续工作。</p></li>
+
+<li><p>Partition<br />
+物理上的概念，一个 Topic 可以分为多个 Partition，每个 Partition 内部是有序的</p>
+
+<p><img src="https://hurryking.github.io/img/Kafka_Topic.png" alt="Partition" /></p>
+
+<p>每条记录都会分配一个顺序增长的 id 数字被称为 offset，这个数字在每个 Partition 内是唯一的<br />
+Partition 的作用有两个。首先，它们允许日志扩展到超出单个服务器所能容纳的大小。每个单独的分区都必须适合承载它的服务器，但是一个主题可能有很多分区，因此它可以处理任意数量的数据。 其次，它们当做并行单元来处理。</p></li>
+</ol>
+
+<h4 id="给出一组-kafka-集群运行案例">给出一组 Kafka 集群运行案例</h4>
+
+<p><img src="https://hurryking.github.io/img/consumer_groups.png" alt="consumer_groups" /></p>
+
+<p>案例中一个集群中有两个 Broker，每个 Broker 有两个 Partition，有两个消费者组，消费者组 A 有两个消费者，消费者组 B 有 4 个消费者。每个 Broker 产生的消息由一组消费者中的一个消费者消费。</p>
+
+<h4 id="快速上手">快速上手</h4>
+
+<ol>
+<li>下载　<a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/2.4.1/kafka_2.12-2.4.1.tgz]">Kafka</a> 2.4.1 并解压，我选择解压到 /usr/local/　下</li>
+</ol>
+
+<pre><code class="language-shell">wget https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.4.1/kafka_2.12-2.4.1.tgz
+tar -xzf kafka_2.12-2.4.1.tgz -C /usr/local
+cd /usr/local/kafka_2.12-2.4.1
+</code></pre>
+
+<ol>
+<li><p>开启 Zookeeper 服务，Ｋafka 依赖 Zookeeper 来管理节点，为了方便我们上手，官方提供了一个启动单节点　Zookeeper 实例的脚本，我们直接使用就好了，当然生产环境不会这样。</p>
+
+<pre><code class="language-shell">bin/zookeeper-server-start.sh config/zookeeper.properties
+</code></pre></li>
+
+<li><p>开启一个 Kafka 服务</p>
+
+<pre><code class="language-shell">bin/kafka-server-start.sh config/server.properties
+</code></pre></li>
+
+<li><p>创建一个　Topic<br />
+发布的消息存储在 localhost:9092 这个服务上，也就是我们刚才启动的 Kafka 服务，端口信息可以在 config/server.properties 中看到　　
+&ndash;replication-factor　１　冗余份数一份(容错用)<br />
+&ndash;partitions 1 分区个数一个<br />
+&ndash;topic test  主题名称　test</p>
+
+<pre><code class="language-shell">bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+</code></pre></li>
+
+<li><p>发送消息<br />
+启动一个生产者，向　test 生产消息</p>
+
+<pre><code class="language-shell">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+</code></pre></li>
+
+<li><p>消费消息<br />
+启动一个消费者，从头开始消费 test 的消息</p>
+
+<pre><code class="language-shell">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+</code></pre></li>
+</ol>
+
+<p>下面是我的实验截图<br />
+<img src="https://hurryking.github.io/img/Kafka_experiment.png" alt="Kafka_experiment" /><br />
+0 是 zookeeper，1　是 Kafka 节点，2 是生产者，3 是消费者</p>
+
+<h4 id="集群搭建">集群搭建</h4>
+
+<p>接下来我们以上面给的集群示例图搭建一个 Kafka 集群，这里把图再贴一遍
+<img src="https://hurryking.github.io/img/consumer_groups.png" alt="consumer_groups" /></p>
+
+<p>我们先搭建 Broker 集群，复制一份 config/server.properties 改名为  config/server-1.properties</p>
+
+<pre><code class="language-shell">cp config/server.properties config/server-1.properties
+</code></pre>
+
+<p>修改 config/server-1.properties 中的参数</p>
+
+<pre><code class="language-shell">broker.id=1  
+listeners=PLAINTEXT://:9093  
+log.dirs=/tmp/kafka-logs-1  
+</code></pre>
+
+<p>先启动 Zookeeper 服务，这里再贴一遍</p>
+
+<pre><code class="language-shell">bin/zookeeper-server-start.sh config/zookeeper.properties
+</code></pre>
+
+<p>然后启动　server 和 server-1</p>
+
+<pre><code class="language-shell">bin/kafka-server-start.sh config/server.properties
+bin/kafka-server-start.sh config/server-1.properties
+</code></pre>
+
+<p>然后在 server 上创建一个有两个 Partition　的 Topic A，在 server-1 上创建一个有两个 Partition　的 Topic B</p>
+
+<pre><code class="language-shell">bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2 --topic A
+bin/kafka-topics.sh --create --bootstrap-server localhost:9093 --replication-factor 1 --partitions 2 --topic B
+</code></pre>
+
+<p>然后启动两个生产者，分别向　A B 生产数据</p>
+
+<pre><code class="language-shell">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic A
+bin/kafka-console-producer.sh --broker-list localhost:9093 --topic B
+</code></pre>
+
+<p>启动两个消费者集组，一个消费者组　Ａ 有两个消费者，一个消费者组 B 有四个消费者</p>
+
+<p>消费者组 A</p>
+
+<pre><code class="language-shell">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic A --group A
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9093 --topic B --group A
+</code></pre>
+
+<p>消费者组 B</p>
+
+<pre><code class="language-shell">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic A --offset latest --partition 0
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic A --offset latest --partition 1
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9093 --topic B --offset latest --partition 0
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9093 --topic B --offset latest --partition 1
+</code></pre>
+
+<p>消费者组 B 有些问题，因为官方不允许 group 参数和 partition 参数同时存在，所以没有给 B 组的消费者指定组 id，但是可以把它们理解为一个逻辑上的组。</p>
+
+<p>以下是我的实验截图<br />
+<img src="https://hurryking.github.io/img/Kafka_cluster.png" alt="Kafka_cluster" /></p>
+
+<p>最后安利下，tmux 真的挺好用的。</p>
+
+<blockquote>
+<p>哪有什么岁月静好，只是有人替你负重前行罢了，特此纪念为抗疫牺牲的英雄们。</p>
+</blockquote>
+
+            </div>
+        </div>
+        <div class="tile is-child box">
+            <div id="disqus_thread"></div>
+<script>
+
+
+
+
+var PAGE_URL = 'http://hurryking.github.io';
+var PAGE_IDENTIFIER = 'hu-yan-luan-yu';
+var disqus_config = function () {
+this.page.url = PAGE_URL;  
+this.page.identifier = PAGE_IDENTIFIER; 
+};
+
+(function() { 
+var d = document, s = d.createElement('script');
+s.src = 'https://hu-yan-luan-yu.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+    <div class="column is-3">
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Tags</h1>
+        <div class="tags">
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/apue">apue</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/composer">composer</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/elasticsearch">elasticsearch</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/finance">finance</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/git">git</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/go">go</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/kafka">kafka</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/leetcode">leetcode</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/life">life</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/mysql">mysql</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/philosophy">philosophy</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/php">php</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/rabbitmq">rabbitmq</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/reviewmyself">reviewmyself</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/sso">sso</a></span>
+        
+            <span class="tag"><a href="https://hurryking.github.io/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5">碎碎念</a></span>
+        
+        </div>          
+    </div>
+</div><br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Recent posts</h1>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/leetcode30/">Leetcode30</a></h1>
+            <time class="has-text-grey-light is-size-7">12 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/elasticsearch-%E7%B3%BB%E5%88%97%E4%B8%80/">ElasticSearch 系列(一)</a></h1>
+            <time class="has-text-grey-light is-size-7">5 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/">Mysql 分区表实践</a></h1>
+            <time class="has-text-grey-light is-size-7">4 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/04/kafka-%E5%85%A5%E9%97%A8/">Kafka 入门</a></h1>
+            <time class="has-text-grey-light is-size-7">3 April 2020</time>
+        
+            <h1><a href="https://hurryking.github.io/2020/03/hugo-%E5%AE%89%E8%A3%85/">Hugo 安装</a></h1>
+            <time class="has-text-grey-light is-size-7">31 March 2020</time>
+        
+    </div>
+</div>
+    <br>
+                
+
+
+    
+<br>
+        <div class="card">
+    <div class="card-content">
+        <h1 class="title is-5">Archives</h1>
+        
+            <a href="https://hurryking.github.io/archives/2020">2020</a> (11)<br>
+        
+            <a href="https://hurryking.github.io/archives/2019">2019</a> (56)<br>
+        
+    </div>
+</div>
+<br>
+        <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=kfLo_LL3ms0hbZk8wb7L_vK1dMEBcsEGCdi6Bo-jPUc"></script>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<footer class="footer has-background-grey-darker has-text-white">
+    <div class="content has-text-centered">
+        <p>
+            <span class="icon is-large"><a href="https://juejin.im/user/5729b8681ea4930064b00d6f" class="mysocial">掘金</a></span>&nbsp;&nbsp;
+            <span class="icon is-large"><a href="https://github.com/hurryking" class="mysocial"><i class="fab fa-github fa-3x"></i></a></span>&nbsp;&nbsp;
+            <br><br>
+            Copyright &copy; 胡言乱语 2020 - Theme by <a href="https://jeffprod.com" class="mysocial">JeffProd.com</a>
+            - <a class="mysocial" href="https://hurryking.github.io/about">About</a>
+        </p>
+    </div>
+</footer>
+
+<script src="https://hurryking.github.io/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+</body>
+</html>

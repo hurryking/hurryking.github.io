@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Leetcode on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/leetcode/</link>
+    <description>Recent content in Leetcode on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 12 Apr 2020 22:26:57 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode30</title>
+      <link>https://hurryking.github.io/2020/04/leetcode30/</link>
+      <pubDate>Sun, 12 Apr 2020 22:26:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/leetcode30/</guid>
+      <description>寻找到达某个节点的路径 这是今天面试遇到的一道算法题，看起来比较简单，思路很清楚，但是有些细节没有想清楚，所以没有一下子，答出来。现在整理下思路继续写出来。
+题目是:
+有如下数组[1, 2, [5,6,8,[21,22]],[12,15]]，返回到达给定元素的路径。
+思路是深度有限遍历，然后把路径放进一个栈里面，进入节点压栈，出节点退栈。
+&amp;lt;?php function deepin($arr, $needle, $path) { if (is_array($arr)) { foreach ($arr as $key =&amp;gt; $value) { $path[] = $key; if ($res = deepin($value, $needle, $path)) { return $res; } else { array_pop($path); } } } if ($arr == $needle) { return $path; } else { array_pop($path); return false; } } $array = [3, 5, [9, 10, 11], [12, 13, 29]]; $path = []; $path = deepin($array, 5, $path);  因为用到了递归，所以数据规模比较大的话会爆栈，还需要优化下，用非递归的方式去遍历。</description>
+    </item>
+    
+    <item>
+      <title>Leetcode29</title>
+      <link>https://hurryking.github.io/2020/02/leetcode29/</link>
+      <pubDate>Tue, 25 Feb 2020 22:26:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/02/leetcode29/</guid>
+      <description>Longest Common Sequence 用动态规划的思想，解决最长公共子序列问题。
+先解释概念，什么是公共子序列？
+最长公共子序列（LCS）是一个在一个序列集合中（通常为两个序列）用来查找所有序列中最长子序列的問題。这与查找最長公共子串的问题不同的地方是：子序列不需要在原序列中占用连续的位置。可能比较难懂，贴上一个维基百科的定义链接
+举例如下，假设有两个字符串 A=&amp;ldquo;acda&amp;rdquo; B=&amp;ldquo;adac&amp;rdquo;
+那么 A 和 B 的公共子串有 ac ad ada，其中最长的公共子序列就是 ada
+动态规划是什么，简单来说就是把事情按照阶段来进行处理，每个阶段的运算依赖上个阶段的结果。
+LCS(&amp;quot;abc&amp;quot;, &amp;quot;dab&amp;quot;) | | | | ----------------------------------------- | | | | | | LCS(&amp;quot;abc&amp;quot;, &amp;quot;ab&amp;quot;) LCS(&amp;quot;bc&amp;quot;, &amp;quot;dab&amp;quot;) | | | | | | 1 + LCS(&amp;quot;bc&amp;quot;, &amp;quot;b&amp;quot;) --------------- | | | | | | | | | 2 + LCS(&amp;quot;c&amp;quot;, &amp;quot;&amp;quot;) LCS(&amp;quot;c&amp;quot;, &amp;quot;dab&amp;quot;) LCS(&amp;quot;bc&amp;quot;, &amp;quot;ab&amp;quot;) | | ------------- | | | | | | LCS(&amp;quot;c&amp;quot;, &amp;quot;ab&amp;quot;) LCS(&amp;quot;bc&amp;quot;, &amp;quot;b&amp;quot;) | 1 + LCS(&amp;quot;c&amp;quot;, &amp;quot;&amp;quot;)	 给出一段伪代码</description>
+    </item>
+    
+    <item>
+      <title>Leetcode28</title>
+      <link>https://hurryking.github.io/2019/06/leetcode28/</link>
+      <pubDate>Sun, 02 Jun 2019 05:31:06 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/06/leetcode28/</guid>
+      <description>Dijkstra 算法 PHP 实现 单源最短路径算法，核心思想为把起点到所有点的距离存在一个数组中，然后广度优先遍历每次触及距离最短的点，然后更新接触到的点与起点的距离，下面是算法图示:
+下面是的我的PHP版本实现
+&amp;lt;?php Class Vertex { protected $id; protected $neighbors; protected $neighbor_weights; public function __construct($node) { $this-&amp;gt;id = $node; } public function addNeighbor($vertex, int $weight) { $this-&amp;gt;neighbors[] = $vertex; $this-&amp;gt;neighbor_weights[$vertex] = $weight; } public function getNeighbors() { return $this-&amp;gt;neighbors; } public function getId() { return $this-&amp;gt;id; } public function getWeight($vertex) { return $this-&amp;gt;neighbor_weights[$vertex]; } } Class Graph { protected $vertexes; protected $vertex_num; public function __construct() { $this-&amp;gt;vertexes = []; $this-&amp;gt;vertex_num = 0; } public function addVertex($node) { $vertex = new Vertex($node); $this-&amp;gt;vertexes[$node] = $vertex; $this-&amp;gt;vertex_num += 1; return $vertex; } public function getVertex($node) { return $this-&amp;gt;vertexes[$node]?</description>
+    </item>
+    
+    <item>
+      <title>Leetcode27</title>
+      <link>https://hurryking.github.io/2019/05/leetcode27/</link>
+      <pubDate>Thu, 23 May 2019 00:52:55 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/leetcode27/</guid>
+      <description>Search in rotated sorted array 买卖股票系列告一段落，主要是第三个　实在是难消化，鄙人实力不济，改日再战。
+今天的题目是search in rotated sorted array，题目的意思是给出一个反转后的不重复有序数组(从大到小)，大意如下，[0,1,2,3,4,5] 有可能被翻转为[4,5,0,1,2,3]　或者 [3,4,5,0,1,2]，然后让你找出数组中指定的值。
+脑子里第一个蹦出来的是，鼎鼎有名的二分算法(binary search)，有进步，哈哈哈，后面一想，这该怎么二分呢，如果不翻转，这题 so easy ，翻转过后怎么办，讨论区逛了一圈，找了一个能理解的实现，如果low小于等于mid，左半边有序，否则右半边有序，然后我们判断目标数是否在有序范围内就ok了。
+class Solution: # @param {integer[]} numss # @param {integer} target # @return {integer} def search(self, nums, target): if not nums: return -1 low, high = 0, len(nums) - 1 while low &amp;lt;= high: mid = int((low + high) / 2) # print(int(mid)) if target == nums[mid]: return mid if nums[low] &amp;lt;= nums[mid]: if nums[low] &amp;lt;= target &amp;lt;= nums[mid]: high = mid - 1 else: low = mid + 1 else: if nums[mid] &amp;lt;= target &amp;lt;= nums[high]: low = mid + 1 else: high = mid - 1 return -1  参考资料 1.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode26</title>
+      <link>https://hurryking.github.io/2019/05/leetcode26/</link>
+      <pubDate>Wed, 01 May 2019 23:06:51 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/leetcode26/</guid>
+      <description>Best Time to Buy and Sell Stock II Say you have an array for which the *i*th element is the price of a given stock on day i.
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).</description>
+    </item>
+    
+    <item>
+      <title>Leetcode25</title>
+      <link>https://hurryking.github.io/2019/05/leetcode25/</link>
+      <pubDate>Wed, 01 May 2019 00:41:05 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/05/leetcode25/</guid>
+      <description>Best Time to Buy and Sell Stock Say you have an array for which the *i*th element is the price of a given stock on day i.
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode24</title>
+      <link>https://hurryking.github.io/2019/04/leetcode24/</link>
+      <pubDate>Tue, 30 Apr 2019 19:59:14 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode24/</guid>
+      <description>Sort Colors Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode23</title>
+      <link>https://hurryking.github.io/2019/04/leetcode23/</link>
+      <pubDate>Tue, 30 Apr 2019 00:28:19 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode23/</guid>
+      <description>Remove Duplicates from Sorted List Given a sorted linked list, delete all duplicates such that each element appear only once.
+Example 1:
+Input: 1-&amp;gt;1-&amp;gt;2 Output: 1-&amp;gt;2  Example 2:
+Input: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;3 Output: 1-&amp;gt;2-&amp;gt;3  第一想法是转 list 再转链表
+# Definition for singly-linked list. # class ListNode(object): # def __init__(self, x): # self.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode22</title>
+      <link>https://hurryking.github.io/2019/04/leetcode22/</link>
+      <pubDate>Sat, 27 Apr 2019 00:08:41 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode22/</guid>
+      <description>Length of Last Word Given a string s consists of upper/lower-case alphabets and empty space characters &#39; &#39;, return the length of last word in the string.
+If the last word does not exist, return 0.
+Note: A word is defined as a character sequence consists of non-space characters only.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode20</title>
+      <link>https://hurryking.github.io/2019/04/leetcode20/</link>
+      <pubDate>Tue, 23 Apr 2019 23:36:09 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode20/</guid>
+      <description>Two Sum Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+Example:
+Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1].</description>
+    </item>
+    
+    <item>
+      <title>Leetcode19</title>
+      <link>https://hurryking.github.io/2019/04/leetcode19/</link>
+      <pubDate>Sun, 21 Apr 2019 16:42:02 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode19/</guid>
+      <description>Permutation II Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+Example:
+Input: [1,1,2] Output: [ [1,1,2], [1,2,1], [2,1,1] ]  排列组合，给出一组可能重复的数字，求所有可能的排列组合。
+之前有刷过一道，给出一组不可能重复的数字求排列组合的问题，Permutation, 第一反应就是套用之前的解法加上判断重复的逻辑。
+class Solution(object): def permuteUnique(self, nums): &amp;quot;&amp;quot;&amp;quot; :type nums: List[int] :rtype: List[List[int]] &amp;quot;&amp;quot;&amp;quot; res = [] # 此处的排序可以想下作用是什么 numd.sort() self.dfs(nums, [], res) return res def dfs(self, choices, path, res): if not choices: res.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode17</title>
+      <link>https://hurryking.github.io/2019/04/leetcode17/</link>
+      <pubDate>Mon, 15 Apr 2019 22:11:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode17/</guid>
+      <description>Longest Common Prefix Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string &amp;ldquo;&amp;rdquo;.
+Example 1:
+Input: [&amp;quot;flower&amp;quot;,&amp;quot;flow&amp;quot;,&amp;quot;flight&amp;quot;] Output: &amp;quot;fl&amp;quot;  Example 2:
+Input: [&amp;quot;dog&amp;quot;,&amp;quot;racecar&amp;quot;,&amp;quot;car&amp;quot;] Output: &amp;quot;&amp;quot; Explanation: There is no common prefix among the input strings.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode16</title>
+      <link>https://hurryking.github.io/2019/04/leetcode16/</link>
+      <pubDate>Tue, 09 Apr 2019 22:10:48 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode16/</guid>
+      <description>N-Queens The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+Each solution contains a distinct board configuration of the n-queens&amp;rsquo; placement, where &amp;lsquo;Q&amp;rsquo; and &amp;lsquo;.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode15</title>
+      <link>https://hurryking.github.io/2019/04/leetcode15/</link>
+      <pubDate>Wed, 03 Apr 2019 00:27:16 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode15/</guid>
+      <description>Subset Power set 接着上回提到的求子集合的问题，继续说位操作解法。
+class Solution: def subsets(self, nums): &amp;quot;&amp;quot;&amp;quot; :type nums: List[int] :rtype: List[List[int]] &amp;quot;&amp;quot;&amp;quot; res = [] for i in range(1&amp;lt;&amp;lt;len(nums)): tmp = [] for j in range(len(nums)): # 判断对应位是否为1 if i &amp;amp; 1 &amp;lt;&amp;lt; j: tmp.append(nums[j]) res.append(tmp) return res  可以把每一个结果转换为二进制，然后遍历　000 到　111 ，把对应位置为１的元素保留到临时list，最终结果就是全部子集合
+比如说 [&amp;lsquo;a&amp;rsquo;, &amp;lsquo;b&amp;rsquo;, &amp;lsquo;c&amp;rsquo;] a 代表 第一位为 １ 的情况 100，b 代表　第二位为 １ 的情况　010，c 代表第三位为 １ 的情况，</description>
+    </item>
+    
+    <item>
+      <title>Leetcode14</title>
+      <link>https://hurryking.github.io/2019/04/leetcode14/</link>
+      <pubDate>Mon, 01 Apr 2019 23:24:39 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/04/leetcode14/</guid>
+      <description>Sqrt(x) Implement int sqrt(int x).
+Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+Example 1:
+Input: 4 Output: 2  Example 2:</description>
+    </item>
+    
+    <item>
+      <title>Leetcode13</title>
+      <link>https://hurryking.github.io/2019/03/leetcode13/</link>
+      <pubDate>Wed, 27 Mar 2019 00:46:43 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode13/</guid>
+      <description>Jump Game Given an array of non-negative integers, you are initially positioned at the first index of the array.
+Each element in the array represents your maximum jump length at that position.
+Determine if you are able to reach the last index.
+Example 1:
+Input: [2,3,1,1,4] Output: true Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode12</title>
+      <link>https://hurryking.github.io/2019/03/leetcode12/</link>
+      <pubDate>Mon, 25 Mar 2019 22:26:57 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode12/</guid>
+      <description>Subsets Given a set of distinct integers, nums, return all possible subsets (the power set).
+Note: The solution set must not contain duplicate subsets.
+Example:
+Input: nums = [1,2,3] Output: [ [3], [1], [2], [1,2,3], [1,3], [2,3], [1,2], [] ]  给出一组不重复的整数，返回所有子集
+what is power set
+回溯解法(DFS)
+回溯算法三要素
+ 选择 可以作出哪些选择 约束 不能做哪些选择 目标 最终要达成的目标  class Solution: def subsets(self, nums): &amp;quot;&amp;quot;&amp;quot; :type nums: List[int] :rtype: List[List[int]] &amp;quot;&amp;quot;&amp;quot; res = [] self.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode11</title>
+      <link>https://hurryking.github.io/2019/03/leetcode11/</link>
+      <pubDate>Fri, 22 Mar 2019 01:18:08 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode11/</guid>
+      <description>3Sum Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find alleft unique triplets in the array which gives the sum of zero.
+Note The solution set must not contain duplicate triplets.
+Example Given array nums = [-1, 0, 1, 2, -1, -4], A solution set is: [ [-1, 0, 1], [-1, -1, 2] ]  给一个数组，找出其中 3 数相加和为 0 的全部组合</description>
+    </item>
+    
+    <item>
+      <title>Leetcode10</title>
+      <link>https://hurryking.github.io/2019/03/leetcode10/</link>
+      <pubDate>Tue, 19 Mar 2019 00:26:56 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode10/</guid>
+      <description>Generate Parentheses Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+For example, given n = 3, a solution set is:
+[ &amp;quot;((()))&amp;quot;, &amp;quot;(()())&amp;quot;, &amp;quot;(())()&amp;quot;, &amp;quot;()(())&amp;quot;, &amp;quot;()()()&amp;quot; ]  给出数字n，列出所有有效的括号组合 此题和上次的排列组合都可以用回溯算法(DFS)解决 回溯算法３要点
+ 选择 选择&amp;rsquo;(&amp;lsquo;或者‘)’ 2.　限制 必须是有效的括号 括号闭合之前必须先开放 括号数有限(n)  3.　目标 排列好所有括号</description>
+    </item>
+    
+    <item>
+      <title>Leetcode09</title>
+      <link>https://hurryking.github.io/2019/03/leetcode09/</link>
+      <pubDate>Thu, 14 Mar 2019 00:06:45 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode09/</guid>
+      <description>46. Permutations Given a collection of distinct integers, return all possible permutations.
+Example: **Input**: [1,2,3] **Output**: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]  给出一组不重复的整数，返回所有可能的排列组合
+深度优先遍历解法DFS
+class Solution(object): def permute(self, nums): res = [] self.dfs(nums, [], res) return res def dfs(self, nums, path, res): if not nums: res.append(path) # return # backtracking for i in xrange(len(nums)): self.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode07</title>
+      <link>https://hurryking.github.io/2019/03/leetcode07/</link>
+      <pubDate>Thu, 07 Mar 2019 22:48:41 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode07/</guid>
+      <description>Reverse Nodes in k-Group Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode06</title>
+      <link>https://hurryking.github.io/2019/03/leetcode06/</link>
+      <pubDate>Wed, 06 Mar 2019 23:58:06 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode06/</guid>
+      <description>Merge K sorted link list 还是昨天的合并　K 个有序链表，今天去社区看了下，还有更简单的解决方案，时间复杂度和空间复杂度更好，大概的思路是用 Python 的最小堆来实现，每次从堆里弹出最小元素，然后最近一次哪个链表出了最小元素就把下一个塞进堆里，很高效，很简洁，元祖（tuple）的运用是这个实现的点睛之笔，下面贴出代码
+def mergeKLists(self, lists): from heap import heappop, heapify, heapreplace dummy = node = ListNode(0) # 下面这一步很赞 h = [(n.val, n) for n in lists if n] # n 转　minheap heapify(h) while(h): # 取　堆里最小的值 v, n = h[0] if n.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode05</title>
+      <link>https://hurryking.github.io/2019/03/leetcode05/</link>
+      <pubDate>Tue, 05 Mar 2019 23:37:00 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode05/</guid>
+      <description>Merge k Sorted Lists Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+Example Input: [ 1-&amp;gt;4-&amp;gt;5, 1-&amp;gt;3-&amp;gt;4, 2-&amp;gt;6 ] Output: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5-&amp;gt;6  合并n个有序链表，第一眼看到觉的很简单，想怎么实现的时候头大，大体思路是全部都放到一个list里，然后排序list，再转链表
+class Solution(object): def mergeKLists(self, lists): &amp;quot;&amp;quot;&amp;quot; :type lists: List[ListNode] :rtype: ListNode &amp;quot;&amp;quot;&amp;quot; merged_list = [] for head in lists: while head: merged_list.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode04</title>
+      <link>https://hurryking.github.io/2019/03/leetcode04/</link>
+      <pubDate>Tue, 05 Mar 2019 01:18:38 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode04/</guid>
+      <description>Add Two Numbers You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode03</title>
+      <link>https://hurryking.github.io/2019/03/leetcode03/</link>
+      <pubDate>Sun, 03 Mar 2019 18:23:20 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode03/</guid>
+      <description>Palindrome Number Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+Example 1: Input: 121 Output: true  Example 2: Input: -121 Output: false  Explanation: From left to right, it reads -121. From right to left, it becomes 121-.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode02</title>
+      <link>https://hurryking.github.io/2019/03/leetcode02/</link>
+      <pubDate>Fri, 01 Mar 2019 01:11:21 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/leetcode02/</guid>
+      <description>Implement atoi which converts a string to an integer. The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode01</title>
+      <link>https://hurryking.github.io/2019/02/leetcode01/</link>
+      <pubDate>Thu, 28 Feb 2019 02:28:38 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/02/leetcode01/</guid>
+      <description>Valid Square Given the coordinates of four points in 2D space, return whether the four points could construct a square.
+The coordinate (x,y) of a point is represented by an integer array with two integers.
+Example: Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1] Output: True  Note: All the input integers are in the range [-10000, 10000].</description>
+    </item>
+    
+  </channel>
+</rss>

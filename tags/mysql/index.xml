@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mysql on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/mysql/</link>
+    <description>Recent content in Mysql on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 04 Apr 2020 17:53:49 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mysql 分区表实践</title>
+      <link>https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Sat, 04 Apr 2020 17:53:49 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/04/mysql-%E5%88%86%E5%8C%BA%E8%A1%A8%E5%AE%9E%E8%B7%B5/</guid>
+      <description>Mysql 表分区实践 为什么要分区 单表数据量过大时，查询操作会导致 CPU 飙升，机器压力很大，所以 Mysql 官方开发了分区功能，可以用来解决这个问题。
+Mysql 的分区原理 分区就相当于把原先存在一张表中的数据，按照指定规则放到几张小表里，当查询进来后再按照这个规则去找对应的表。比如按照区间分表，把用户　id 0-100000 的放到一个表，100000-200000 的放一个表，一般是根据业务来定规则。
+分区的策略  Range Partition
+按照某个字段的区间来分，比如说按照store_id区间分，stroe_id 在　[0,6] [6,11] [11,16] [16,21]　这些区间分属于不同的区域
+  CREATE TABLE employees ( id INT NOT NULL, fname VARCHAR(30), lname VARCHAR(30), hired DATE NOT NULL DEFAULT &#39;1970-01-01&#39;, separated DATE NOT NULL DEFAULT &#39;9999-12-31&#39;, job_code INT NOT NULL, store_id INT NOT NULL ) PARTITION BY RANGE (store_id) ( PARTITION p0 VALUES LESS THAN (6), PARTITION p1 VALUES LESS THAN (11), PARTITION p2 VALUES LESS THAN (16), PARTITION p3 VALUES LESS THAN (21) );   List Partition</description>
+    </item>
+    
+    <item>
+      <title>Mysql InnoDB　锁和事务模型系列(一)</title>
+      <link>https://hurryking.github.io/2019/03/mysql-innodb-%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1%E6%A8%A1%E5%9E%8B%E7%B3%BB%E5%88%97%E4%B8%80/</link>
+      <pubDate>Sun, 10 Mar 2019 14:37:25 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/mysql-innodb-%E9%94%81%E5%92%8C%E4%BA%8B%E5%8A%A1%E6%A8%A1%E5%9E%8B%E7%B3%BB%E5%88%97%E4%B8%80/</guid>
+      <description>Mysql InnoDB 锁 以下的所有操作都是基于 mysql8
+Mysql innodb 包含的锁类型如下:
+ 共享锁和排他锁 意向锁 记录锁 区间锁 Next-key 锁 插入意向锁 自增锁 断定锁(仅空间索引使用)  共享锁和排他锁 InnoDB 实现了标准的行级锁定。S(共享)和 X (排他)锁
+ S 允许事务读取一行的时候持有锁 X 允许事务更新或者删除一行的时候持有锁  如果事务　T1 对行　r 持有 S，事务　T2 对行　r 进行加锁的操作会有如下两种情况: * T2 对　r 加 S 可以立刻得到授权，T1 和　T2 都对　r 持有　S * T2 对　r 加 X 不能立马得到授权，得等　r 上的 S 都释放了以后才可以　如果事务　T２ 对行　r 持有 X，事务　T2 对行　r 进行加任何类型的锁都不会立马得到相应，必须得等到　T1 释放掉对 r 加的 X。</description>
+    </item>
+    
+  </channel>
+</rss>

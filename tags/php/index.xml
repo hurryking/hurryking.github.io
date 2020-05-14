@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/php/</link>
+    <description>Recent content in Php on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 23 Mar 2020 17:17:04 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>单点登录系列(一)</title>
+      <link>https://hurryking.github.io/2020/03/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E5%88%97%E4%B8%80/</link>
+      <pubDate>Mon, 23 Mar 2020 17:17:04 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%E7%B3%BB%E5%88%97%E4%B8%80/</guid>
+      <description>单点登录出现的背景 企业内的办公软件繁多，每个软件都有一套自己的用户系统，每个系统都需要注册一个账号，对员工来说需要记录许多账号密码，难以使用，对企业来说需要管理多系统的用户，难以管理。如果有一个系统实现用户的统一管理，登录企业内的所有软件只需要一个账号，对员工和企业都是好事。
+单点登录的出现就解决了这个问题。
+单点登录的实现方式 单点登录实现的核心就是多应用共享会话，共享会话的实现方式因协议而异，目前主要有三种协议。
+ SAML(Security Assertion Markup Language)
+SAML 是一种基于 XML 结构提供应用间交换用户信息的协议。下面放一张 SAML 单点登录的流程图。
+其中有三个角色， Client(客户端),Identify Provider(认证服务提供者),Service Provider(服务提供者)，SP 提供服务，IP 负责认证 SAML协议 比较复杂，上面的流程图只是 web 浏览器的访问模式，还有 ECP(Enchaned Client Or Proxy) 加强型客户端或代理，IDP(Identity Provider Discovery) 认证服务发现等几种模式。
+ OIDC(OpenID Connect)
+OpenId Connect 是基于 OAuth 2.0 协议的一种简单认证层协议。它允许客户端通过授权服务去校验终端用户的身份，并通过易上手的 REST 风格的接口获取用户的基本信息。
+OIDC 的基本流程如下图
++--------+ +--------+ | | | | | |---------(1) AuthN Request--------&amp;gt;| | | | | | | | +--------+ | | | | | | | | | | | End- |&amp;lt;--(2) AuthN &amp;amp; AuthZ--&amp;gt;| | | | | User | | | | RP | | | | OP | | | +--------+ | | | | | | | |&amp;lt;--------(3) AuthN Response--------| | | | | | | |---------(4) UserInfo Request-----&amp;gt;| | | | | | | |&amp;lt;--------(5) UserInfo Response-----| | | | | | +--------+ +--------+  RP (Reply Party) 代表需要验证用户身份的客户端</description>
+    </item>
+    
+    <item>
+      <title>Composer 自动加载解析</title>
+      <link>https://hurryking.github.io/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Sun, 22 Mar 2020 16:14:11 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/</guid>
+      <description>Composer 自动加载分析以及优化 自动加载的原理 自动加载的核心实现是依靠 spl_autoload_register 函数
+spl_autoload_register 可以注册自动加载器到SPL __autoload函数队列中。用通俗一点的话说就是这个方法允许我们自己定义一个自动加载函数。
+下面给出一个官方的例子 A.class.php
+&amp;lt;?php class A { function foo() { echo __CLASS__ . PHP_EOL; } }  autoload.php
+&amp;lt;?php spl_autoload_register(function ($class) { echo $class . PHP_EOL; $filename = $class . &#39;.class.php&#39;; if (file_exists($filename)) { include $filename; } else { throw new Exception(&amp;quot;Unable to load {$class}&amp;quot;, 1); } }); try { $obj = new A(); } catch (Exception $e) { echo $e-&amp;gt;getMessage() .</description>
+    </item>
+    
+    <item>
+      <title>如何给 PHP 添加新特性</title>
+      <link>https://hurryking.github.io/2019/03/%E5%A6%82%E4%BD%95%E7%BB%99-php-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%89%B9%E6%80%A7/</link>
+      <pubDate>Sun, 24 Mar 2019 15:32:28 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2019/03/%E5%A6%82%E4%BD%95%E7%BB%99-php-%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%89%B9%E6%80%A7/</guid>
+      <description>如何给 PHP 添加新的语法特性(译) 译者注: 文中的操作都是基于 PHP5.6 进行的修改，翻译这篇文章的时候 PHP7 都已经出了，有很多方法已经被遗弃，希望各位注意不要踩坑。
+原文链接
+正文 最近有好多人问我怎么给 PHP 添加新语法特性。我仔细想了想，确实没有这方面的教程，接下来我会阐述整个流程。同时这篇文章也是对 Zend 引擎的一个简介。
+我提前为这篇过长的文章道歉。
+这篇文章假设你已经掌握了一些 C 的基本知识，并且了解 PHP 的一些基本概念(像 zvals 结构体)。如果你不具备这些条件，建议先去了解一下。
+我将使用你可能从其他语言获知的 in 运算符作为一个例子。它表现如下:
+$words = [&#39;hello&#39;, &#39;world&#39;, &#39;foo&#39;, &#39;bar&#39;]; var_dump(&#39;hello&#39; in $words); // true var_dump(&#39;foo&#39; in $words); // true var_dump(&#39;blub&#39; in $words); // false $string = &#39;PHP is fun!</description>
+    </item>
+    
+  </channel>
+</rss>

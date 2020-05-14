@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Composer on 胡言乱语</title>
+    <link>https://hurryking.github.io/tags/composer/</link>
+    <description>Recent content in Composer on 胡言乱语</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 22 Mar 2020 16:14:11 +0800</lastBuildDate>
+    
+        <atom:link href="https://hurryking.github.io/tags/composer/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Composer 自动加载解析</title>
+      <link>https://hurryking.github.io/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Sun, 22 Mar 2020 16:14:11 +0800</pubDate>
+      
+      <guid>https://hurryking.github.io/2020/03/composer-%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E8%A7%A3%E6%9E%90/</guid>
+      <description>Composer 自动加载分析以及优化 自动加载的原理 自动加载的核心实现是依靠 spl_autoload_register 函数
+spl_autoload_register 可以注册自动加载器到SPL __autoload函数队列中。用通俗一点的话说就是这个方法允许我们自己定义一个自动加载函数。
+下面给出一个官方的例子 A.class.php
+&amp;lt;?php class A { function foo() { echo __CLASS__ . PHP_EOL; } }  autoload.php
+&amp;lt;?php spl_autoload_register(function ($class) { echo $class . PHP_EOL; $filename = $class . &#39;.class.php&#39;; if (file_exists($filename)) { include $filename; } else { throw new Exception(&amp;quot;Unable to load {$class}&amp;quot;, 1); } }); try { $obj = new A(); } catch (Exception $e) { echo $e-&amp;gt;getMessage() .</description>
+    </item>
+    
+  </channel>
+</rss>
